@@ -8,7 +8,7 @@ using SqlMana;
 
 namespace BridgeSQL.MSVN
 {
-    class SVNUpdate : ActionSimpleOeMenuItemBase
+    class SVNUpdateAll : ActionSimpleOeMenuItemBase
     {
         public override bool AppliesTo(ObjectExplorerNodeDescriptorBase oeNode)
         {
@@ -16,7 +16,7 @@ namespace BridgeSQL.MSVN
             return
                 ManaSQLConfig.SvnUpdate
                 && ManaSQLConfig.ValidGenPaths
-                && theNode.Type == "StoredProcedure";
+                && theNode.Type == "StoredProcedures";
         }
         public override string ItemText
         {
@@ -24,20 +24,12 @@ namespace BridgeSQL.MSVN
         }
         public override void OnAction(ObjectExplorerNodeDescriptorBase node)
         {
-            IOeNode theNode = (IOeNode)node;
-            IDatabaseObjectInfo DBI;
+            ManaProcess.runExe(
+                ManaSQLConfig.TProcPath
+                , TProcCommands.Update(new string[] { ManaSQLConfig.Extract.FormDefaultRepoPath() })
+                , false
+                );
 
-            if (theNode.IsDatabaseObject && theNode.TryGetDatabaseObject(out DBI))
-            {
-                ManaSQLConfig.Extract.ResetWhereSSP(false);
-                ManaSQLConfig.Extract.AppendWhereSSP(DBI.ObjectName);
-
-                ManaProcess.runExe(
-                    ManaSQLConfig.TProcPath
-                    , TProcCommands.Update(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
-                    , false
-                    );
-            }
         }
     }
 }

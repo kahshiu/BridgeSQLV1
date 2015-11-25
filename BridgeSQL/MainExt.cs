@@ -31,15 +31,16 @@ namespace BridgeSQL
             // adding UI to MSSQL
             thePlug.AddToolbarItem(manaSQLCommand);
             thePlug.AddTopLevelMenuItem(new MExtractAll());
+            thePlug.AddTopLevelMenuItem(new MSVN.SVNCommitAll());
+            thePlug.AddTopLevelMenuItem(new MSVN.SVNUpdateAll());
+
             thePlug.AddTopLevelMenuItem(new MExtract());
             thePlug.AddTopLevelMenuItem(new MExtractEnlist());
-
             thePlug.AddTopLevelMenuItem(new MCompareFile1());
             thePlug.AddTopLevelMenuItem(new MCompareFile2());
 
             // adding in SVN menu strip
             thePlug.AddTopLevelMenuItem(new MSVN.SVNRepoStatus());
-            
             thePlug.AddTopLevelMenuItem(new MSVN.SVNCommit());
             thePlug.AddTopLevelMenuItem(new MSVN.SVNUpdate());
             thePlug.AddTopLevelMenuItem(new MSVN.SVNShowLog());

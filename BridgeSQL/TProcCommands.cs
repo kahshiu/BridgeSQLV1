@@ -38,10 +38,13 @@ namespace BridgeSQL
             return total;
         }
 
-        //public static string Diff()
-        //{
-
-        //}
+        public static string Diff(string path)
+        {
+            string total = "/command:diff ";
+            string temp = @"/path:""{0}""";
+            total = total + string.Format(temp, path);
+            return total;
+        }
 
         //public static string Merge()
         //{
@@ -61,10 +64,13 @@ namespace BridgeSQL
 
         //}
 
-        //public static string Blame()
-        //{
-
-        //}
+        public static string Blame(string path)
+        {
+            string total = "/command:blame ";
+            string temp = @"/path:""{0}""";
+            total = total + string.Format(temp, path);
+            return total;
+        }
 
         public static string Update(string[] paths, string revision = "")
         {

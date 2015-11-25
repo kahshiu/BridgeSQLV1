@@ -642,7 +642,7 @@ namespace BridgeSQL
                 UpdatedWhere(Mode + "-WhereFileStore");
         }
 
-        private string FormDefaultRepoPath(string filename = "")
+        public string FormDefaultRepoPath(string filename = "")
         {
             string temp = "";
             if (SERVER != "" && DB != "")

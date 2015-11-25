@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RedGate.SIPFrameworkShared;
+using SqlMana;
 
 namespace BridgeSQL.MSVN
 {
@@ -25,10 +26,17 @@ namespace BridgeSQL.MSVN
         {
             IOeNode theNode = (IOeNode)node;
             IDatabaseObjectInfo DBI;
-            ManaSQLConfig.CompareFile1.UpdateVariables(theNode);
+
             if (theNode.IsDatabaseObject && theNode.TryGetDatabaseObject(out DBI))
             {
-                ManaSQLConfig.CompareFile1.AppendWhereSSP(DBI.ObjectName);
+                ManaSQLConfig.Extract.ResetWhereSSP(false);
+                ManaSQLConfig.Extract.AppendWhereSSP(DBI.ObjectName);
+
+                ManaProcess.runExe(
+                    ManaSQLConfig.TProcPath
+                    , TProcCommands.ShowLog(ManaSQLConfig.Extract.FormSelectedSSPFilePaths()[0])
+                    , false
+                    );
             }
         }
     }

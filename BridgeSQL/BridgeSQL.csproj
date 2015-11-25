@@ -64,12 +64,14 @@
     <Compile Include="MExtractAll.cs" />
     <Compile Include="MExtractEnlist.cs" />
     <Compile Include="MSVN\SVNBlame.cs" />
+    <Compile Include="MSVN\SVNCommitAll.cs" />
     <Compile Include="MSVN\SVNDiff.cs" />
     <Compile Include="MSVN\SVNMerge.cs" />
     <Compile Include="MSVN\SVNCommit.cs" />
     <Compile Include="MSVN\SVNRepoStatus.cs" />
     <Compile Include="MSVN\SVNShowLog.cs" />
     <Compile Include="MSVN\SVNUpdate.cs" />
+    <Compile Include="MSVN\SVNUpdateAll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MSettings.cs" />
     <Compile Include="TProcCommands.cs" />
