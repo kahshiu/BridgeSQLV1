@@ -36,7 +36,7 @@ namespace BridgeSQL.MSVN
                 //add this command just in case SSP is new and not added
                 ManaProcess.runExe(
                     ManaSQLConfig.TProcPath
-                    , TProcCommands.RepoStatus(ManaSQLConfig.Extract.FormDefaultRepoPath())
+                    , TProcCommands.RepoStatus(ManaSQLConfig.Extract.FormRepoPath())
                     , false
                     );
             }

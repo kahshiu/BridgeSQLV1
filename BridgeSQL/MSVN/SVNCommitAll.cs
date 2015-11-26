@@ -26,12 +26,12 @@ namespace BridgeSQL.MSVN
         {
             ManaProcess.runExe(
                 ManaSQLConfig.TProcPath
-                , TProcCommands.Add(new string[] { ManaSQLConfig.Extract.FormDefaultRepoPath() })
+                , TProcCommands.Add(new string[] { ManaSQLConfig.Extract.FormRepoPath() })
                 , false
                 );
             ManaProcess.runExe(
                 ManaSQLConfig.TProcPath
-                , TProcCommands.Commit(new string[] { ManaSQLConfig.Extract.FormDefaultRepoPath() })
+                , TProcCommands.Commit(new string[] { ManaSQLConfig.Extract.FormRepoPath() })
                 , false
                 );
         }

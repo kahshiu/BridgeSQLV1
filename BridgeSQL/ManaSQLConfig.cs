@@ -340,7 +340,7 @@ namespace BridgeSQL
         public string FileAction = "";
 
         // 2.1 variable items
-        public Boolean UseTemp = false;
+        public Boolean _UseTemp = false;
         private Boolean _IsDefault = true;
         private List<string> WhereSSPStore = new List<string>();
         private List<string> WhereFileStore = new List<string>();
@@ -439,8 +439,21 @@ namespace BridgeSQL
             set
             {
                 _IsDefault = value;
+                if(_IsDefault == true) { _UseTemp = false; }
                 if (UpdatedVariables != null)
                     UpdatedVariables(Mode + "-IsDefault");
+            }
+        }
+
+        public bool UseTemp
+        {
+            get { return _UseTemp; }
+            set
+            {
+                _UseTemp = value;
+                if(_UseTemp == true) { _IsDefault = false; }
+                if (UpdatedVariables != null)
+                    UpdatedVariables(Mode + "-IsTemp");
             }
         }
 
@@ -642,48 +655,97 @@ namespace BridgeSQL
                 UpdatedWhere(Mode + "-WhereFileStore");
         }
 
-        public string FormDefaultRepoPath(string filename = "")
+        public string FormRepoPath()
         {
-            string temp = "";
+            string path = "";
             if (SERVER != "" && DB != "")
             {
-                if (UseTemp)
-                    temp = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, "temp", DB);
+                if (IsDefault)
+                {
+                    path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, SERVER, DB);
+                }
+                else if (UseTemp)
+                {
+                    path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, "tempServer", DB);
+                }
                 else
-                    temp = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, SERVER, DB);
+                {
+                    path = _RepoPath;
+                }
             }
-            if (filename != "")
-                temp = string.Format(@"{0}\{1}", temp, filename);
-            return temp;
+            return path;
+            
         }
-        private string FormDefaultRepoPath2(string filename = "")
+        private string FormRepoPath2()
         {
-            string temp = "";
-            if (SERVER != "" && DB != "")
-                temp = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, SERVER2, DB2);
-            if (filename != "")
-                temp = string.Format(@"{0}\{1}", temp, filename);
-            return temp;
+            string path = "";
+            if (SERVER2 != "" && DB2 != "")
+            {
+                if (IsDefault)
+                {
+                    path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, SERVER2, DB2);
+                }
+                else if (UseTemp)
+                {
+                    path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, "tempServer", DB2);
+                }
+                else
+                {
+                    path = _RepoPath2;
+                }
+            }
+            return path;
         }
 
-        private string FormDefaultLogPath(string filename = "")
+        private string FormLogPath()
         {
-            string temp = "";
+            string path = "";
             if (SERVER != "" && DB != "")
-                temp = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, SERVER, "log");
-            if (filename != "")
-                temp = string.Format(@"{0}\{1}", temp, filename);
-            return temp;
+            {
+                if (Mode == "compareDir")
+                {
+                    if (IsDefault)
+                    {
+                        path = ManaSQLConfig.RepoPath;
+                    }
+                    else
+                    {
+                        path = _RepoPath;
+                    }
+                    path = string.Format(@"{0}\{1}\{2}", path, "compared", DateTime.Now.ToOADate().ToString());
+                }
+                else
+                {
+                    if (IsDefault)
+                    {
+                        path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, SERVER, "log");
+                    }
+                    else if (UseTemp)
+                    {
+                        path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, "tempServer", "log");
+                    }
+                    else
+                    {
+                        path = _LogPath;
+                    }
+                }
+            }
+            return path;
         }
 
-        private string FormDefaultOutPath(string filename = "")
+        private string FormOutPath()
         {
-            string temp = "";
-            if (SERVER != "")
-                temp = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, SERVER, DB);
-            if (filename != "")
-                temp = string.Format(@"{0}\{1}", temp, filename);
-            return temp;
+            string path = "";
+            if (IsDefault)
+            {
+                path = ManaSQLConfig.RepoPath;
+            }
+            else
+            {
+                path = _RepoPath;
+            }
+            path = string.Format(@"{0}\{1}\{2}", path, "compared", DateTime.Now.ToOADate().ToString());
+            return path;
         }
 
         public List<string> FormSelectedSSPFilePaths()
@@ -691,47 +753,41 @@ namespace BridgeSQL
             List<string> total = new List<string>();
             foreach (string ssp in WhereSSPStore)
             {
-                total.Add(FormDefaultRepoPath(string.Format(@"{0}.sql", ssp)));
+                total.Add(GetRepoPath(string.Format(@"{0}.sql", ssp)));
             }
             return total;
         }
 
         public string GetRepoPath(string filename = "")
         {
-            return IsDefault ? FormDefaultRepoPath(filename) : _RepoPath;
+            string path = FormRepoPath();
+            if (filename != "") path = string.Format(@"{0}\{1}", path, filename);
+            return path;
         }
 
         public string GetRepoPath2(string filename = "")
         {
-            return IsDefault ? FormDefaultRepoPath2(filename) : _RepoPath2;
+            string path = FormRepoPath2();
+            if (filename != "") path = string.Format(@"{0}\{1}", path, filename);
+            return path;
         }
 
         public string GetLogPath(string filename = "")
         {
-            return IsDefault ? FormDefaultLogPath(filename) : _LogPath;
+            string path = FormLogPath();
+            if (filename == "" && Mode == "compareDir") filename = "log.txt";
+            if (filename != "") path = string.Format(@"{0}\{1}", path, filename);
+            return path;
         }
 
         public string GetOutPath(string filename = "")
         {
-            return IsDefault ? FormDefaultOutPath(filename) : _OutPath;
+            // put in default
+            string path = FormOutPath();
+            if (filename == "") filename = "result.txt";
+            if (filename != "") path = string.Format(@"{0}\{1}", path, filename);
+            return path;
         }
-
-        public string GetCompareLogPath(string filename = "")
-        {
-            string temp = "";
-            temp = string.Format(@"{0}\{1}", ManaSQLConfig.RepoPath, "Compare");
-            temp = string.Format(@"{0}\compare_{1}.log", temp, DateTime.Now.ToOADate().ToString());
-            return temp;
-        }
-
-        public string GetCompareResultPath(string filename = "")
-        {
-            string temp = "";
-            temp = string.Format(@"{0}\{1}", ManaSQLConfig.RepoPath, "Compare");
-            temp = string.Format(@"{0}\compare_{1}.result", temp, DateTime.Now.ToOADate().ToString());
-            return temp;
-        }
-
         // Unsuccessful: force string to return ""
         // Successful: return appropriate string
         public string CompileArgs(int variant = 0, string template = "\"{0}|{1}\" ")
@@ -753,8 +809,8 @@ namespace BridgeSQL
 
                 if (Mode == "compareDir")
                 {
-                    compiled = compiled + string.Format(template, "OutPath", reg.Replace(GetCompareResultPath(), "\\\""));
-                    compiled = compiled + string.Format(template, "LogPath", reg.Replace(GetCompareLogPath(), "\\\""));
+                    compiled = compiled + string.Format(template, "OutPath", reg.Replace(GetOutPath(), "\\\""));
+                    compiled = compiled + string.Format(template, "LogPath", reg.Replace(GetLogPath(), "\\\""));
                 }
                 else
                 {
