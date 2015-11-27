@@ -694,6 +694,8 @@ namespace BridgeSQL
             }
             return path;
         }
+
+        // currently only compareDir uses this
         public string FormRepoPath2()
         {
             //string path = "";
@@ -753,6 +755,7 @@ namespace BridgeSQL
             return path;
         }
 
+        // currently only compareDir uses this
         public string FormOutPath()
         {
             string path = "";

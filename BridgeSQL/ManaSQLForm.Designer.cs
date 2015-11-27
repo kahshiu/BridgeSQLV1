@@ -213,7 +213,7 @@
             // 
             // extractLogCreate
             // 
-            this.extractLogCreate.Location = new System.Drawing.Point(382, 170);
+            this.extractLogCreate.Location = new System.Drawing.Point(301, 199);
             this.extractLogCreate.Name = "extractLogCreate";
             this.extractLogCreate.Size = new System.Drawing.Size(75, 23);
             this.extractLogCreate.TabIndex = 6;
@@ -223,7 +223,7 @@
             // 
             // extractRepoCreate
             // 
-            this.extractRepoCreate.Location = new System.Drawing.Point(382, 83);
+            this.extractRepoCreate.Location = new System.Drawing.Point(301, 112);
             this.extractRepoCreate.Name = "extractRepoCreate";
             this.extractRepoCreate.Size = new System.Drawing.Size(75, 23);
             this.extractRepoCreate.TabIndex = 6;
@@ -234,7 +234,7 @@
             // extractDDir
             // 
             this.extractDDir.AutoSize = true;
-            this.extractDDir.Location = new System.Drawing.Point(204, 199);
+            this.extractDDir.Location = new System.Drawing.Point(9, 216);
             this.extractDDir.Name = "extractDDir";
             this.extractDDir.Size = new System.Drawing.Size(172, 21);
             this.extractDDir.TabIndex = 5;
@@ -302,7 +302,7 @@
             // 
             // extractList
             // 
-            this.extractList.Location = new System.Drawing.Point(382, 258);
+            this.extractList.Location = new System.Drawing.Point(382, 289);
             this.extractList.Name = "extractList";
             this.extractList.Size = new System.Drawing.Size(125, 23);
             this.extractList.TabIndex = 3;
@@ -312,7 +312,7 @@
             // 
             // extractClear
             // 
-            this.extractClear.Location = new System.Drawing.Point(382, 287);
+            this.extractClear.Location = new System.Drawing.Point(382, 318);
             this.extractClear.Name = "extractClear";
             this.extractClear.Size = new System.Drawing.Size(125, 23);
             this.extractClear.TabIndex = 4;
@@ -324,7 +324,7 @@
             // 
             this.extractSSP.FormattingEnabled = true;
             this.extractSSP.ItemHeight = 16;
-            this.extractSSP.Location = new System.Drawing.Point(9, 258);
+            this.extractSSP.Location = new System.Drawing.Point(9, 289);
             this.extractSSP.Name = "extractSSP";
             this.extractSSP.Size = new System.Drawing.Size(367, 436);
             this.extractSSP.TabIndex = 0;
@@ -343,7 +343,7 @@
             // extractSSPLabel
             // 
             this.extractSSPLabel.AutoSize = true;
-            this.extractSSPLabel.Location = new System.Drawing.Point(6, 238);
+            this.extractSSPLabel.Location = new System.Drawing.Point(6, 269);
             this.extractSSPLabel.Name = "extractSSPLabel";
             this.extractSSPLabel.Size = new System.Drawing.Size(104, 17);
             this.extractSSPLabel.TabIndex = 0;
@@ -408,7 +408,7 @@
             // 
             // uploadLogCreate
             // 
-            this.uploadLogCreate.Location = new System.Drawing.Point(382, 170);
+            this.uploadLogCreate.Location = new System.Drawing.Point(301, 199);
             this.uploadLogCreate.Name = "uploadLogCreate";
             this.uploadLogCreate.Size = new System.Drawing.Size(75, 23);
             this.uploadLogCreate.TabIndex = 8;
@@ -418,7 +418,7 @@
             // 
             // uploadRepoCreate
             // 
-            this.uploadRepoCreate.Location = new System.Drawing.Point(382, 83);
+            this.uploadRepoCreate.Location = new System.Drawing.Point(301, 112);
             this.uploadRepoCreate.Name = "uploadRepoCreate";
             this.uploadRepoCreate.Size = new System.Drawing.Size(75, 23);
             this.uploadRepoCreate.TabIndex = 7;
@@ -429,7 +429,7 @@
             // uploadDDir
             // 
             this.uploadDDir.AutoSize = true;
-            this.uploadDDir.Location = new System.Drawing.Point(204, 199);
+            this.uploadDDir.Location = new System.Drawing.Point(9, 216);
             this.uploadDDir.Name = "uploadDDir";
             this.uploadDDir.Size = new System.Drawing.Size(172, 21);
             this.uploadDDir.TabIndex = 6;
@@ -439,7 +439,7 @@
             // 
             // uploadSelectFromFile
             // 
-            this.uploadSelectFromFile.Location = new System.Drawing.Point(382, 258);
+            this.uploadSelectFromFile.Location = new System.Drawing.Point(382, 289);
             this.uploadSelectFromFile.Name = "uploadSelectFromFile";
             this.uploadSelectFromFile.Size = new System.Drawing.Size(140, 23);
             this.uploadSelectFromFile.TabIndex = 3;
@@ -449,7 +449,7 @@
             // 
             // uploadList
             // 
-            this.uploadList.Location = new System.Drawing.Point(382, 314);
+            this.uploadList.Location = new System.Drawing.Point(382, 345);
             this.uploadList.Name = "uploadList";
             this.uploadList.Size = new System.Drawing.Size(140, 23);
             this.uploadList.TabIndex = 5;
@@ -460,7 +460,7 @@
             // uploadCheckAll
             // 
             this.uploadCheckAll.AutoSize = true;
-            this.uploadCheckAll.Location = new System.Drawing.Point(382, 287);
+            this.uploadCheckAll.Location = new System.Drawing.Point(382, 318);
             this.uploadCheckAll.Name = "uploadCheckAll";
             this.uploadCheckAll.Size = new System.Drawing.Size(88, 21);
             this.uploadCheckAll.TabIndex = 4;
@@ -515,7 +515,7 @@
             // uploadSSPLabel
             // 
             this.uploadSSPLabel.AutoSize = true;
-            this.uploadSSPLabel.Location = new System.Drawing.Point(6, 238);
+            this.uploadSSPLabel.Location = new System.Drawing.Point(6, 269);
             this.uploadSSPLabel.Name = "uploadSSPLabel";
             this.uploadSSPLabel.Size = new System.Drawing.Size(84, 17);
             this.uploadSSPLabel.TabIndex = 0;
@@ -579,7 +579,7 @@
             // 
             this.uploadSSP.CheckOnClick = true;
             this.uploadSSP.FormattingEnabled = true;
-            this.uploadSSP.Location = new System.Drawing.Point(9, 258);
+            this.uploadSSP.Location = new System.Drawing.Point(9, 289);
             this.uploadSSP.Name = "uploadSSP";
             this.uploadSSP.Size = new System.Drawing.Size(367, 429);
             this.uploadSSP.TabIndex = 0;
@@ -632,7 +632,7 @@
             // 
             // compareFile2LogCreate
             // 
-            this.compareFile2LogCreate.Location = new System.Drawing.Point(879, 171);
+            this.compareFile2LogCreate.Location = new System.Drawing.Point(797, 199);
             this.compareFile2LogCreate.Name = "compareFile2LogCreate";
             this.compareFile2LogCreate.Size = new System.Drawing.Size(75, 23);
             this.compareFile2LogCreate.TabIndex = 20;
@@ -641,7 +641,7 @@
             // 
             // compareFile2RepoCreate
             // 
-            this.compareFile2RepoCreate.Location = new System.Drawing.Point(879, 84);
+            this.compareFile2RepoCreate.Location = new System.Drawing.Point(797, 112);
             this.compareFile2RepoCreate.Name = "compareFile2RepoCreate";
             this.compareFile2RepoCreate.Size = new System.Drawing.Size(75, 23);
             this.compareFile2RepoCreate.TabIndex = 19;
@@ -650,7 +650,7 @@
             // 
             // compareFile1LogCreate
             // 
-            this.compareFile1LogCreate.Location = new System.Drawing.Point(383, 171);
+            this.compareFile1LogCreate.Location = new System.Drawing.Point(301, 199);
             this.compareFile1LogCreate.Name = "compareFile1LogCreate";
             this.compareFile1LogCreate.Size = new System.Drawing.Size(75, 23);
             this.compareFile1LogCreate.TabIndex = 18;
@@ -659,7 +659,7 @@
             // 
             // compareFile1RepoCreate
             // 
-            this.compareFile1RepoCreate.Location = new System.Drawing.Point(383, 84);
+            this.compareFile1RepoCreate.Location = new System.Drawing.Point(301, 112);
             this.compareFile1RepoCreate.Name = "compareFile1RepoCreate";
             this.compareFile1RepoCreate.Size = new System.Drawing.Size(75, 23);
             this.compareFile1RepoCreate.TabIndex = 17;
@@ -670,8 +670,9 @@
             // 
             this.compareFile2Obj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.compareFile2Obj.AutoSize = true;
-            this.compareFile2Obj.Location = new System.Drawing.Point(826, 109);
+            this.compareFile2Obj.Location = new System.Drawing.Point(657, 64);
             this.compareFile2Obj.Name = "compareFile2Obj";
+            this.compareFile2Obj.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.compareFile2Obj.Size = new System.Drawing.Size(46, 17);
             this.compareFile2Obj.TabIndex = 16;
             this.compareFile2Obj.Text = "label2";
@@ -680,8 +681,9 @@
             // 
             this.compareFile1Obj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.compareFile1Obj.AutoSize = true;
-            this.compareFile1Obj.Location = new System.Drawing.Point(330, 109);
+            this.compareFile1Obj.Location = new System.Drawing.Point(161, 64);
             this.compareFile1Obj.Name = "compareFile1Obj";
+            this.compareFile1Obj.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.compareFile1Obj.Size = new System.Drawing.Size(46, 17);
             this.compareFile1Obj.TabIndex = 15;
             this.compareFile1Obj.Text = "label1";
@@ -689,7 +691,7 @@
             // compareFile2DDir
             // 
             this.compareFile2DDir.AutoSize = true;
-            this.compareFile2DDir.Location = new System.Drawing.Point(700, 216);
+            this.compareFile2DDir.Location = new System.Drawing.Point(505, 216);
             this.compareFile2DDir.Name = "compareFile2DDir";
             this.compareFile2DDir.Size = new System.Drawing.Size(172, 21);
             this.compareFile2DDir.TabIndex = 14;
@@ -720,7 +722,7 @@
             // compareFile2TempPath
             // 
             this.compareFile2TempPath.AutoSize = true;
-            this.compareFile2TempPath.Location = new System.Drawing.Point(700, 243);
+            this.compareFile2TempPath.Location = new System.Drawing.Point(505, 243);
             this.compareFile2TempPath.Name = "compareFile2TempPath";
             this.compareFile2TempPath.Size = new System.Drawing.Size(139, 21);
             this.compareFile2TempPath.TabIndex = 11;
@@ -742,7 +744,7 @@
             // compareFileAction2
             // 
             this.compareFileAction2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareFileAction2.Location = new System.Drawing.Point(204, 417);
+            this.compareFileAction2.Location = new System.Drawing.Point(204, 390);
             this.compareFileAction2.Name = "compareFileAction2";
             this.compareFileAction2.Size = new System.Drawing.Size(172, 44);
             this.compareFileAction2.TabIndex = 10;
@@ -753,7 +755,7 @@
             // compareFileAction1
             // 
             this.compareFileAction1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareFileAction1.Location = new System.Drawing.Point(204, 367);
+            this.compareFileAction1.Location = new System.Drawing.Point(204, 340);
             this.compareFileAction1.Name = "compareFileAction1";
             this.compareFileAction1.Size = new System.Drawing.Size(172, 44);
             this.compareFileAction1.TabIndex = 10;
@@ -1008,7 +1010,7 @@
             // 
             // compareDirRepo2Create
             // 
-            this.compareDirRepo2Create.Location = new System.Drawing.Point(384, 170);
+            this.compareDirRepo2Create.Location = new System.Drawing.Point(303, 199);
             this.compareDirRepo2Create.Name = "compareDirRepo2Create";
             this.compareDirRepo2Create.Size = new System.Drawing.Size(75, 23);
             this.compareDirRepo2Create.TabIndex = 52;
@@ -1017,7 +1019,7 @@
             // 
             // compareDirRepoCreate
             // 
-            this.compareDirRepoCreate.Location = new System.Drawing.Point(384, 83);
+            this.compareDirRepoCreate.Location = new System.Drawing.Point(303, 112);
             this.compareDirRepoCreate.Name = "compareDirRepoCreate";
             this.compareDirRepoCreate.Size = new System.Drawing.Size(75, 23);
             this.compareDirRepoCreate.TabIndex = 52;
@@ -1026,7 +1028,7 @@
             // 
             // compareDirLogCreate
             // 
-            this.compareDirLogCreate.Location = new System.Drawing.Point(384, 258);
+            this.compareDirLogCreate.Location = new System.Drawing.Point(303, 286);
             this.compareDirLogCreate.Name = "compareDirLogCreate";
             this.compareDirLogCreate.Size = new System.Drawing.Size(75, 23);
             this.compareDirLogCreate.TabIndex = 51;
@@ -1035,7 +1037,7 @@
             // 
             // compareDirResultCreate
             // 
-            this.compareDirResultCreate.Location = new System.Drawing.Point(384, 344);
+            this.compareDirResultCreate.Location = new System.Drawing.Point(303, 373);
             this.compareDirResultCreate.Name = "compareDirResultCreate";
             this.compareDirResultCreate.Size = new System.Drawing.Size(75, 23);
             this.compareDirResultCreate.TabIndex = 50;
@@ -1045,7 +1047,7 @@
             // compareDirDDir
             // 
             this.compareDirDDir.AutoSize = true;
-            this.compareDirDDir.Location = new System.Drawing.Point(515, 316);
+            this.compareDirDDir.Location = new System.Drawing.Point(9, 390);
             this.compareDirDDir.Name = "compareDirDDir";
             this.compareDirDDir.Size = new System.Drawing.Size(172, 21);
             this.compareDirDDir.TabIndex = 49;
@@ -1105,7 +1107,7 @@
             // compareDirCompare
             // 
             this.compareDirCompare.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareDirCompare.Location = new System.Drawing.Point(515, 343);
+            this.compareDirCompare.Location = new System.Drawing.Point(164, 417);
             this.compareDirCompare.Name = "compareDirCompare";
             this.compareDirCompare.Size = new System.Drawing.Size(214, 44);
             this.compareDirCompare.TabIndex = 41;
@@ -1117,7 +1119,7 @@
             // 
             this.compareDirLog.Location = new System.Drawing.Point(9, 258);
             this.compareDirLog.Name = "compareDirLog";
-            this.compareDirLog.Size = new System.Drawing.Size(367, 22);
+            this.compareDirLog.Size = new System.Drawing.Size(369, 22);
             this.compareDirLog.TabIndex = 25;
             this.compareDirLog.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareDirLog.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
@@ -1139,7 +1141,7 @@
             // 
             this.compareDirRepo.Location = new System.Drawing.Point(9, 84);
             this.compareDirRepo.Name = "compareDirRepo";
-            this.compareDirRepo.Size = new System.Drawing.Size(367, 22);
+            this.compareDirRepo.Size = new System.Drawing.Size(369, 22);
             this.compareDirRepo.TabIndex = 26;
             this.compareDirRepo.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareDirRepo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);

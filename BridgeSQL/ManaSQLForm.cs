@@ -30,6 +30,7 @@ namespace BridgeSQL
         {
             InitializeComponent();
             mainPlug = thePlug;
+            Initialise();
 
             // page:extract
             ManaSQLConfig.Extract.UpdatedVariables += new FixedSettings.VariablesHandler(RefreshCheckBoxes);
@@ -64,25 +65,33 @@ namespace BridgeSQL
             ManaSQLConfig.UpdatedList += new ManaSQLConfig.ListHandler(RefreshListBoxItems);
             ManaSQLConfig.UpdatedList += new ManaSQLConfig.ListHandler(RefreshSelectedListBoxItems);
 
-            // force every program start to adopt default setting
+            //non visuals
+            //ManaSQLConfig.UpdatedNonVisualData += new ManaSQLConfig.NonVisualDataHandler();         
+        }
+
+        private void Initialise()
+        {
             extractDDir.Checked = true;
             uploadDDir.Checked = true;
             compareFile1DDir.Checked = true;
             compareFile2DDir.Checked = true;
             compareDirDDir.Checked = true;
 
+            extractServer.Text = "SELECT NODE";
+            extractDB.Text = "SELECT NODE";
+            uploadServer.Text = "SELECT NODE";
+            uploadDB.Text = "SELECT NODE";
+            compareFile1Server.Text = "SELECT NODE";
+            compareFile1DB.Text = "SELECT NODE";
+            compareFile1Obj.Text = "SELECT NODE";
+            compareFile2Server.Text = "SELECT NODE";
+            compareFile2DB.Text = "SELECT NODE";
+            compareFile2Obj.Text = "SELECT NODE";
+
             RefreshCheckBoxes("all");
             RefreshTextBox("all");
             RefreshListBoxItems("all");
             RefreshButton("all");
-
-            //non visuals
-            //ManaSQLConfig.UpdatedNonVisualData += new ManaSQLConfig.NonVisualDataHandler();
-        }
-
-        private void Initialise()
-        {
-
         }
 
         // START: CONTEXT MENU
@@ -752,7 +761,7 @@ namespace BridgeSQL
                 extractDDir.CheckState = ManaSQLConfig.Extract.IsDefault ? CheckState.Checked : CheckState.Unchecked;
                 extractRepo.ReadOnly = ManaSQLConfig.Extract.IsDefault;
                 extractLog.ReadOnly = ManaSQLConfig.Extract.IsDefault;
-                //RefreshTextBox("extract");
+                RefreshTextBox("extract");
             }
 
             // each page: upload
@@ -762,7 +771,7 @@ namespace BridgeSQL
                 uploadRepo.ReadOnly = ManaSQLConfig.Upload.IsDefault;
                 uploadLog.ReadOnly = ManaSQLConfig.Upload.IsDefault;
                 uploadCheckAll.Checked = false;
-                //RefreshTextBox("upload");
+                RefreshTextBox("upload");
             }
 
             // each page: comparefile
@@ -788,7 +797,7 @@ namespace BridgeSQL
             //attempt to optimise paths
             if (isRefreshTextBox == "compareFile1")
             {
-                //RefreshTextBox(isRefreshTextBox);
+                RefreshTextBox(isRefreshTextBox);
                 isRefreshTextBox = "";
             }
 
@@ -826,7 +835,7 @@ namespace BridgeSQL
                 compareDirRepo.ReadOnly = ManaSQLConfig.CompareDir.IsDefault;
                 compareDirLog.ReadOnly = ManaSQLConfig.CompareDir.IsDefault;
                 compareDirResult.ReadOnly = ManaSQLConfig.CompareDir.IsDefault;
-                //RefreshTextBox("compareDir");
+                RefreshTextBox("compareDir");
             }
 
         }
@@ -989,13 +998,13 @@ namespace BridgeSQL
             {
                 compareFile1Server.Text = ManaSQLConfig.CompareFile1.SERVER;
                 compareFile1DB.Text = ManaSQLConfig.CompareFile1.DB;
-                compareFile1Obj.Text = ManaSQLConfig.CompareFile1.OBJ;
+                compareFile1Obj.Text = string.Format(@"[{0}]", ManaSQLConfig.CompareFile1.OBJ);
             }
             if (Util.Contains(new string[] { "all", "compareFile2" }, list))
             {
                 compareFile2Server.Text = ManaSQLConfig.CompareFile2.SERVER;
                 compareFile2DB.Text = ManaSQLConfig.CompareFile2.DB;
-                compareFile2Obj.Text = ManaSQLConfig.CompareFile2.OBJ;
+                compareFile2Obj.Text = string.Format(@"[{0}]", ManaSQLConfig.CompareFile1.OBJ);
             }
         }
 
