@@ -117,16 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="compareFileNote.Text" xml:space="preserve">
-    <value>What will happen:
-1. File 1 and File 2 will be written to directory
-2. Actions in (1) will be logged, each for file
-3. File 1 and File 2 will be compared via SVN diff
-
-Note:
-1. Actions of (1) will NOT be logged when using Temp Folder
-</value>
-  </data>
   <data name="compareDirNote.Text" xml:space="preserve">
     <value>What will happen:
 1. Each file (using file name) in base directory will be 
@@ -135,6 +125,16 @@ Note:
 3. Files that DONT find a match in either directory will be logged
 4. Log will be written
 5. Filenames in (2) will be written to file 
+</value>
+  </data>
+  <data name="compareFileNote.Text" xml:space="preserve">
+    <value>What will happen:
+1. File 1 and File 2 will be written to directory
+2. Actions in (1) will be logged, each for file
+3. File 1 and File 2 will be compared via SVN diff
+
+Note:
+1. Actions of (1) will NOT be logged when using Temp Folder
 </value>
   </data>
   <metadata name="dirBrowser.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

@@ -69,11 +69,16 @@
             this.uploadServerLabel = new System.Windows.Forms.Label();
             this.uploadSSP = new System.Windows.Forms.CheckedListBox();
             this.compareFile = new System.Windows.Forms.TabPage();
+            this.compareFile2LogCreate = new System.Windows.Forms.Button();
+            this.compareFile2RepoCreate = new System.Windows.Forms.Button();
+            this.compareFile1LogCreate = new System.Windows.Forms.Button();
+            this.compareFile1RepoCreate = new System.Windows.Forms.Button();
             this.compareFile2Obj = new System.Windows.Forms.Label();
             this.compareFile1Obj = new System.Windows.Forms.Label();
             this.compareFile2DDir = new System.Windows.Forms.CheckBox();
             this.compareFile1DDir = new System.Windows.Forms.CheckBox();
             this.compareFileNote = new System.Windows.Forms.Label();
+            this.compareFile2TempPath = new System.Windows.Forms.CheckBox();
             this.compareFile1TempPath = new System.Windows.Forms.CheckBox();
             this.compareFileAction2 = new System.Windows.Forms.Button();
             this.compareFileAction1 = new System.Windows.Forms.Button();
@@ -154,11 +159,6 @@
             this.exploreText = new System.Windows.Forms.ToolStripMenuItem();
             this.fileSearch = new System.Windows.Forms.OpenFileDialog();
             this.favPaths = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.compareFile1RepoCreate = new System.Windows.Forms.Button();
-            this.compareFile1LogCreate = new System.Windows.Forms.Button();
-            this.compareFile2RepoCreate = new System.Windows.Forms.Button();
-            this.compareFile2LogCreate = new System.Windows.Forms.Button();
-            this.compareFile2TempPath = new System.Windows.Forms.CheckBox();
             this.tab.SuspendLayout();
             this.extract.SuspendLayout();
             this.upload.SuspendLayout();
@@ -630,6 +630,42 @@
             this.compareFile.Text = "Compare File";
             this.compareFile.UseVisualStyleBackColor = true;
             // 
+            // compareFile2LogCreate
+            // 
+            this.compareFile2LogCreate.Location = new System.Drawing.Point(879, 171);
+            this.compareFile2LogCreate.Name = "compareFile2LogCreate";
+            this.compareFile2LogCreate.Size = new System.Drawing.Size(75, 23);
+            this.compareFile2LogCreate.TabIndex = 20;
+            this.compareFile2LogCreate.Text = "Create";
+            this.compareFile2LogCreate.UseVisualStyleBackColor = true;
+            // 
+            // compareFile2RepoCreate
+            // 
+            this.compareFile2RepoCreate.Location = new System.Drawing.Point(879, 84);
+            this.compareFile2RepoCreate.Name = "compareFile2RepoCreate";
+            this.compareFile2RepoCreate.Size = new System.Drawing.Size(75, 23);
+            this.compareFile2RepoCreate.TabIndex = 19;
+            this.compareFile2RepoCreate.Text = "Create";
+            this.compareFile2RepoCreate.UseVisualStyleBackColor = true;
+            // 
+            // compareFile1LogCreate
+            // 
+            this.compareFile1LogCreate.Location = new System.Drawing.Point(383, 171);
+            this.compareFile1LogCreate.Name = "compareFile1LogCreate";
+            this.compareFile1LogCreate.Size = new System.Drawing.Size(75, 23);
+            this.compareFile1LogCreate.TabIndex = 18;
+            this.compareFile1LogCreate.Text = "Create";
+            this.compareFile1LogCreate.UseVisualStyleBackColor = true;
+            // 
+            // compareFile1RepoCreate
+            // 
+            this.compareFile1RepoCreate.Location = new System.Drawing.Point(383, 84);
+            this.compareFile1RepoCreate.Name = "compareFile1RepoCreate";
+            this.compareFile1RepoCreate.Size = new System.Drawing.Size(75, 23);
+            this.compareFile1RepoCreate.TabIndex = 17;
+            this.compareFile1RepoCreate.Text = "Create";
+            this.compareFile1RepoCreate.UseVisualStyleBackColor = true;
+            // 
             // compareFile2Obj
             // 
             this.compareFile2Obj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -659,7 +695,7 @@
             this.compareFile2DDir.TabIndex = 14;
             this.compareFile2DDir.Text = "Use default directories";
             this.compareFile2DDir.UseVisualStyleBackColor = true;
-            this.compareFile2DDir.CheckedChanged += new System.EventHandler(this.CheckBoxUI_Click);
+            this.compareFile2DDir.Click += new System.EventHandler(this.CheckBoxUI_Click);
             // 
             // compareFile1DDir
             // 
@@ -670,7 +706,7 @@
             this.compareFile1DDir.TabIndex = 13;
             this.compareFile1DDir.Text = "Use default directories";
             this.compareFile1DDir.UseVisualStyleBackColor = true;
-            this.compareFile1DDir.CheckedChanged += new System.EventHandler(this.CheckBoxUI_Click);
+            this.compareFile1DDir.Click += new System.EventHandler(this.CheckBoxUI_Click);
             // 
             // compareFileNote
             // 
@@ -680,6 +716,17 @@
             this.compareFileNote.Size = new System.Drawing.Size(390, 119);
             this.compareFileNote.TabIndex = 12;
             this.compareFileNote.Text = resources.GetString("compareFileNote.Text");
+            // 
+            // compareFile2TempPath
+            // 
+            this.compareFile2TempPath.AutoSize = true;
+            this.compareFile2TempPath.Location = new System.Drawing.Point(700, 243);
+            this.compareFile2TempPath.Name = "compareFile2TempPath";
+            this.compareFile2TempPath.Size = new System.Drawing.Size(139, 21);
+            this.compareFile2TempPath.TabIndex = 11;
+            this.compareFile2TempPath.Text = "Use Temp Folder";
+            this.compareFile2TempPath.UseVisualStyleBackColor = true;
+            this.compareFile2TempPath.Click += new System.EventHandler(this.CheckBoxUI_Click);
             // 
             // compareFile1TempPath
             // 
@@ -1004,7 +1051,7 @@
             this.compareDirDDir.TabIndex = 49;
             this.compareDirDDir.Text = "Use default directories";
             this.compareDirDDir.UseVisualStyleBackColor = true;
-            this.compareDirDDir.CheckedChanged += new System.EventHandler(this.CheckBoxUI_Click);
+            this.compareDirDDir.Click += new System.EventHandler(this.CheckBoxUI_Click);
             // 
             // compareDirNote
             // 
@@ -1511,53 +1558,6 @@
             this.favPaths.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.favPaths.Name = "favPaths";
             this.favPaths.Size = new System.Drawing.Size(67, 4);
-            // 
-            // compareFile1RepoCreate
-            // 
-            this.compareFile1RepoCreate.Location = new System.Drawing.Point(383, 84);
-            this.compareFile1RepoCreate.Name = "compareFile1RepoCreate";
-            this.compareFile1RepoCreate.Size = new System.Drawing.Size(75, 23);
-            this.compareFile1RepoCreate.TabIndex = 17;
-            this.compareFile1RepoCreate.Text = "Create";
-            this.compareFile1RepoCreate.UseVisualStyleBackColor = true;
-            // 
-            // compareFile1LogCreate
-            // 
-            this.compareFile1LogCreate.Location = new System.Drawing.Point(383, 171);
-            this.compareFile1LogCreate.Name = "compareFile1LogCreate";
-            this.compareFile1LogCreate.Size = new System.Drawing.Size(75, 23);
-            this.compareFile1LogCreate.TabIndex = 18;
-            this.compareFile1LogCreate.Text = "Create";
-            this.compareFile1LogCreate.UseVisualStyleBackColor = true;
-            // 
-            // compareFile2RepoCreate
-            // 
-            this.compareFile2RepoCreate.Location = new System.Drawing.Point(879, 84);
-            this.compareFile2RepoCreate.Name = "compareFile2RepoCreate";
-            this.compareFile2RepoCreate.Size = new System.Drawing.Size(75, 23);
-            this.compareFile2RepoCreate.TabIndex = 19;
-            this.compareFile2RepoCreate.Text = "Create";
-            this.compareFile2RepoCreate.UseVisualStyleBackColor = true;
-            // 
-            // compareFile2LogCreate
-            // 
-            this.compareFile2LogCreate.Location = new System.Drawing.Point(879, 171);
-            this.compareFile2LogCreate.Name = "compareFile2LogCreate";
-            this.compareFile2LogCreate.Size = new System.Drawing.Size(75, 23);
-            this.compareFile2LogCreate.TabIndex = 20;
-            this.compareFile2LogCreate.Text = "Create";
-            this.compareFile2LogCreate.UseVisualStyleBackColor = true;
-            // 
-            // compareFile2TempPath
-            // 
-            this.compareFile2TempPath.AutoSize = true;
-            this.compareFile2TempPath.Location = new System.Drawing.Point(700, 243);
-            this.compareFile2TempPath.Name = "compareFile2TempPath";
-            this.compareFile2TempPath.Size = new System.Drawing.Size(139, 21);
-            this.compareFile2TempPath.TabIndex = 11;
-            this.compareFile2TempPath.Text = "Use Temp Folder";
-            this.compareFile2TempPath.UseVisualStyleBackColor = true;
-            this.compareFile2TempPath.Click += new System.EventHandler(this.CheckBoxUI_Click);
             // 
             // ManaSQLForm
             // 

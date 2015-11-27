@@ -25,7 +25,7 @@ namespace BridgeSQL
         {
             IOeNode theNode = (IOeNode)node;
             IDatabaseObjectInfo DBI;
-            
+
             if (theNode.IsDatabaseObject && theNode.TryGetDatabaseObject(out DBI))
             {
                 ManaSQLConfig.CompareFile2.ResetWhereSSP(false);

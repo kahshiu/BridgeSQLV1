@@ -416,7 +416,8 @@ namespace BridgeSQL
             }
             string[] currDetails = GetNodeDetails(currNode);
 
-            if (newDetails[0] != currDetails[0] || newDetails[1] != currDetails[1])
+            //ommit initiation, all items are empty
+            if (currNode != null && (newDetails[0] != currDetails[0] || newDetails[1] != currDetails[1]))
             {
                 ResetWhereSSP(false);
                 ResetWhereFiles(false);
@@ -485,7 +486,7 @@ namespace BridgeSQL
                 bool flag = false;
                 if (Mode == "compareDir")
                 {
-                    flag = ( (ValidRepoPath && ValidLogPath && ValidOutPath) || IsDefault) && ValidRepoPath2;
+                    flag = ((ValidRepoPath && ValidLogPath && ValidOutPath) || IsDefault) && ValidRepoPath2;
                 }
                 return flag;
             }
@@ -675,7 +676,8 @@ namespace BridgeSQL
         public string FormRepoPath()
         {
             string path = "";
-            if (SERVER != "" && DB != "")
+            bool hasDB = (SERVER != "" && DB != "");
+            if (hasDB)
             {
                 if (IsDefault)
                 {
@@ -691,7 +693,6 @@ namespace BridgeSQL
                 }
             }
             return path;
-
         }
         public string FormRepoPath2()
         {
@@ -719,7 +720,8 @@ namespace BridgeSQL
         public string FormLogPath()
         {
             string path = "";
-            if (SERVER != "" && DB != "")
+            bool hasDB = (SERVER != "" && DB != "");
+            if (hasDB)
             {
                 if (Mode == "compareDir")
                 {
