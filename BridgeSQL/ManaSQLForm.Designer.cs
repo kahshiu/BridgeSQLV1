@@ -74,7 +74,8 @@
             this.compareFile2DDir = new System.Windows.Forms.CheckBox();
             this.compareFile1DDir = new System.Windows.Forms.CheckBox();
             this.compareFileNote = new System.Windows.Forms.Label();
-            this.compareFileTempPaths = new System.Windows.Forms.CheckBox();
+            this.compareFile1TempPath = new System.Windows.Forms.CheckBox();
+            this.compareFileAction2 = new System.Windows.Forms.Button();
             this.compareFileAction1 = new System.Windows.Forms.Button();
             this.compareFile1Indicator = new System.Windows.Forms.Label();
             this.compareFile2Indicator = new System.Windows.Forms.Label();
@@ -99,10 +100,10 @@
             this.compareFile2ServerLabel = new System.Windows.Forms.Label();
             this.compareFile1ServerLabel = new System.Windows.Forms.Label();
             this.compare2 = new System.Windows.Forms.TabPage();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.compareDirRepo2Create = new System.Windows.Forms.Button();
+            this.compareDirRepoCreate = new System.Windows.Forms.Button();
+            this.compareDirLogCreate = new System.Windows.Forms.Button();
+            this.compareDirResultCreate = new System.Windows.Forms.Button();
             this.compareDirDDir = new System.Windows.Forms.CheckBox();
             this.compareDirNote = new System.Windows.Forms.Label();
             this.compareDirResultLabel = new System.Windows.Forms.Label();
@@ -153,6 +154,11 @@
             this.exploreText = new System.Windows.Forms.ToolStripMenuItem();
             this.fileSearch = new System.Windows.Forms.OpenFileDialog();
             this.favPaths = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.compareFile1RepoCreate = new System.Windows.Forms.Button();
+            this.compareFile1LogCreate = new System.Windows.Forms.Button();
+            this.compareFile2RepoCreate = new System.Windows.Forms.Button();
+            this.compareFile2LogCreate = new System.Windows.Forms.Button();
+            this.compareFile2TempPath = new System.Windows.Forms.CheckBox();
             this.tab.SuspendLayout();
             this.extract.SuspendLayout();
             this.upload.SuspendLayout();
@@ -581,12 +587,18 @@
             // 
             // compareFile
             // 
+            this.compareFile.Controls.Add(this.compareFile2LogCreate);
+            this.compareFile.Controls.Add(this.compareFile2RepoCreate);
+            this.compareFile.Controls.Add(this.compareFile1LogCreate);
+            this.compareFile.Controls.Add(this.compareFile1RepoCreate);
             this.compareFile.Controls.Add(this.compareFile2Obj);
             this.compareFile.Controls.Add(this.compareFile1Obj);
             this.compareFile.Controls.Add(this.compareFile2DDir);
             this.compareFile.Controls.Add(this.compareFile1DDir);
             this.compareFile.Controls.Add(this.compareFileNote);
-            this.compareFile.Controls.Add(this.compareFileTempPaths);
+            this.compareFile.Controls.Add(this.compareFile2TempPath);
+            this.compareFile.Controls.Add(this.compareFile1TempPath);
+            this.compareFile.Controls.Add(this.compareFileAction2);
             this.compareFile.Controls.Add(this.compareFileAction1);
             this.compareFile.Controls.Add(this.compareFile1Indicator);
             this.compareFile.Controls.Add(this.compareFile2Indicator);
@@ -620,8 +632,9 @@
             // 
             // compareFile2Obj
             // 
+            this.compareFile2Obj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.compareFile2Obj.AutoSize = true;
-            this.compareFile2Obj.Location = new System.Drawing.Point(709, 84);
+            this.compareFile2Obj.Location = new System.Drawing.Point(826, 109);
             this.compareFile2Obj.Name = "compareFile2Obj";
             this.compareFile2Obj.Size = new System.Drawing.Size(46, 17);
             this.compareFile2Obj.TabIndex = 16;
@@ -629,8 +642,9 @@
             // 
             // compareFile1Obj
             // 
+            this.compareFile1Obj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.compareFile1Obj.AutoSize = true;
-            this.compareFile1Obj.Location = new System.Drawing.Point(213, 84);
+            this.compareFile1Obj.Location = new System.Drawing.Point(330, 109);
             this.compareFile1Obj.Name = "compareFile1Obj";
             this.compareFile1Obj.Size = new System.Drawing.Size(46, 17);
             this.compareFile1Obj.TabIndex = 15;
@@ -639,7 +653,7 @@
             // compareFile2DDir
             // 
             this.compareFile2DDir.AutoSize = true;
-            this.compareFile2DDir.Location = new System.Drawing.Point(700, 199);
+            this.compareFile2DDir.Location = new System.Drawing.Point(700, 216);
             this.compareFile2DDir.Name = "compareFile2DDir";
             this.compareFile2DDir.Size = new System.Drawing.Size(172, 21);
             this.compareFile2DDir.TabIndex = 14;
@@ -650,7 +664,7 @@
             // compareFile1DDir
             // 
             this.compareFile1DDir.AutoSize = true;
-            this.compareFile1DDir.Location = new System.Drawing.Point(204, 199);
+            this.compareFile1DDir.Location = new System.Drawing.Point(9, 216);
             this.compareFile1DDir.Name = "compareFile1DDir";
             this.compareFile1DDir.Size = new System.Drawing.Size(172, 21);
             this.compareFile1DDir.TabIndex = 13;
@@ -661,31 +675,42 @@
             // compareFileNote
             // 
             this.compareFileNote.AutoSize = true;
-            this.compareFileNote.Location = new System.Drawing.Point(8, 305);
+            this.compareFileNote.Location = new System.Drawing.Point(502, 340);
             this.compareFileNote.Name = "compareFileNote";
             this.compareFileNote.Size = new System.Drawing.Size(390, 119);
             this.compareFileNote.TabIndex = 12;
             this.compareFileNote.Text = resources.GetString("compareFileNote.Text");
             // 
-            // compareFileTempPaths
+            // compareFile1TempPath
             // 
-            this.compareFileTempPaths.AutoSize = true;
-            this.compareFileTempPaths.Location = new System.Drawing.Point(725, 304);
-            this.compareFileTempPaths.Name = "compareFileTempPaths";
-            this.compareFileTempPaths.Size = new System.Drawing.Size(139, 21);
-            this.compareFileTempPaths.TabIndex = 11;
-            this.compareFileTempPaths.Text = "Use Temp Folder";
-            this.compareFileTempPaths.UseVisualStyleBackColor = true;
-            this.compareFileTempPaths.CheckedChanged += new System.EventHandler(this.compareFileTempPaths_CheckedChanged);
+            this.compareFile1TempPath.AutoSize = true;
+            this.compareFile1TempPath.Location = new System.Drawing.Point(9, 243);
+            this.compareFile1TempPath.Name = "compareFile1TempPath";
+            this.compareFile1TempPath.Size = new System.Drawing.Size(139, 21);
+            this.compareFile1TempPath.TabIndex = 11;
+            this.compareFile1TempPath.Text = "Use Temp Folder";
+            this.compareFile1TempPath.UseVisualStyleBackColor = true;
+            this.compareFile1TempPath.Click += new System.EventHandler(this.CheckBoxUI_Click);
+            // 
+            // compareFileAction2
+            // 
+            this.compareFileAction2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareFileAction2.Location = new System.Drawing.Point(204, 417);
+            this.compareFileAction2.Name = "compareFileAction2";
+            this.compareFileAction2.Size = new System.Drawing.Size(172, 44);
+            this.compareFileAction2.TabIndex = 10;
+            this.compareFileAction2.Text = "Compare Files";
+            this.compareFileAction2.UseVisualStyleBackColor = true;
+            this.compareFileAction2.Click += new System.EventHandler(this.compareFileAction1_Click);
             // 
             // compareFileAction1
             // 
-            this.compareFileAction1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareFileAction1.Location = new System.Drawing.Point(505, 288);
+            this.compareFileAction1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareFileAction1.Location = new System.Drawing.Point(204, 367);
             this.compareFileAction1.Name = "compareFileAction1";
-            this.compareFileAction1.Size = new System.Drawing.Size(214, 44);
+            this.compareFileAction1.Size = new System.Drawing.Size(172, 44);
             this.compareFileAction1.TabIndex = 10;
-            this.compareFileAction1.Text = "Write, Compare File";
+            this.compareFileAction1.Text = "Write Files";
             this.compareFileAction1.UseVisualStyleBackColor = true;
             this.compareFileAction1.Click += new System.EventHandler(this.compareFileAction1_Click);
             // 
@@ -694,7 +719,7 @@
             this.compareFile1Indicator.AutoSize = true;
             this.compareFile1Indicator.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.compareFile1Indicator.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.compareFile1Indicator.Location = new System.Drawing.Point(6, 249);
+            this.compareFile1Indicator.Location = new System.Drawing.Point(298, 297);
             this.compareFile1Indicator.Name = "compareFile1Indicator";
             this.compareFile1Indicator.Size = new System.Drawing.Size(78, 29);
             this.compareFile1Indicator.TabIndex = 9;
@@ -704,7 +729,7 @@
             // 
             this.compareFile2Indicator.AutoSize = true;
             this.compareFile2Indicator.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareFile2Indicator.Location = new System.Drawing.Point(500, 249);
+            this.compareFile2Indicator.Location = new System.Drawing.Point(500, 297);
             this.compareFile2Indicator.Name = "compareFile2Indicator";
             this.compareFile2Indicator.Size = new System.Drawing.Size(94, 29);
             this.compareFile2Indicator.TabIndex = 9;
@@ -716,6 +741,7 @@
             this.compareFile2Log.Name = "compareFile2Log";
             this.compareFile2Log.Size = new System.Drawing.Size(367, 22);
             this.compareFile2Log.TabIndex = 5;
+            this.compareFile2Log.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareFile2Log.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareFile2Log.Leave += new System.EventHandler(this.UpdatePathWithLeave);
             this.compareFile2Log.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowTextContext);
@@ -726,6 +752,7 @@
             this.compareFile1Log.Name = "compareFile1Log";
             this.compareFile1Log.Size = new System.Drawing.Size(367, 22);
             this.compareFile1Log.TabIndex = 5;
+            this.compareFile1Log.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareFile1Log.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareFile1Log.Leave += new System.EventHandler(this.UpdatePathWithLeave);
             this.compareFile1Log.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowTextContext);
@@ -734,8 +761,9 @@
             // 
             this.compareFile2Repo.Location = new System.Drawing.Point(505, 84);
             this.compareFile2Repo.Name = "compareFile2Repo";
-            this.compareFile2Repo.Size = new System.Drawing.Size(198, 22);
+            this.compareFile2Repo.Size = new System.Drawing.Size(367, 22);
             this.compareFile2Repo.TabIndex = 5;
+            this.compareFile2Repo.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareFile2Repo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareFile2Repo.Leave += new System.EventHandler(this.UpdatePathWithLeave);
             this.compareFile2Repo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowTextContext);
@@ -744,8 +772,9 @@
             // 
             this.compareFile1Repo.Location = new System.Drawing.Point(9, 84);
             this.compareFile1Repo.Name = "compareFile1Repo";
-            this.compareFile1Repo.Size = new System.Drawing.Size(198, 22);
+            this.compareFile1Repo.Size = new System.Drawing.Size(367, 22);
             this.compareFile1Repo.TabIndex = 5;
+            this.compareFile1Repo.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareFile1Repo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareFile1Repo.Leave += new System.EventHandler(this.UpdatePathWithLeave);
             this.compareFile1Repo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowTextContext);
@@ -904,10 +933,10 @@
             // 
             // compare2
             // 
-            this.compare2.Controls.Add(this.button8);
-            this.compare2.Controls.Add(this.button7);
-            this.compare2.Controls.Add(this.button6);
-            this.compare2.Controls.Add(this.button5);
+            this.compare2.Controls.Add(this.compareDirRepo2Create);
+            this.compare2.Controls.Add(this.compareDirRepoCreate);
+            this.compare2.Controls.Add(this.compareDirLogCreate);
+            this.compare2.Controls.Add(this.compareDirResultCreate);
             this.compare2.Controls.Add(this.compareDirDDir);
             this.compare2.Controls.Add(this.compareDirNote);
             this.compare2.Controls.Add(this.compareDirResultLabel);
@@ -930,46 +959,46 @@
             this.compare2.Text = "Compare Dir";
             this.compare2.UseVisualStyleBackColor = true;
             // 
-            // button8
+            // compareDirRepo2Create
             // 
-            this.button8.Location = new System.Drawing.Point(382, 170);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 23);
-            this.button8.TabIndex = 52;
-            this.button8.Text = "Create";
-            this.button8.UseVisualStyleBackColor = true;
+            this.compareDirRepo2Create.Location = new System.Drawing.Point(384, 170);
+            this.compareDirRepo2Create.Name = "compareDirRepo2Create";
+            this.compareDirRepo2Create.Size = new System.Drawing.Size(75, 23);
+            this.compareDirRepo2Create.TabIndex = 52;
+            this.compareDirRepo2Create.Text = "Create";
+            this.compareDirRepo2Create.UseVisualStyleBackColor = true;
             // 
-            // button7
+            // compareDirRepoCreate
             // 
-            this.button7.Location = new System.Drawing.Point(382, 83);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 52;
-            this.button7.Text = "Create";
-            this.button7.UseVisualStyleBackColor = true;
+            this.compareDirRepoCreate.Location = new System.Drawing.Point(384, 83);
+            this.compareDirRepoCreate.Name = "compareDirRepoCreate";
+            this.compareDirRepoCreate.Size = new System.Drawing.Size(75, 23);
+            this.compareDirRepoCreate.TabIndex = 52;
+            this.compareDirRepoCreate.Text = "Create";
+            this.compareDirRepoCreate.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // compareDirLogCreate
             // 
-            this.button6.Location = new System.Drawing.Point(382, 257);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 51;
-            this.button6.Text = "Create";
-            this.button6.UseVisualStyleBackColor = true;
+            this.compareDirLogCreate.Location = new System.Drawing.Point(384, 258);
+            this.compareDirLogCreate.Name = "compareDirLogCreate";
+            this.compareDirLogCreate.Size = new System.Drawing.Size(75, 23);
+            this.compareDirLogCreate.TabIndex = 51;
+            this.compareDirLogCreate.Text = "Create";
+            this.compareDirLogCreate.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // compareDirResultCreate
             // 
-            this.button5.Location = new System.Drawing.Point(384, 344);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 50;
-            this.button5.Text = "Create";
-            this.button5.UseVisualStyleBackColor = true;
+            this.compareDirResultCreate.Location = new System.Drawing.Point(384, 344);
+            this.compareDirResultCreate.Name = "compareDirResultCreate";
+            this.compareDirResultCreate.Size = new System.Drawing.Size(75, 23);
+            this.compareDirResultCreate.TabIndex = 50;
+            this.compareDirResultCreate.Text = "Create";
+            this.compareDirResultCreate.UseVisualStyleBackColor = true;
             // 
             // compareDirDDir
             // 
             this.compareDirDDir.AutoSize = true;
-            this.compareDirDDir.Location = new System.Drawing.Point(465, 406);
+            this.compareDirDDir.Location = new System.Drawing.Point(515, 316);
             this.compareDirDDir.Name = "compareDirDDir";
             this.compareDirDDir.Size = new System.Drawing.Size(172, 21);
             this.compareDirDDir.TabIndex = 49;
@@ -980,7 +1009,7 @@
             // compareDirNote
             // 
             this.compareDirNote.AutoSize = true;
-            this.compareDirNote.Location = new System.Drawing.Point(8, 407);
+            this.compareDirNote.Location = new System.Drawing.Point(512, 64);
             this.compareDirNote.Name = "compareDirNote";
             this.compareDirNote.Size = new System.Drawing.Size(425, 119);
             this.compareDirNote.TabIndex = 48;
@@ -991,9 +1020,9 @@
             this.compareDirResultLabel.AutoSize = true;
             this.compareDirResultLabel.Location = new System.Drawing.Point(6, 325);
             this.compareDirResultLabel.Name = "compareDirResultLabel";
-            this.compareDirResultLabel.Size = new System.Drawing.Size(123, 17);
+            this.compareDirResultLabel.Size = new System.Drawing.Size(184, 17);
             this.compareDirResultLabel.TabIndex = 47;
-            this.compareDirResultLabel.Text = "Result of compare";
+            this.compareDirResultLabel.Text = "Directory of compare Result";
             // 
             // compareDirResult
             // 
@@ -1001,6 +1030,7 @@
             this.compareDirResult.Name = "compareDirResult";
             this.compareDirResult.Size = new System.Drawing.Size(367, 22);
             this.compareDirResult.TabIndex = 45;
+            this.compareDirResult.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareDirResult.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareDirResult.Leave += new System.EventHandler(this.UpdatePathWithLeave);
             this.compareDirResult.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowTextContext);
@@ -1021,14 +1051,14 @@
             this.compareDirLogLabel.AutoSize = true;
             this.compareDirLogLabel.Location = new System.Drawing.Point(8, 238);
             this.compareDirLogLabel.Name = "compareDirLogLabel";
-            this.compareDirLogLabel.Size = new System.Drawing.Size(107, 17);
+            this.compareDirLogLabel.Size = new System.Drawing.Size(168, 17);
             this.compareDirLogLabel.TabIndex = 44;
-            this.compareDirLogLabel.Text = "Log of compare";
+            this.compareDirLogLabel.Text = "Directory of compare Log";
             // 
             // compareDirCompare
             // 
-            this.compareDirCompare.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareDirCompare.Location = new System.Drawing.Point(465, 433);
+            this.compareDirCompare.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareDirCompare.Location = new System.Drawing.Point(515, 343);
             this.compareDirCompare.Name = "compareDirCompare";
             this.compareDirCompare.Size = new System.Drawing.Size(214, 44);
             this.compareDirCompare.TabIndex = 41;
@@ -1042,6 +1072,7 @@
             this.compareDirLog.Name = "compareDirLog";
             this.compareDirLog.Size = new System.Drawing.Size(367, 22);
             this.compareDirLog.TabIndex = 25;
+            this.compareDirLog.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareDirLog.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareDirLog.Leave += new System.EventHandler(this.UpdatePathWithLeave);
             this.compareDirLog.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowTextContext);
@@ -1052,6 +1083,7 @@
             this.compareDirRepo2.Name = "compareDirRepo2";
             this.compareDirRepo2.Size = new System.Drawing.Size(367, 22);
             this.compareDirRepo2.TabIndex = 25;
+            this.compareDirRepo2.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareDirRepo2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareDirRepo2.Leave += new System.EventHandler(this.UpdatePathWithLeave);
             this.compareDirRepo2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowTextContext);
@@ -1062,6 +1094,7 @@
             this.compareDirRepo.Name = "compareDirRepo";
             this.compareDirRepo.Size = new System.Drawing.Size(367, 22);
             this.compareDirRepo.TabIndex = 26;
+            this.compareDirRepo.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareDirRepo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareDirRepo.Leave += new System.EventHandler(this.UpdatePathWithLeave);
             this.compareDirRepo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowTextContext);
@@ -1479,6 +1512,53 @@
             this.favPaths.Name = "favPaths";
             this.favPaths.Size = new System.Drawing.Size(67, 4);
             // 
+            // compareFile1RepoCreate
+            // 
+            this.compareFile1RepoCreate.Location = new System.Drawing.Point(383, 84);
+            this.compareFile1RepoCreate.Name = "compareFile1RepoCreate";
+            this.compareFile1RepoCreate.Size = new System.Drawing.Size(75, 23);
+            this.compareFile1RepoCreate.TabIndex = 17;
+            this.compareFile1RepoCreate.Text = "Create";
+            this.compareFile1RepoCreate.UseVisualStyleBackColor = true;
+            // 
+            // compareFile1LogCreate
+            // 
+            this.compareFile1LogCreate.Location = new System.Drawing.Point(383, 171);
+            this.compareFile1LogCreate.Name = "compareFile1LogCreate";
+            this.compareFile1LogCreate.Size = new System.Drawing.Size(75, 23);
+            this.compareFile1LogCreate.TabIndex = 18;
+            this.compareFile1LogCreate.Text = "Create";
+            this.compareFile1LogCreate.UseVisualStyleBackColor = true;
+            // 
+            // compareFile2RepoCreate
+            // 
+            this.compareFile2RepoCreate.Location = new System.Drawing.Point(879, 84);
+            this.compareFile2RepoCreate.Name = "compareFile2RepoCreate";
+            this.compareFile2RepoCreate.Size = new System.Drawing.Size(75, 23);
+            this.compareFile2RepoCreate.TabIndex = 19;
+            this.compareFile2RepoCreate.Text = "Create";
+            this.compareFile2RepoCreate.UseVisualStyleBackColor = true;
+            // 
+            // compareFile2LogCreate
+            // 
+            this.compareFile2LogCreate.Location = new System.Drawing.Point(879, 171);
+            this.compareFile2LogCreate.Name = "compareFile2LogCreate";
+            this.compareFile2LogCreate.Size = new System.Drawing.Size(75, 23);
+            this.compareFile2LogCreate.TabIndex = 20;
+            this.compareFile2LogCreate.Text = "Create";
+            this.compareFile2LogCreate.UseVisualStyleBackColor = true;
+            // 
+            // compareFile2TempPath
+            // 
+            this.compareFile2TempPath.AutoSize = true;
+            this.compareFile2TempPath.Location = new System.Drawing.Point(700, 243);
+            this.compareFile2TempPath.Name = "compareFile2TempPath";
+            this.compareFile2TempPath.Size = new System.Drawing.Size(139, 21);
+            this.compareFile2TempPath.TabIndex = 11;
+            this.compareFile2TempPath.Text = "Use Temp Folder";
+            this.compareFile2TempPath.UseVisualStyleBackColor = true;
+            this.compareFile2TempPath.Click += new System.EventHandler(this.CheckBoxUI_Click);
+            // 
             // ManaSQLForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1567,7 +1647,7 @@
         private System.Windows.Forms.Label uploadLogWarning;
         private System.Windows.Forms.TextBox uploadLog;
         private System.Windows.Forms.Label uploadLogLabel;
-        private System.Windows.Forms.CheckBox compareFileTempPaths;
+        private System.Windows.Forms.CheckBox compareFile1TempPath;
         private System.Windows.Forms.Button uploadSelectFromFile;
         private System.Windows.Forms.GroupBox generalGrp;
         private System.Windows.Forms.CheckBox dspSVNLog;
@@ -1628,10 +1708,16 @@
         private System.Windows.Forms.Button extractLogCreate;
         private System.Windows.Forms.Button uploadLogCreate;
         private System.Windows.Forms.Button uploadRepoCreate;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button compareDirRepo2Create;
+        private System.Windows.Forms.Button compareDirRepoCreate;
+        private System.Windows.Forms.Button compareDirLogCreate;
+        private System.Windows.Forms.Button compareDirResultCreate;
         private System.Windows.Forms.ContextMenuStrip favPaths;
+        private System.Windows.Forms.Button compareFileAction2;
+        private System.Windows.Forms.Button compareFile2LogCreate;
+        private System.Windows.Forms.Button compareFile2RepoCreate;
+        private System.Windows.Forms.Button compareFile1LogCreate;
+        private System.Windows.Forms.Button compareFile1RepoCreate;
+        private System.Windows.Forms.CheckBox compareFile2TempPath;
     }
 }

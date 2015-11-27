@@ -14,7 +14,6 @@ namespace BridgeSQL
             var theNode = (IOeNode)oeNode;
             return 
                 ManaSQLConfig.ValidGenPaths
-                && ManaSQLConfig.Extract.ValidPaths
                 && ManaSQLConfig.ShowCompareFile
                 && theNode.Type == "StoredProcedure";
         }
@@ -26,11 +25,13 @@ namespace BridgeSQL
         {
             IOeNode theNode = (IOeNode)node;
             IDatabaseObjectInfo DBI;
-            ManaSQLConfig.CompareFile1.UpdateVariables(theNode);
+            
             if (theNode.IsDatabaseObject && theNode.TryGetDatabaseObject(out DBI))
             {
+                ManaSQLConfig.CompareFile1.ResetWhereSSP(false);
                 ManaSQLConfig.CompareFile1.AppendWhereSSP(DBI.ObjectName);
             }
+            ManaSQLConfig.CompareFile1.UpdateVariables(theNode);
         }
     }
 }

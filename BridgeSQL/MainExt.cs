@@ -57,6 +57,7 @@ namespace BridgeSQL
             //standard
             ManaSQLConfig.Extract.UpdateVariables(args.Selection);
             ManaSQLConfig.Upload.UpdateVariables(args.Selection);
+            ManaSQLConfig.CompareDir.UpdateVariables(args.Selection);
         }
 
         private void OnConnectionsChanged(IConnectionsChangedEventArgs args)
