@@ -159,6 +159,8 @@
             this.exploreText = new System.Windows.Forms.ToolStripMenuItem();
             this.fileSearch = new System.Windows.Forms.OpenFileDialog();
             this.favPaths = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.compareDirResultLocationPath = new System.Windows.Forms.Label();
+            this.compareDirLogLocationPath = new System.Windows.Forms.Label();
             this.tab.SuspendLayout();
             this.extract.SuspendLayout();
             this.upload.SuspendLayout();
@@ -285,9 +287,9 @@
             this.extractLogWarning.ForeColor = System.Drawing.Color.Maroon;
             this.extractLogWarning.Location = new System.Drawing.Point(6, 196);
             this.extractLogWarning.Name = "extractLogWarning";
-            this.extractLogWarning.Size = new System.Drawing.Size(130, 17);
+            this.extractLogWarning.Size = new System.Drawing.Size(144, 17);
             this.extractLogWarning.TabIndex = 0;
-            this.extractLogWarning.Text = "Invalid Directory!";
+            this.extractLogWarning.Text = "Directory not exist!";
             // 
             // extractRepoWarning
             // 
@@ -296,9 +298,9 @@
             this.extractRepoWarning.ForeColor = System.Drawing.Color.Maroon;
             this.extractRepoWarning.Location = new System.Drawing.Point(6, 109);
             this.extractRepoWarning.Name = "extractRepoWarning";
-            this.extractRepoWarning.Size = new System.Drawing.Size(130, 17);
+            this.extractRepoWarning.Size = new System.Drawing.Size(144, 17);
             this.extractRepoWarning.TabIndex = 0;
-            this.extractRepoWarning.Text = "Invalid Directory!";
+            this.extractRepoWarning.Text = "Directory not exist!";
             // 
             // extractList
             // 
@@ -475,9 +477,9 @@
             this.uploadLogWarning.ForeColor = System.Drawing.Color.Maroon;
             this.uploadLogWarning.Location = new System.Drawing.Point(6, 196);
             this.uploadLogWarning.Name = "uploadLogWarning";
-            this.uploadLogWarning.Size = new System.Drawing.Size(130, 17);
+            this.uploadLogWarning.Size = new System.Drawing.Size(144, 17);
             this.uploadLogWarning.TabIndex = 0;
-            this.uploadLogWarning.Text = "Invalid Directory!";
+            this.uploadLogWarning.Text = "Directory not exist!";
             // 
             // uploadRepoWarning
             // 
@@ -486,9 +488,9 @@
             this.uploadRepoWarning.ForeColor = System.Drawing.Color.Maroon;
             this.uploadRepoWarning.Location = new System.Drawing.Point(6, 109);
             this.uploadRepoWarning.Name = "uploadRepoWarning";
-            this.uploadRepoWarning.Size = new System.Drawing.Size(130, 17);
+            this.uploadRepoWarning.Size = new System.Drawing.Size(144, 17);
             this.uploadRepoWarning.TabIndex = 0;
-            this.uploadRepoWarning.Text = "Invalid Directory!";
+            this.uploadRepoWarning.Text = "Directory not exist!";
             // 
             // uploadLog
             // 
@@ -835,9 +837,9 @@
             this.compareFile2LogWarning.ForeColor = System.Drawing.Color.Maroon;
             this.compareFile2LogWarning.Location = new System.Drawing.Point(502, 196);
             this.compareFile2LogWarning.Name = "compareFile2LogWarning";
-            this.compareFile2LogWarning.Size = new System.Drawing.Size(130, 17);
+            this.compareFile2LogWarning.Size = new System.Drawing.Size(144, 17);
             this.compareFile2LogWarning.TabIndex = 6;
-            this.compareFile2LogWarning.Text = "Invalid Directory!";
+            this.compareFile2LogWarning.Text = "Directory not exist!";
             // 
             // compareFile1LogWarning
             // 
@@ -846,9 +848,9 @@
             this.compareFile1LogWarning.ForeColor = System.Drawing.Color.Maroon;
             this.compareFile1LogWarning.Location = new System.Drawing.Point(6, 196);
             this.compareFile1LogWarning.Name = "compareFile1LogWarning";
-            this.compareFile1LogWarning.Size = new System.Drawing.Size(130, 17);
+            this.compareFile1LogWarning.Size = new System.Drawing.Size(144, 17);
             this.compareFile1LogWarning.TabIndex = 6;
-            this.compareFile1LogWarning.Text = "Invalid Directory!";
+            this.compareFile1LogWarning.Text = "Directory not exist!";
             // 
             // compareFile2RepoWarning
             // 
@@ -857,9 +859,9 @@
             this.compareFile2RepoWarning.ForeColor = System.Drawing.Color.Maroon;
             this.compareFile2RepoWarning.Location = new System.Drawing.Point(502, 109);
             this.compareFile2RepoWarning.Name = "compareFile2RepoWarning";
-            this.compareFile2RepoWarning.Size = new System.Drawing.Size(130, 17);
+            this.compareFile2RepoWarning.Size = new System.Drawing.Size(144, 17);
             this.compareFile2RepoWarning.TabIndex = 6;
-            this.compareFile2RepoWarning.Text = "Invalid Directory!";
+            this.compareFile2RepoWarning.Text = "Directory not exist!";
             // 
             // compareFile1RepoWarning
             // 
@@ -868,9 +870,9 @@
             this.compareFile1RepoWarning.ForeColor = System.Drawing.Color.Maroon;
             this.compareFile1RepoWarning.Location = new System.Drawing.Point(6, 109);
             this.compareFile1RepoWarning.Name = "compareFile1RepoWarning";
-            this.compareFile1RepoWarning.Size = new System.Drawing.Size(130, 17);
+            this.compareFile1RepoWarning.Size = new System.Drawing.Size(144, 17);
             this.compareFile1RepoWarning.TabIndex = 6;
-            this.compareFile1RepoWarning.Text = "Invalid Directory!";
+            this.compareFile1RepoWarning.Text = "Directory not exist!";
             // 
             // compareFile2LogLabel
             // 
@@ -991,6 +993,8 @@
             this.compare2.Controls.Add(this.compareDirResultLabel);
             this.compare2.Controls.Add(this.compareDirResult);
             this.compare2.Controls.Add(this.compareDirResultWarning);
+            this.compare2.Controls.Add(this.compareDirLogLocationPath);
+            this.compare2.Controls.Add(this.compareDirResultLocationPath);
             this.compare2.Controls.Add(this.compareDirLogLabel);
             this.compare2.Controls.Add(this.compareDirCompare);
             this.compare2.Controls.Add(this.compareDirLog);
@@ -1028,7 +1032,7 @@
             // 
             // compareDirLogCreate
             // 
-            this.compareDirLogCreate.Location = new System.Drawing.Point(303, 286);
+            this.compareDirLogCreate.Location = new System.Drawing.Point(305, 305);
             this.compareDirLogCreate.Name = "compareDirLogCreate";
             this.compareDirLogCreate.Size = new System.Drawing.Size(75, 23);
             this.compareDirLogCreate.TabIndex = 51;
@@ -1037,7 +1041,7 @@
             // 
             // compareDirResultCreate
             // 
-            this.compareDirResultCreate.Location = new System.Drawing.Point(303, 373);
+            this.compareDirResultCreate.Location = new System.Drawing.Point(303, 409);
             this.compareDirResultCreate.Name = "compareDirResultCreate";
             this.compareDirResultCreate.Size = new System.Drawing.Size(75, 23);
             this.compareDirResultCreate.TabIndex = 50;
@@ -1047,7 +1051,7 @@
             // compareDirDDir
             // 
             this.compareDirDDir.AutoSize = true;
-            this.compareDirDDir.Location = new System.Drawing.Point(9, 390);
+            this.compareDirDDir.Location = new System.Drawing.Point(505, 238);
             this.compareDirDDir.Name = "compareDirDDir";
             this.compareDirDDir.Size = new System.Drawing.Size(172, 21);
             this.compareDirDDir.TabIndex = 49;
@@ -1058,7 +1062,7 @@
             // compareDirNote
             // 
             this.compareDirNote.AutoSize = true;
-            this.compareDirNote.Location = new System.Drawing.Point(512, 64);
+            this.compareDirNote.Location = new System.Drawing.Point(502, 64);
             this.compareDirNote.Name = "compareDirNote";
             this.compareDirNote.Size = new System.Drawing.Size(425, 119);
             this.compareDirNote.TabIndex = 48;
@@ -1067,7 +1071,7 @@
             // compareDirResultLabel
             // 
             this.compareDirResultLabel.AutoSize = true;
-            this.compareDirResultLabel.Location = new System.Drawing.Point(6, 325);
+            this.compareDirResultLabel.Location = new System.Drawing.Point(8, 344);
             this.compareDirResultLabel.Name = "compareDirResultLabel";
             this.compareDirResultLabel.Size = new System.Drawing.Size(184, 17);
             this.compareDirResultLabel.TabIndex = 47;
@@ -1075,7 +1079,7 @@
             // 
             // compareDirResult
             // 
-            this.compareDirResult.Location = new System.Drawing.Point(11, 345);
+            this.compareDirResult.Location = new System.Drawing.Point(11, 381);
             this.compareDirResult.Name = "compareDirResult";
             this.compareDirResult.Size = new System.Drawing.Size(367, 22);
             this.compareDirResult.TabIndex = 45;
@@ -1089,11 +1093,11 @@
             this.compareDirResultWarning.AutoSize = true;
             this.compareDirResultWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.compareDirResultWarning.ForeColor = System.Drawing.Color.Maroon;
-            this.compareDirResultWarning.Location = new System.Drawing.Point(8, 370);
+            this.compareDirResultWarning.Location = new System.Drawing.Point(8, 406);
             this.compareDirResultWarning.Name = "compareDirResultWarning";
-            this.compareDirResultWarning.Size = new System.Drawing.Size(130, 17);
+            this.compareDirResultWarning.Size = new System.Drawing.Size(144, 17);
             this.compareDirResultWarning.TabIndex = 46;
-            this.compareDirResultWarning.Text = "Invalid Directory!";
+            this.compareDirResultWarning.Text = "Directory not exist!";
             // 
             // compareDirLogLabel
             // 
@@ -1107,7 +1111,7 @@
             // compareDirCompare
             // 
             this.compareDirCompare.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareDirCompare.Location = new System.Drawing.Point(164, 417);
+            this.compareDirCompare.Location = new System.Drawing.Point(505, 265);
             this.compareDirCompare.Name = "compareDirCompare";
             this.compareDirCompare.Size = new System.Drawing.Size(214, 44);
             this.compareDirCompare.TabIndex = 41;
@@ -1117,7 +1121,7 @@
             // 
             // compareDirLog
             // 
-            this.compareDirLog.Location = new System.Drawing.Point(9, 258);
+            this.compareDirLog.Location = new System.Drawing.Point(11, 277);
             this.compareDirLog.Name = "compareDirLog";
             this.compareDirLog.Size = new System.Drawing.Size(369, 22);
             this.compareDirLog.TabIndex = 25;
@@ -1153,11 +1157,11 @@
             this.compareDirLogWarning.AutoSize = true;
             this.compareDirLogWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.compareDirLogWarning.ForeColor = System.Drawing.Color.Maroon;
-            this.compareDirLogWarning.Location = new System.Drawing.Point(8, 283);
+            this.compareDirLogWarning.Location = new System.Drawing.Point(10, 302);
             this.compareDirLogWarning.Name = "compareDirLogWarning";
-            this.compareDirLogWarning.Size = new System.Drawing.Size(130, 17);
+            this.compareDirLogWarning.Size = new System.Drawing.Size(144, 17);
             this.compareDirLogWarning.TabIndex = 29;
-            this.compareDirLogWarning.Text = "Invalid Directory!";
+            this.compareDirLogWarning.Text = "Directory not exist!";
             // 
             // compareDirRepo2Warning
             // 
@@ -1166,9 +1170,9 @@
             this.compareDirRepo2Warning.ForeColor = System.Drawing.Color.Maroon;
             this.compareDirRepo2Warning.Location = new System.Drawing.Point(8, 196);
             this.compareDirRepo2Warning.Name = "compareDirRepo2Warning";
-            this.compareDirRepo2Warning.Size = new System.Drawing.Size(130, 17);
+            this.compareDirRepo2Warning.Size = new System.Drawing.Size(144, 17);
             this.compareDirRepo2Warning.TabIndex = 30;
-            this.compareDirRepo2Warning.Text = "Invalid Directory!";
+            this.compareDirRepo2Warning.Text = "Directory not exist!";
             // 
             // compareDirRepoWarning
             // 
@@ -1177,9 +1181,9 @@
             this.compareDirRepoWarning.ForeColor = System.Drawing.Color.Maroon;
             this.compareDirRepoWarning.Location = new System.Drawing.Point(6, 109);
             this.compareDirRepoWarning.Name = "compareDirRepoWarning";
-            this.compareDirRepoWarning.Size = new System.Drawing.Size(130, 17);
+            this.compareDirRepoWarning.Size = new System.Drawing.Size(144, 17);
             this.compareDirRepoWarning.TabIndex = 27;
-            this.compareDirRepoWarning.Text = "Invalid Directory!";
+            this.compareDirRepoWarning.Text = "Directory not exist!";
             // 
             // compareDirRepo2Label
             // 
@@ -1561,6 +1565,24 @@
             this.favPaths.Name = "favPaths";
             this.favPaths.Size = new System.Drawing.Size(67, 4);
             // 
+            // compareDirResultLocationPath
+            // 
+            this.compareDirResultLocationPath.AutoSize = true;
+            this.compareDirResultLocationPath.Location = new System.Drawing.Point(8, 361);
+            this.compareDirResultLocationPath.Name = "compareDirResultLocationPath";
+            this.compareDirResultLocationPath.Size = new System.Drawing.Size(103, 17);
+            this.compareDirResultLocationPath.TabIndex = 44;
+            this.compareDirResultLocationPath.Text = "[Location Path]";
+            // 
+            // compareDirLogLocationPath
+            // 
+            this.compareDirLogLocationPath.AutoSize = true;
+            this.compareDirLogLocationPath.Location = new System.Drawing.Point(8, 257);
+            this.compareDirLogLocationPath.Name = "compareDirLogLocationPath";
+            this.compareDirLogLocationPath.Size = new System.Drawing.Size(103, 17);
+            this.compareDirLogLocationPath.TabIndex = 44;
+            this.compareDirLogLocationPath.Text = "[Location Path]";
+            // 
             // ManaSQLForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1721,5 +1743,7 @@
         private System.Windows.Forms.Button compareFile1LogCreate;
         private System.Windows.Forms.Button compareFile1RepoCreate;
         private System.Windows.Forms.CheckBox compareFile2TempPath;
+        private System.Windows.Forms.Label compareDirLogLocationPath;
+        private System.Windows.Forms.Label compareDirResultLocationPath;
     }
 }

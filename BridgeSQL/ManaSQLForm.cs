@@ -26,6 +26,11 @@ namespace BridgeSQL
         public string message = "";
         public ISsmsFunctionalityProvider6 mainPlug;
 
+        private string errorMsg = @"Error: Some paths do not exist or do not contain sql files."
+            +Environment.NewLine
+            +"No action taken. Program will exist."
+            ;
+
         public ManaSQLForm(ISsmsFunctionalityProvider6 thePlug)
         {
             InitializeComponent();
@@ -276,21 +281,28 @@ namespace BridgeSQL
             }
             else if (control.Name == "extractList")
             {
-                string args = ManaSQLConfig.Extract.CompileArgs();
-                args = "data " + args;
-                ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+                if (ManaSQLConfig.Extract.ValidPaths)
+                {
+                    string args = ManaSQLConfig.Extract.CompileArgs();
+                    args = "data " + args;
+                    ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
 
-                // add file just in case its not already added
-                ManaProcess.runExe(
-                    ManaSQLConfig.TProcPath
-                    , TProcCommands.Add(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
-                    , false
+                    // add file just in case its not already added
+                    ManaProcess.runExe(
+                        ManaSQLConfig.TProcPath
+                        , TProcCommands.Add(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
+                        , false
                     );
-                ManaProcess.runExe(
-                    ManaSQLConfig.TProcPath
-                    , TProcCommands.Commit(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
-                    , false
-                    );
+                    ManaProcess.runExe(
+                        ManaSQLConfig.TProcPath
+                        , TProcCommands.Commit(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
+                        , false
+                        );
+                }
+                else
+                {
+                    MessageBox.Show(errorMsg);
+                }
             }
         }
 
@@ -342,29 +354,144 @@ namespace BridgeSQL
 
         private void uploadList_Click(object sender, EventArgs e)
         {
-            string args = ManaSQLConfig.Upload.CompileArgs();
-            args = "data " + args;
-            ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+            if(ManaSQLConfig.Upload.ValidPaths)
+            {
+                string args = ManaSQLConfig.Upload.CompileArgs();
+                args = "data " + args;
+                ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+            }
+            else
+            {
+                MessageBox.Show(errorMsg);
+            }
         }
 
         // START: PAGE COMPARE FILE
         // compare tab handlers
         private void compareFileAction1_Click(object sender, EventArgs e)
         {
-            //string args;
-            //args = ManaSQLConfig.CompareFile1.CompileArgs();
-            //args = "data " + args;
-            //ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+            var control = sender as Button;
+            string args;
 
-            //args = ManaSQLConfig.CompareFile2.CompileArgs();
-            //args = "data " + args;
-            //ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+            //TODO: implement defensive code here
+            if (control.Equals(compareFileAction1))
+            {
+                if(ManaSQLConfig.CompareFile1.ValidPaths && ManaSQLConfig.CompareFile2.ValidPaths)
+                {
+                    args = ManaSQLConfig.CompareFile1.CompileArgs();
+                    args = "data " + args;
+                    ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+
+                    args = ManaSQLConfig.CompareFile2.CompileArgs();
+                    args = "data " + args;
+                    ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+                }
+                else
+                {
+                    MessageBox.Show(errorMsg);
+                }
+            }
+            else if (control.Equals(compareFileAction2))
+            {
+                string path1 = ManaSQLConfig.CompareFile1.FormSelectedSSPFilePaths()[0];
+                string path2 = ManaSQLConfig.CompareFile2.FormSelectedSSPFilePaths()[0];
+                string indicator1 = ManaSQLConfig.CompareFile2.FormTags();
+                string indicator2 = ManaSQLConfig.CompareFile2.FormTags();
+
+                ManaProcess.runExe(
+                    ManaSQLConfig.TProcPath
+                    , TProcCommands.Diff(
+                        path1
+                        , path2
+                        , indicator1
+                        , indicator2
+                        , path1
+                        , path2
+                        )
+                    , false
+                    );
+            }
+            // SVN merging
         }
 
         private void compareDirCompare_Click(object sender, EventArgs e)
         {
-            // get the arguments from here,
-            // combine with those from repopath, repopath2
+            //TODO: implement defensive code here
+            if(!ManaSQLConfig.CompareDir.ValidPaths)
+            {
+                MessageBox.Show(errorMsg);
+                return;
+            }
+
+            ManaSQLConfig.CompareDir.GenAutomationDate();
+            string logDir = ManaSQLConfig.CompareDir.GetLogPath();
+            string outDir = Path.GetDirectoryName(ManaSQLConfig.CompareDir.GetOutPath());
+            bool isValidDir = !Directory.Exists(logDir) || !Directory.Exists(outDir); // these two should point to the same dir
+
+            string filename = "compare.log";
+            string fileDir = Path.GetDirectoryName(logDir.Substring(0, logDir.Length - 1));
+            string filePath = string.Format(@"{0}\{1}", fileDir, filename);
+            string fileContent = "";
+
+            if (ManaSQLConfig.CompareDir.IsDefault)
+            {
+                if (isValidDir)
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(logDir);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(string.Format(@"Error: Cannot create directory: [{0}]", logDir));
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                if (isValidDir)
+                {
+                    MessageBox.Show("Error: Not specified paths not present: Log Path, Result Path");
+                    return;
+                }
+            }
+
+            string args = ManaSQLConfig.CompareDir.CompileArgs();
+            args = "data " + args;
+            ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+
+            try
+            {
+                string username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+                string datetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss:fff");
+
+                fileContent = string.Format(
+@"---------------------------
+[Compare Begin      ] {0} {1}
+[Compare Written Dir] {2}
+[Compare Base       ] {3}
+[Compare Target     ] {4}
+[Compare Base Path  ] {5}
+[Compare Target Path] {6}
+---------------------------
+"
+, datetime
+, username
+, ManaSQLConfig.CompareDir.AutomationDate
+, ManaSQLConfig.CompareDir.FormTags()
+, ManaSQLConfig.CompareDir.FormTags2()
+, ManaSQLConfig.CompareDir.GetRepoPath()
+, ManaSQLConfig.CompareDir.GetRepoPath2()
+);
+                File.AppendAllText(filePath, fileContent);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Cannot compare log: " + filename);
+            }
+
+            ManaSQLConfig.CompareDir.InvalidateAutomationDate();
         }
 
         // START: DISPLAY SETTINGS
@@ -444,20 +571,18 @@ namespace BridgeSQL
             // textboxes in extract page
             if (Util.Contains(new string[] { "all", "extract", "extract-RepoPath" }, list))
             {
-                isSystemGen = ManaSQLConfig.Extract.IsDefault || ManaSQLConfig.Extract.UseTemp; // system will create
                 theText = ManaSQLConfig.Extract.FormRepoPath();
                 extractRepo.Text = theText;
-                extractRepoWarning.Visible = !isSystemGen && !ManaSQLConfig.Extract.ValidRepoPath && theText != "";
-                extractRepoCreate.Visible = !isSystemGen && ManaSQLConfig.Extract.ValidCreateRepoPath;
+                extractRepoWarning.Visible = !ManaSQLConfig.Extract.ValidRepoPath;
+                extractRepoCreate.Visible = ManaSQLConfig.Extract.ValidCreateRepoPath;
                 isRefreshButton = "extract";
             }
             if (Util.Contains(new string[] { "all", "extract", "extract-LogPath" }, list))
             {
-                isSystemGen = ManaSQLConfig.Extract.IsDefault || ManaSQLConfig.Extract.UseTemp; // system will create
                 theText = ManaSQLConfig.Extract.FormLogPath();
                 extractLog.Text = theText;
-                extractLogWarning.Visible = !isSystemGen && !ManaSQLConfig.Extract.ValidLogPath && theText != "";
-                extractLogCreate.Visible = !isSystemGen && ManaSQLConfig.Extract.ValidCreateLogPath;
+                extractLogWarning.Visible = !ManaSQLConfig.Extract.ValidLogPath;
+                extractLogCreate.Visible = ManaSQLConfig.Extract.ValidCreateLogPath;
                 isRefreshButton = "extract";
             }
 
@@ -471,20 +596,19 @@ namespace BridgeSQL
             // textboxes in upload page
             if (Util.Contains(new string[] { "all", "upload", "upload-RepoPath" }, list))
             {
-                isSystemGen = ManaSQLConfig.Upload.IsDefault || ManaSQLConfig.Upload.UseTemp; // system will create
                 theText = ManaSQLConfig.Upload.FormRepoPath();
                 uploadRepo.Text = theText;
-                uploadRepoWarning.Visible = !isSystemGen && !ManaSQLConfig.Upload.ValidRepoPath && theText != "";
-                uploadRepoCreate.Visible = !isSystemGen && ManaSQLConfig.Upload.ValidCreateRepoPath;
+                uploadRepoWarning.Text = GetWarningText(theText);
+                uploadRepoWarning.Visible = !ManaSQLConfig.Upload.ValidRepoPath;
+                uploadRepoCreate.Visible = ManaSQLConfig.Upload.ValidCreateRepoPath;
                 isRefreshListBoxItems = "upload";
             }
             if (Util.Contains(new string[] { "all", "upload", "upload-LogPath" }, list))
             {
-                isSystemGen = ManaSQLConfig.Upload.IsDefault || ManaSQLConfig.Upload.UseTemp; // system will create
                 theText = ManaSQLConfig.Upload.FormLogPath();
                 uploadLog.Text = theText;
-                uploadLogWarning.Visible = !isSystemGen && !ManaSQLConfig.Upload.ValidLogPath && theText != "";
-                uploadLogCreate.Visible = !isSystemGen && ManaSQLConfig.Upload.ValidCreateLogPath;
+                uploadLogWarning.Visible = !ManaSQLConfig.Upload.ValidLogPath;
+                uploadLogCreate.Visible = ManaSQLConfig.Upload.ValidCreateLogPath;
                 isRefreshListBoxItems = "upload";
             }
 
@@ -498,20 +622,18 @@ namespace BridgeSQL
             // textboxes in compare file page
             if (Util.Contains(new string[] { "all", "compareFile1", "compareFile1-RepoPath" }, list))
             {
-                isSystemGen = ManaSQLConfig.CompareFile1.IsDefault || ManaSQLConfig.CompareFile1.UseTemp; // system will create
                 theText = ManaSQLConfig.CompareFile1.FormRepoPath();
                 compareFile1Repo.Text = theText;
-                compareFile1RepoWarning.Visible = !isSystemGen && !ManaSQLConfig.CompareFile1.ValidRepoPath && theText != "";
-                compareFile1RepoCreate.Visible = !isSystemGen && ManaSQLConfig.CompareFile1.ValidCreateRepoPath;
+                compareFile1RepoWarning.Visible = !ManaSQLConfig.CompareFile1.ValidRepoPath;
+                compareFile1RepoCreate.Visible = ManaSQLConfig.CompareFile1.ValidCreateRepoPath;
                 isRefreshButton = "compareFile1";
             }
             if (Util.Contains(new string[] { "all", "compareFile1", "compareFile1-LogPath" }, list))
             {
-                isSystemGen = ManaSQLConfig.CompareFile1.IsDefault || ManaSQLConfig.CompareFile1.UseTemp; // system will create
                 theText = ManaSQLConfig.CompareFile1.FormLogPath();
                 compareFile1Log.Text = theText;
-                compareFile1LogWarning.Visible = !isSystemGen && !ManaSQLConfig.CompareFile1.ValidLogPath && theText != "";
-                compareFile1LogCreate.Visible = !isSystemGen && ManaSQLConfig.CompareFile1.ValidCreateLogPath;
+                compareFile1LogWarning.Visible = !ManaSQLConfig.CompareFile1.ValidLogPath;
+                compareFile1LogCreate.Visible = ManaSQLConfig.CompareFile1.ValidCreateLogPath;
                 isRefreshButton = "compareFile1";
             }
 
@@ -524,20 +646,18 @@ namespace BridgeSQL
 
             if (Util.Contains(new string[] { "all", "compareFile2", "compareFile2-RepoPath" }, list))
             {
-                isSystemGen = ManaSQLConfig.CompareFile2.IsDefault || ManaSQLConfig.CompareFile2.UseTemp; // system will create
                 theText = ManaSQLConfig.CompareFile2.FormRepoPath();
                 compareFile2Repo.Text = theText;
-                compareFile2RepoWarning.Visible = !isSystemGen && !ManaSQLConfig.CompareFile2.ValidRepoPath && theText != "";
-                compareFile2RepoCreate.Visible = !isSystemGen && ManaSQLConfig.CompareFile2.ValidCreateRepoPath;
+                compareFile2RepoWarning.Visible = !ManaSQLConfig.CompareFile2.ValidRepoPath;
+                compareFile2RepoCreate.Visible = ManaSQLConfig.CompareFile2.ValidCreateRepoPath;
                 isRefreshButton = "compareFile2";
             }
             if (Util.Contains(new string[] { "all", "compareFile2", "compareFile2-LogPath" }, list))
             {
-                isSystemGen = ManaSQLConfig.CompareFile2.IsDefault || ManaSQLConfig.CompareFile2.UseTemp; // system will create
                 theText = ManaSQLConfig.CompareFile2.FormLogPath();
                 compareFile2Log.Text = theText;
-                compareFile2LogWarning.Visible = !isSystemGen && !ManaSQLConfig.CompareFile2.ValidLogPath && theText != "";
-                compareFile2LogCreate.Visible = !isSystemGen && ManaSQLConfig.CompareFile2.ValidCreateLogPath;
+                compareFile2LogWarning.Visible = !ManaSQLConfig.CompareFile2.ValidLogPath;
+                compareFile2LogCreate.Visible = ManaSQLConfig.CompareFile2.ValidCreateLogPath;
                 isRefreshButton = "compareFile2";
             }
 
@@ -551,39 +671,39 @@ namespace BridgeSQL
             // textboxes in compare dir page
             if (Util.Contains(new string[] { "all", "compareDir", "compareDir-RepoPath" }, list))
             {
-                isSystemGen = ManaSQLConfig.CompareDir.IsDefault || ManaSQLConfig.CompareDir.UseTemp; // system will create
                 theText = ManaSQLConfig.CompareDir.FormRepoPath();
                 compareDirRepo.Text = theText;
-                compareDirRepoWarning.Visible = !isSystemGen && !ManaSQLConfig.CompareDir.ValidRepoPath && theText != "";
-                compareDirRepoCreate.Visible = !isSystemGen && ManaSQLConfig.CompareDir.ValidCreateRepoPath;
+                compareDirRepoWarning.Text = GetWarningText(theText);
+                compareDirRepoWarning.Visible = !ManaSQLConfig.CompareDir.ValidRepoPath;
+                compareDirRepoCreate.Visible = ManaSQLConfig.CompareDir.ValidCreateRepoPath;
                 isRefreshButton = "compareDir";
             }
             if (Util.Contains(new string[] { "all", "compareDir", "compareDir-RepoPath2" }, list))
             {
-                isSystemGen = ManaSQLConfig.CompareDir.IsDefault || ManaSQLConfig.CompareDir.UseTemp; // system will create
                 theText = ManaSQLConfig.CompareDir.FormRepoPath2();
                 compareDirRepo2.Text = theText;
-                compareDirRepo2Warning.Visible = !isSystemGen && !ManaSQLConfig.CompareDir.ValidRepoPath2 && theText != "";
-                compareDirRepo2Create.Visible = !isSystemGen && ManaSQLConfig.CompareDir.ValidCreateRepoPath2;
+                compareDirRepo2Warning.Text = GetWarningText(theText);
+                compareDirRepo2Warning.Visible = !ManaSQLConfig.CompareDir.ValidRepoPath2;
+                compareDirRepo2Create.Visible = ManaSQLConfig.CompareDir.ValidCreateRepoPath2;
                 isRefreshButton = "compareDir";
             }
             if (Util.Contains(new string[] { "all", "compareDir", "compareDir-LogPath" }, list))
             {
-                isSystemGen = ManaSQLConfig.CompareDir.IsDefault || ManaSQLConfig.CompareDir.UseTemp; // system will create
                 theText = ManaSQLConfig.CompareDir.FormLogPath();
                 compareDirLog.Text = theText;
-                compareDirLogWarning.Visible = !isSystemGen && !ManaSQLConfig.CompareDir.ValidLogPath && theText != "";
-                compareDirLogCreate.Visible = !isSystemGen && ManaSQLConfig.CompareDir.ValidCreateLogPath;
+                compareDirLogWarning.Visible = !ManaSQLConfig.CompareDir.ValidLogPath;
+                compareDirLogCreate.Visible = ManaSQLConfig.CompareDir.ValidCreateLogPath;
                 isRefreshButton = "compareDir";
+                RefreshLabel("compareDirLogLocationPath");
             }
             if (Util.Contains(new string[] { "all", "compareDir", "compareDir-OutPath" }, list))
             {
-                isSystemGen = ManaSQLConfig.CompareDir.IsDefault || ManaSQLConfig.CompareDir.UseTemp; // system will create
                 theText = ManaSQLConfig.CompareDir.FormOutPath();
                 compareDirResult.Text = theText;
-                compareDirResultWarning.Visible = !isSystemGen && !ManaSQLConfig.CompareDir.ValidOutPath && theText != "";
-                compareDirResultCreate.Visible = !isSystemGen && ManaSQLConfig.CompareDir.ValidCreateOutPath;
+                compareDirResultWarning.Visible = !ManaSQLConfig.CompareDir.ValidOutPath;
+                compareDirResultCreate.Visible = ManaSQLConfig.CompareDir.ValidCreateOutPath;
                 isRefreshButton = "compareDir";
+                RefreshLabel("compareDirResultLocationPath");
             }
 
             if (isRefreshButton == "compareDir")
@@ -705,6 +825,18 @@ namespace BridgeSQL
             }
         }
 
+        //helper functions for textbox
+        private string GetWarningText(string repoPath)
+        {
+            string warningText = "Directory Not Exist";
+            if (!Util.HasFile(repoPath, "sql"))
+            {
+                warningText = "Directory contains no sql file";
+            }
+            return warningText;
+        }
+
+
         // START: CHECKBOXES
         // Generic function, from DS
         // Based on datastore (config), update checkboxes
@@ -713,44 +845,45 @@ namespace BridgeSQL
             string isRefreshTextBox = "";
 
             // Setting: checkbox for pages
-            if (Util.Contains(new string[] { "all", "ShowExtract" }, list))
+            if (Util.Contains(new string[] { "all", "general-ShowExtract" }, list))
             {
                 dspExtract.CheckState = ManaSQLConfig.ShowExtract ? CheckState.Checked : CheckState.Unchecked;
             }
-            if (Util.Contains(new string[] { "all", "ShowCompareFile" }, list))
+            if (Util.Contains(new string[] { "all", "general-ShowCompareFile" }, list))
             {
                 dspCompareFile.CheckState = ManaSQLConfig.ShowCompareFile ? CheckState.Checked : CheckState.Unchecked;
             }
-            if (Util.Contains(new string[] { "all", "EnableLogging" }, list))
+            if (Util.Contains(new string[] { "all", "general-EnableLogging" }, list))
             {
                 enableLogging.CheckState = ManaSQLConfig.EnableLogging ? CheckState.Checked : CheckState.Unchecked;
+                RefreshButton("all");
             }
             // Setting: checkbox for SVN
-            if (Util.Contains(new string[] { "all", "SvnRepoStatus" }, list))
+            if (Util.Contains(new string[] { "all", "general-SvnRepoStatus" }, list))
             {
                 dspSVNRepoStatus.CheckState = ManaSQLConfig.SvnRepoStatus ? CheckState.Checked : CheckState.Unchecked;
             }
-            if (Util.Contains(new string[] { "all", "SvnCommit" }, list))
+            if (Util.Contains(new string[] { "all", "general-SvnCommit" }, list))
             {
                 dspSVNCommit.CheckState = ManaSQLConfig.SvnCommit ? CheckState.Checked : CheckState.Unchecked;
             }
-            if (Util.Contains(new string[] { "all", "SvnUpdate" }, list))
+            if (Util.Contains(new string[] { "all", "general-SvnUpdate" }, list))
             {
                 dspSVNUpdate.CheckState = ManaSQLConfig.SvnUpdate ? CheckState.Checked : CheckState.Unchecked;
             }
-            if (Util.Contains(new string[] { "all", "SvnShowLog" }, list))
+            if (Util.Contains(new string[] { "all", "general-SvnShowLog" }, list))
             {
                 dspSVNLog.CheckState = ManaSQLConfig.SvnShowLog ? CheckState.Checked : CheckState.Unchecked;
             }
-            if (Util.Contains(new string[] { "all", "SvnDiff" }, list))
+            if (Util.Contains(new string[] { "all", "general-SvnDiff" }, list))
             {
                 dspSVNDiff.CheckState = ManaSQLConfig.SvnDiff ? CheckState.Checked : CheckState.Unchecked;
             }
-            if (Util.Contains(new string[] { "all", "SvnMerge" }, list))
+            if (Util.Contains(new string[] { "all", "general-SvnMerge" }, list))
             {
                 dspSVNMerge.CheckState = ManaSQLConfig.SvnMerge ? CheckState.Checked : CheckState.Unchecked;
             }
-            if (Util.Contains(new string[] { "all", "SvnBlame" }, list))
+            if (Util.Contains(new string[] { "all", "general-SvnBlame" }, list))
             {
                 dspSVNBlame.CheckState = ManaSQLConfig.SvnBlame ? CheckState.Checked : CheckState.Unchecked;
             }
@@ -824,7 +957,7 @@ namespace BridgeSQL
             //attempt to optimise paths
             if (isRefreshTextBox == "compareFile2")
             {
-                //RefreshTextBox(isRefreshTextBox);
+                RefreshTextBox(isRefreshTextBox);
                 isRefreshTextBox = "";
             }
 
@@ -931,8 +1064,15 @@ namespace BridgeSQL
         public void RefreshButton(string list)
         {
             bool isListed;
+
+            //Note: 
+            //1. SqlMana will automatically create directory to write files into 
+            //2. Extract + compareFile doesn NOT require any directory checks
+            //3. Upload + compareDir MUST check existance of directory
+
             if (Util.Contains(new string[] { "all", "extract" }, list))
             {
+
                 isListed =
                    ManaSQLConfig.ValidGenPaths
                    && ManaSQLConfig.Extract.ValidPaths
@@ -973,7 +1113,7 @@ namespace BridgeSQL
             {
                 isListed =
                     ManaSQLConfig.ValidGenPaths
-                    && ManaSQLConfig.CompareDir.ValidPaths2
+                    && ManaSQLConfig.CompareDir.ValidPaths
                     ;
                 compareDirCompare.Enabled = isListed;
             }
@@ -1004,7 +1144,15 @@ namespace BridgeSQL
             {
                 compareFile2Server.Text = ManaSQLConfig.CompareFile2.SERVER;
                 compareFile2DB.Text = ManaSQLConfig.CompareFile2.DB;
-                compareFile2Obj.Text = string.Format(@"[{0}]", ManaSQLConfig.CompareFile1.OBJ);
+                compareFile2Obj.Text = string.Format(@"[{0}]", ManaSQLConfig.CompareFile2.OBJ);
+            }
+            if (Util.Contains(new string[] { "all", "compareDirLogLocationPath" }, list))
+            {
+                compareDirLogLocationPath.Text = ManaSQLConfig.CompareDir.GetLogPath("[logFilename]");
+            }
+            if (Util.Contains(new string[] { "all", "compareDirResultLocationPath" }, list))
+            {
+                compareDirResultLocationPath.Text = ManaSQLConfig.CompareDir.GetOutPath();
             }
         }
 
@@ -1029,32 +1177,7 @@ namespace BridgeSQL
 
                 if (isActive)
                 {
-                    string[] filenames = Directory.GetFiles(ManaSQLConfig.Upload.FormRepoPath(), "*.sql");
-                    List<int> toRemove = new List<int>();
-
-                    for (int i = 0; i < filenames.Length; i++)
-                    {
-                        filenames[i] = Path.GetFileName(filenames[i]);
-
-                        // mark list as non .sql extension
-                        Regex regex = new Regex(@".sql$");
-                        if (!regex.Match(filenames[i]).Success)
-                        {
-                            toRemove.Add(i);
-                        }
-                    }
-
-                    // purge list that are non .sql extension
-                    if (toRemove.Count > 0)
-                    {
-                        List<string> temp = new List<string>(filenames);
-                        foreach (int x in toRemove)
-                        {
-                            temp.RemoveAt(x);
-                        }
-                        filenames = temp.ToArray();
-                    }
-
+                    string[] filenames = Util.GetFilesWithExtension(ManaSQLConfig.Upload.FormRepoPath(), "sql").ToArray();
                     uploadSSP.Items.Clear();
                     uploadSSP.Items.AddRange(filenames);
                 }

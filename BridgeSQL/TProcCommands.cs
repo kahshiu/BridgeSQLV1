@@ -38,11 +38,23 @@ namespace BridgeSQL
             return total;
         }
 
-        public static string Diff(string path)
+        public static string Diff(string path, string path2="", string title="",string title2 = "", string pathToShow="", string pathToShow2="")
         {
             string total = "/command:diff ";
-            string temp = @"/path:""{0}""";
-            total = total + string.Format(temp, path);
+            string _temp = @"/path:""{0}"" ";
+            string _temp2 = @"/path2:""{0}"" ";
+            string _title = @"/lefttitle:""{0}"" ";
+            string _title2 = @"/righttitle:""{0}"" ";
+            string _pathToShow = @"/left:""{0}""";
+            string _pathToShow2 = @"/right:""{0}""";
+
+            total = total + string.Format(_temp, path);
+            if (path2 != "") { total = total + string.Format(_temp2, path2); }
+            if (title != "") { total = total + string.Format(_title, title); }
+            if (title2 != "") { total = total + string.Format(_title2, title2); }
+            if (pathToShow != "") { total = total + string.Format(_pathToShow, pathToShow); }
+            if (pathToShow2 != "") { total = total + string.Format(_pathToShow2, pathToShow2); }
+
             return total;
         }
 

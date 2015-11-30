@@ -29,7 +29,7 @@ namespace BridgeSQL
             if (theNode.IsDatabaseObject && theNode.TryGetDatabaseObject(out DBI))
             {
                 ManaSQLConfig.CompareFile2.ResetWhereSSP(false);
-                ManaSQLConfig.CompareFile2.AppendWhereSSP(DBI.ObjectName);
+                ManaSQLConfig.CompareFile2.AppendWhereSSP(DBI.ObjectName,false);
             }
             ManaSQLConfig.CompareFile2.UpdateVariables(theNode);
         }

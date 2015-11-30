@@ -342,6 +342,7 @@ namespace BridgeSQL
         public string FileAction = "";
 
         // 2.1 variable items
+        private Boolean _isStrict = true;
         private Boolean _UseTemp = false;
         private Boolean _IsDefault = true;
         private List<string> WhereSSPStore = new List<string>();
@@ -370,7 +371,7 @@ namespace BridgeSQL
             LogSuffix = Mode;
 
             // actions + sequences
-            if (Mode == "extract" || Mode == "compareFile1" || Mode == "CompareFile2")
+            if (Mode == "extract" || Mode == "compareFile1" || Mode == "compareFile2")
             {
                 SeqAction = SeqActions[0];
                 DBAction = DBActions[0];
@@ -387,6 +388,7 @@ namespace BridgeSQL
                 SeqAction = SeqActions[2];
                 DBAction = "";
                 FileAction = FileActions[2];
+                _isStrict = false;
             }
         }
 
@@ -462,40 +464,94 @@ namespace BridgeSQL
             }
         }
 
-        public bool ValidRepoPath { get { return Util.ValidatePath(FormRepoPath()); } }
-        public bool ValidRepoPath2 { get { return Util.ValidatePath(FormRepoPath2()); } }
-        public bool ValidLogPath { get { return Util.ValidatePath(FormLogPath()); } }
-        public bool ValidOutPath { get { return Util.ValidatePath(FormOutPath()); } }
-
-        public bool ValidPaths
+        // read path, check if directory exists base on Mode
+        public bool ValidRepoPath
         {
             get
             {
                 bool flag = false;
-                if (Mode == "extract" || Mode == "upload" || Mode == "compareFile1" || Mode == "compareFile2")
+                if (Mode == "compareDir"
+                    || Mode == "upload")
                 {
-                    flag = (ValidRepoPath && ValidLogPath) || IsDefault;
+                    flag = Util.ValidatePath(FormRepoPath())
+                          && Util.HasFile(FormRepoPath(), "sql");
                 }
+                else if (Mode == "compareFile1"
+                    || Mode == "compareFile2"
+                    || Mode == "extract")
+                { flag = FormRepoPath() != ""; }
                 return flag;
             }
         }
-        public bool ValidPaths2
+
+        // read path, check if directory exists
+        public bool ValidRepoPath2
         {
             get
             {
                 bool flag = false;
                 if (Mode == "compareDir")
                 {
-                    flag = ((ValidRepoPath && ValidLogPath && ValidOutPath) || IsDefault) && ValidRepoPath2;
+                    flag = Util.ValidatePath(FormRepoPath2())
+                        && Util.HasFile(FormRepoPath(), "sql");
                 }
+                else if (Mode == "compareFile1"
+                    || Mode == "compareFile2"
+                    || Mode == "extract"
+                    || Mode == "upload")
+                { flag = true; }
                 return flag;
             }
         }
 
-        public bool ValidCreateRepoPath { get { return Util.ValidateCreateDir(FormRepoPath()); } }
-        public bool ValidCreateRepoPath2 { get { return Util.ValidateCreateDir(FormRepoPath2()); } }
-        public bool ValidCreateLogPath { get { return Util.ValidateCreateDir(FormLogPath()); } }
-        public bool ValidCreateOutPath { get { return Util.ValidateCreateDir(FormOutPath()); } }
+        // written path, no need to check if directory exists
+        public bool ValidLogPath
+        {
+            get
+            {
+                bool flag = false;
+                if (Mode == "compareDir"
+                    || Mode == "compareFile1"
+                    || Mode == "compareFile2"
+                    || Mode == "extract"
+                    || Mode == "upload")
+                { flag = !ManaSQLConfig.EnableLogging || (ManaSQLConfig.EnableLogging && FormLogPath() != ""); }
+                return flag;
+            }
+        }
+
+        // written path, no need to check if directory exists
+        public bool ValidOutPath
+        {
+            get
+            {
+                bool flag = false;
+                if (Mode == "compareDir") { flag = FormOutPath() != ""; }
+                else if (Mode == "compareFile1"
+                    || Mode == "compareFile2"
+                    || Mode == "extract"
+                    || Mode == "upload")
+                { flag = true; }
+                return flag;
+            }
+        }
+
+        public bool ValidPaths
+        {
+            get
+            {
+                bool flag = false;
+                flag = ValidRepoPath && ValidRepoPath2 && ValidLogPath && ValidOutPath;
+                return flag;
+            }
+        }
+
+        // hide create directory buttons
+        // decided there's no need for these, at the moment
+        public bool ValidCreateRepoPath { get { return false; } }
+        public bool ValidCreateRepoPath2 { get { return false; } }
+        public bool ValidCreateLogPath { get { return false; } }
+        public bool ValidCreateOutPath { get { return false; } }
 
         public string RepoPath
         {
@@ -673,11 +729,31 @@ namespace BridgeSQL
                 UpdatedWhere(Mode + "-WhereFileStore");
         }
 
+        public string FormTags()
+        {
+            List<string> paths = new List<string>();
+            if (SERVER != "") paths.Add(SERVER);
+            if (DB != "") paths.Add(DB);
+            if (OBJ != "") paths.Add(OBJ);
+            return string.Join("_", paths);
+        }
+
+        public string FormTags2()
+        {
+            List<string> paths = new List<string>();
+            if (SERVER2 != "") paths.Add(SERVER2);
+            if (DB2 != "") paths.Add(DB2);
+            if (OBJ2 != "") paths.Add(OBJ2);
+            return string.Join("_", paths);
+        }
+
         public string FormRepoPath()
         {
             string path = "";
+            bool isStrict = (IsDefault || UseTemp) ? true : _isStrict;
             bool hasDB = (SERVER != "" && DB != "");
-            if (hasDB)
+
+            if ((isStrict && hasDB) || !isStrict)
             {
                 if (IsDefault)
                 {
@@ -698,32 +774,18 @@ namespace BridgeSQL
         // currently only compareDir uses this
         public string FormRepoPath2()
         {
-            //string path = "";
-            //if (SERVER2 != "" && DB2 != "")
-            //{
-            //    if (IsDefault)
-            //    {
-            //        path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, SERVER2, DB2);
-            //    }
-            //    else if (UseTemp)
-            //    {
-            //        path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, "tempServer", DB2);
-            //    }
-            //    else
-            //    {
-            //        path = _RepoPath2;
-            //    }
-            //}
-            //return path;
-
-            return _RepoPath2;
+            string path = "";
+            path = _RepoPath2;
+            return path;
         }
 
         public string FormLogPath()
         {
             string path = "";
+            bool isStrict = (IsDefault || UseTemp) ? true : _isStrict;
             bool hasDB = (SERVER != "" && DB != "");
-            if (hasDB)
+
+            if ((isStrict && hasDB) || !isStrict)
             {
                 if (Mode == "compareDir")
                 {
@@ -765,7 +827,7 @@ namespace BridgeSQL
             }
             else
             {
-                path = _RepoPath;
+                path = _OutPath;
             }
             return path;
         }
@@ -798,26 +860,36 @@ namespace BridgeSQL
         public string GetLogPath(string filename = "")
         {
             string path = FormLogPath();
-
+            if (path == "") return path;
             if (Mode == "compareDir")
             {
-                path = string.Format(@"{0}\{1}\{2}", path, "compared", DateTime.Now.ToOADate().ToString());
-                if (filename == "") filename = "log.txt";
+                path = string.Format(@"{0}\{1}\{2}", path, "compared", AutomationDate);
             }
             if (filename != "") path = string.Format(@"{0}\{1}", path, filename);
             return path;
         }
 
         // currently only compareDir uses this
-        public string GetOutPath(string filename = "")
+        public string GetOutPath(string filename = "", string subdir = "")
         {
             string path = FormOutPath();
-            path = string.Format(@"{0}\{1}\{2}", path, "compared", DateTime.Now.ToOADate().ToString());
+            if (path == "") return path;
 
-            // put in default
+            path = string.Format(@"{0}\{1}\{2}", path, "compared", AutomationDate);
             if (filename == "") filename = "result.txt";
             if (filename != "") path = string.Format(@"{0}\{1}", path, filename);
             return path;
+        }
+
+        public string AutomationDate = "[Automation]";
+        public string GenAutomationDate()
+        {
+            AutomationDate = DateTime.Now.ToOADate().ToString();
+            return AutomationDate;
+        }
+        public void InvalidateAutomationDate()
+        {
+            AutomationDate = "[Automation]";
         }
         // Unsuccessful: force string to return ""
         // Successful: return appropriate string
@@ -831,22 +903,33 @@ namespace BridgeSQL
             {
                 //Generic settings
                 Regex reg = new Regex("\"");
-                compiled = compiled + string.Format(template, "AuthString", reg.Replace(CON.ConnectionString, "\\\""));
+
                 compiled = compiled + string.Format(template, "SeqAction", reg.Replace(SeqAction, "\\\""));
                 compiled = compiled + string.Format(template, "DBAction", reg.Replace(DBAction, "\\\""));
                 compiled = compiled + string.Format(template, "FileAction", reg.Replace(FileAction, "\\\""));
+
+                compiled = compiled + string.Format(template, "LogPath", reg.Replace(GetLogPath(), "\\\""));
                 compiled = compiled + string.Format(template, "LogSuffix", reg.Replace(LogSuffix, "\\\""));
                 compiled = compiled + string.Format(template, "LogKill", ManaSQLConfig.EnableLogging ? "0" : "1");
 
                 if (Mode == "compareDir")
                 {
-                    compiled = compiled + string.Format(template, "OutPath", reg.Replace(GetOutPath(), "\\\""));
+                    string subdir = string.Format(
+                        @"{0}_{1}_{2}"
+                        , FormTags()
+                        , FormTags2()
+                        , AutomationDate
+                    );
+                    compiled = compiled + string.Format(template, "RepoPath", reg.Replace(GetRepoPath(), "\\\""));
+                    compiled = compiled + string.Format(template, "Repo2Path", reg.Replace(GetRepoPath2(), "\\\""));
                     compiled = compiled + string.Format(template, "LogPath", reg.Replace(GetLogPath(), "\\\""));
+                    compiled = compiled + string.Format(template, "OutPath", reg.Replace(GetOutPath(), "\\\""));
+                    success = true;
                 }
                 else
                 {
+                    compiled = compiled + string.Format(template, "AuthString", reg.Replace(CON.ConnectionString, "\\\""));
                     compiled = compiled + string.Format(template, "RepoPath", reg.Replace(GetRepoPath(), "\\\""));
-                    compiled = compiled + string.Format(template, "LogPath", reg.Replace(GetLogPath(), "\\\""));
 
                     if (Mode == "extract" || Mode == "compareFile1" || Mode == "compareFile2")
                     {
