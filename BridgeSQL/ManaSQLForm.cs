@@ -393,20 +393,20 @@ namespace BridgeSQL
             }
             else if (control.Equals(compareFileAction2))
             {
-                string path1 = ManaSQLConfig.CompareFile1.FormSelectedSSPFilePaths()[0];
-                string path2 = ManaSQLConfig.CompareFile2.FormSelectedSSPFilePaths()[0];
-                string indicator1 = ManaSQLConfig.CompareFile2.FormTags();
-                string indicator2 = ManaSQLConfig.CompareFile2.FormTags();
+                string pathRight = ManaSQLConfig.CompareFile1.FormSelectedSSPFilePaths()[0];
+                string pathLeft = ManaSQLConfig.CompareFile2.FormSelectedSSPFilePaths()[0];
+                string indicatorRight = ManaSQLConfig.CompareFile1.FormTags();
+                string indicatorLeft = ManaSQLConfig.CompareFile2.FormTags();
 
                 ManaProcess.runExe(
                     ManaSQLConfig.TProcPath
                     , TProcCommands.Diff(
-                        path1
-                        , path2
-                        , indicator1
-                        , indicator2
-                        , path1
-                        , path2
+                        pathLeft
+                        , pathRight
+                        , indicatorLeft
+                        , indicatorRight
+                        , pathLeft
+                        , pathRight
                         )
                     , false
                     );
