@@ -327,11 +327,13 @@ namespace BridgeSQL
         public string SERVER = "";
         public string DB = "";
         public string OBJ = "";
+        public string TYPE = "";
 
         public IOeNode NODE2;
         public string SERVER2 = "";
         public string DB2 = "";
         public string OBJ2 = "";
+        public string TYPE2 = "";
 
         // 1.0 static items
         private string Mode = "";
@@ -407,6 +409,7 @@ namespace BridgeSQL
                 SERVER2 = newDetails[0];
                 DB2 = newDetails[1];
                 OBJ2 = newDetails[2];
+                TYPE2 = newDetails[3];
                 currNode = NODE2;
             }
             else
@@ -414,12 +417,17 @@ namespace BridgeSQL
                 SERVER = newDetails[0];
                 DB = newDetails[1];
                 OBJ = newDetails[2];
+                TYPE = newDetails[3];
                 currNode = NODE;
             }
             string[] currDetails = GetNodeDetails(currNode);
 
             //ommit initiation, all items are empty
-            if (currNode != null && (newDetails[0] != currDetails[0] || newDetails[1] != currDetails[1]))
+            if (currNode != null
+                && (newDetails[0] != currDetails[0]
+                || newDetails[1] != currDetails[1]
+                || newDetails[3] != currDetails[3])
+                )
             {
                 ResetWhereSSP(false);
                 ResetWhereFiles(false);
@@ -604,6 +612,7 @@ namespace BridgeSQL
             string dbname = "";
             string servername = "";
             string objname = "";
+            string objtype = "";
             bool validDBI = false;
 
             if (theNode != null)
@@ -618,10 +627,12 @@ namespace BridgeSQL
                         if (theNode.Type == "StoredProcedures")
                         {
                             dbname = theNode.Name;
+                            objtype = "StoredProcedures";
                         }
                         else if (theNode.Type == "StoredProcedure" && validDBI)
                         {
                             dbname = DBI.DatabaseName;
+                            objtype = "StoredProcedures";
                         }
                     }
                     else if (Mode == "compareFile2" || Mode == "compareFile1")
@@ -631,11 +642,12 @@ namespace BridgeSQL
                         {
                             dbname = DBI.DatabaseName;
                             objname = DBI.ObjectName;
+                            objtype = "StoredProcedures";
                         }
                     }
                 }
             }
-            return new string[3] { servername, dbname, objname };
+            return new string[4] { servername, dbname, objname, objtype };
         }
 
         //triggered when opening/ closing new connection
@@ -750,24 +762,33 @@ namespace BridgeSQL
         public string FormRepoPath()
         {
             string path = "";
+            string subdir = "";
             bool isStrict = (IsDefault || UseTemp) ? true : _isStrict;
             bool hasDB = (SERVER != "" && DB != "");
+
+            if (TYPE == "StoredProcedures")
+                subdir = TYPE;
+            else if (TYPE == "UserDefinedFunctions")
+                subdir = TYPE;
 
             if ((isStrict && hasDB) || !isStrict)
             {
                 if (IsDefault)
                 {
                     path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, SERVER, DB);
+                    if (subdir != "") path = string.Format(@"{0}\{1}", path, subdir);
                 }
                 else if (UseTemp)
                 {
                     path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, "tempServer", DB);
+                    if (subdir != "") path = string.Format(@"{0}\{1}", path, subdir);
                 }
                 else
                 {
                     path = _RepoPath;
                 }
             }
+
             return path;
         }
 

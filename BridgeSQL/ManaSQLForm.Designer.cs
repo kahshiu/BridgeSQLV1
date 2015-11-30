@@ -114,6 +114,8 @@
             this.compareDirResultLabel = new System.Windows.Forms.Label();
             this.compareDirResult = new System.Windows.Forms.TextBox();
             this.compareDirResultWarning = new System.Windows.Forms.Label();
+            this.compareDirLogLocationPath = new System.Windows.Forms.Label();
+            this.compareDirResultLocationPath = new System.Windows.Forms.Label();
             this.compareDirLogLabel = new System.Windows.Forms.Label();
             this.compareDirCompare = new System.Windows.Forms.Button();
             this.compareDirLog = new System.Windows.Forms.TextBox();
@@ -159,8 +161,6 @@
             this.exploreText = new System.Windows.Forms.ToolStripMenuItem();
             this.fileSearch = new System.Windows.Forms.OpenFileDialog();
             this.favPaths = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.compareDirResultLocationPath = new System.Windows.Forms.Label();
-            this.compareDirLogLocationPath = new System.Windows.Forms.Label();
             this.tab.SuspendLayout();
             this.extract.SuspendLayout();
             this.upload.SuspendLayout();
@@ -304,7 +304,7 @@
             // 
             // extractList
             // 
-            this.extractList.Location = new System.Drawing.Point(382, 289);
+            this.extractList.Location = new System.Drawing.Point(382, 276);
             this.extractList.Name = "extractList";
             this.extractList.Size = new System.Drawing.Size(125, 23);
             this.extractList.TabIndex = 3;
@@ -314,7 +314,7 @@
             // 
             // extractClear
             // 
-            this.extractClear.Location = new System.Drawing.Point(382, 318);
+            this.extractClear.Location = new System.Drawing.Point(382, 305);
             this.extractClear.Name = "extractClear";
             this.extractClear.Size = new System.Drawing.Size(125, 23);
             this.extractClear.TabIndex = 4;
@@ -326,7 +326,7 @@
             // 
             this.extractSSP.FormattingEnabled = true;
             this.extractSSP.ItemHeight = 16;
-            this.extractSSP.Location = new System.Drawing.Point(9, 289);
+            this.extractSSP.Location = new System.Drawing.Point(9, 276);
             this.extractSSP.Name = "extractSSP";
             this.extractSSP.Size = new System.Drawing.Size(367, 436);
             this.extractSSP.TabIndex = 0;
@@ -345,7 +345,7 @@
             // extractSSPLabel
             // 
             this.extractSSPLabel.AutoSize = true;
-            this.extractSSPLabel.Location = new System.Drawing.Point(6, 269);
+            this.extractSSPLabel.Location = new System.Drawing.Point(6, 256);
             this.extractSSPLabel.Name = "extractSSPLabel";
             this.extractSSPLabel.Size = new System.Drawing.Size(104, 17);
             this.extractSSPLabel.TabIndex = 0;
@@ -441,7 +441,7 @@
             // 
             // uploadSelectFromFile
             // 
-            this.uploadSelectFromFile.Location = new System.Drawing.Point(382, 289);
+            this.uploadSelectFromFile.Location = new System.Drawing.Point(383, 276);
             this.uploadSelectFromFile.Name = "uploadSelectFromFile";
             this.uploadSelectFromFile.Size = new System.Drawing.Size(140, 23);
             this.uploadSelectFromFile.TabIndex = 3;
@@ -451,7 +451,7 @@
             // 
             // uploadList
             // 
-            this.uploadList.Location = new System.Drawing.Point(382, 345);
+            this.uploadList.Location = new System.Drawing.Point(383, 332);
             this.uploadList.Name = "uploadList";
             this.uploadList.Size = new System.Drawing.Size(140, 23);
             this.uploadList.TabIndex = 5;
@@ -462,7 +462,7 @@
             // uploadCheckAll
             // 
             this.uploadCheckAll.AutoSize = true;
-            this.uploadCheckAll.Location = new System.Drawing.Point(382, 318);
+            this.uploadCheckAll.Location = new System.Drawing.Point(383, 305);
             this.uploadCheckAll.Name = "uploadCheckAll";
             this.uploadCheckAll.Size = new System.Drawing.Size(88, 21);
             this.uploadCheckAll.TabIndex = 4;
@@ -517,7 +517,7 @@
             // uploadSSPLabel
             // 
             this.uploadSSPLabel.AutoSize = true;
-            this.uploadSSPLabel.Location = new System.Drawing.Point(6, 269);
+            this.uploadSSPLabel.Location = new System.Drawing.Point(6, 256);
             this.uploadSSPLabel.Name = "uploadSSPLabel";
             this.uploadSSPLabel.Size = new System.Drawing.Size(84, 17);
             this.uploadSSPLabel.TabIndex = 0;
@@ -581,7 +581,7 @@
             // 
             this.uploadSSP.CheckOnClick = true;
             this.uploadSSP.FormattingEnabled = true;
-            this.uploadSSP.Location = new System.Drawing.Point(9, 289);
+            this.uploadSSP.Location = new System.Drawing.Point(9, 276);
             this.uploadSSP.Name = "uploadSSP";
             this.uploadSSP.Size = new System.Drawing.Size(367, 429);
             this.uploadSSP.TabIndex = 0;
@@ -1099,6 +1099,24 @@
             this.compareDirResultWarning.TabIndex = 46;
             this.compareDirResultWarning.Text = "Directory not exist!";
             // 
+            // compareDirLogLocationPath
+            // 
+            this.compareDirLogLocationPath.AutoSize = true;
+            this.compareDirLogLocationPath.Location = new System.Drawing.Point(8, 257);
+            this.compareDirLogLocationPath.Name = "compareDirLogLocationPath";
+            this.compareDirLogLocationPath.Size = new System.Drawing.Size(103, 17);
+            this.compareDirLogLocationPath.TabIndex = 44;
+            this.compareDirLogLocationPath.Text = "[Location Path]";
+            // 
+            // compareDirResultLocationPath
+            // 
+            this.compareDirResultLocationPath.AutoSize = true;
+            this.compareDirResultLocationPath.Location = new System.Drawing.Point(8, 361);
+            this.compareDirResultLocationPath.Name = "compareDirResultLocationPath";
+            this.compareDirResultLocationPath.Size = new System.Drawing.Size(103, 17);
+            this.compareDirResultLocationPath.TabIndex = 44;
+            this.compareDirResultLocationPath.Text = "[Location Path]";
+            // 
             // compareDirLogLabel
             // 
             this.compareDirLogLabel.AutoSize = true;
@@ -1564,24 +1582,6 @@
             this.favPaths.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.favPaths.Name = "favPaths";
             this.favPaths.Size = new System.Drawing.Size(67, 4);
-            // 
-            // compareDirResultLocationPath
-            // 
-            this.compareDirResultLocationPath.AutoSize = true;
-            this.compareDirResultLocationPath.Location = new System.Drawing.Point(8, 361);
-            this.compareDirResultLocationPath.Name = "compareDirResultLocationPath";
-            this.compareDirResultLocationPath.Size = new System.Drawing.Size(103, 17);
-            this.compareDirResultLocationPath.TabIndex = 44;
-            this.compareDirResultLocationPath.Text = "[Location Path]";
-            // 
-            // compareDirLogLocationPath
-            // 
-            this.compareDirLogLocationPath.AutoSize = true;
-            this.compareDirLogLocationPath.Location = new System.Drawing.Point(8, 257);
-            this.compareDirLogLocationPath.Name = "compareDirLogLocationPath";
-            this.compareDirLogLocationPath.Size = new System.Drawing.Size(103, 17);
-            this.compareDirLogLocationPath.TabIndex = 44;
-            this.compareDirLogLocationPath.Text = "[Location Path]";
             // 
             // ManaSQLForm
             // 

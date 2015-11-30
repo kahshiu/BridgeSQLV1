@@ -8,7 +8,7 @@ namespace BridgeSQL
         public override bool AppliesTo(ObjectExplorerNodeDescriptorBase oeNode)
         {
             var theNode = (IOeNode)oeNode;
-            return 
+            return
                 ManaSQLConfig.ValidGenPaths
                 && ManaSQLConfig.Extract.ValidPaths
                 && ManaSQLConfig.ShowExtract
