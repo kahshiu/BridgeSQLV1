@@ -27,8 +27,8 @@ namespace BridgeSQL
         public ISsmsFunctionalityProvider6 mainPlug;
 
         private string errorMsg = @"Error: Some paths do not exist or do not contain sql files."
-            +Environment.NewLine
-            +"No action taken. Program will exist."
+            + Environment.NewLine
+            + "No action taken. Program will exist."
             ;
 
         public ManaSQLForm(ISsmsFunctionalityProvider6 thePlug)
@@ -170,18 +170,19 @@ namespace BridgeSQL
         }
 
         // START: ALL PATH TEXTBOXES
+        // handler for textbox onfocus
         private void StoreTextRef(object sender, EventArgs e)
         {
             var control = sender as TextBox;
-            if (!control.ReadOnly)
-            {
-                currentTextBox = control;
-                currentTextBoxIsValid = Util.ValidatePath(control.Text);
-            }
+            currentTextBoxIsValid = Util.ValidatePath(control.Text);
+            currentTextBox = control;
+
         }
+        // handler for textbox onblur
         private void UpdatePathWithLeave(object sender, EventArgs e)
         {
             var control = sender as TextBox;
+
             if (!control.ReadOnly)
             {
                 currentTextBox = null;
@@ -189,7 +190,7 @@ namespace BridgeSQL
                 UpdateTextBox(control.Name, control.Text);
             }
         }
-
+        // handler for textbox keyboard
         private void UpdatePathWithKey(object sender, KeyEventArgs e)
         {
             var control = sender as TextBox;
@@ -354,7 +355,7 @@ namespace BridgeSQL
 
         private void uploadList_Click(object sender, EventArgs e)
         {
-            if(ManaSQLConfig.Upload.ValidPaths)
+            if (ManaSQLConfig.Upload.ValidPaths)
             {
                 string args = ManaSQLConfig.Upload.CompileArgs();
                 args = "data " + args;
@@ -376,7 +377,7 @@ namespace BridgeSQL
             //TODO: implement defensive code here
             if (control.Equals(compareFileAction1))
             {
-                if(ManaSQLConfig.CompareFile1.ValidPaths && ManaSQLConfig.CompareFile2.ValidPaths)
+                if (ManaSQLConfig.CompareFile1.ValidPaths && ManaSQLConfig.CompareFile2.ValidPaths)
                 {
                     args = ManaSQLConfig.CompareFile1.CompileArgs();
                     args = "data " + args;
@@ -417,7 +418,7 @@ namespace BridgeSQL
         private void compareDirCompare_Click(object sender, EventArgs e)
         {
             //TODO: implement defensive code here
-            if(!ManaSQLConfig.CompareDir.ValidPaths)
+            if (!ManaSQLConfig.CompareDir.ValidPaths)
             {
                 MessageBox.Show(errorMsg);
                 return;
