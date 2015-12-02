@@ -25,7 +25,7 @@ namespace BridgeSQL
         public static bool IsSVNMerge = true;
         public static bool IsSVNBlame = true;
         public static string GenRepoPath = @"c:\repoSSP";
-        public static string GenManaPath = @"c:\SqlMana\SqlMana.exe";
+        public static string GenManaPath = @"C:\SSMS_plugins\SQLMana\SqlMana.exe";
         public static string GenTProcPath = @"c:\Program Files\TortoiseSVN\bin\TortoiseProc.exe";
         public static List<string> CustomPaths = new List<string>();
 
