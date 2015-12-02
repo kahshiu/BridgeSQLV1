@@ -11,6 +11,7 @@ namespace BridgeSQL
     public class ManaSQLConfig
     {
         public static string Mode = "general";
+        public static string Extension = "sql";
         public static string WinPath = Environment.GetFolderPath(Environment.SpecialFolder.System);
 
         private static string _RepoPath;
@@ -399,7 +400,7 @@ namespace BridgeSQL
         //1. DatabaseObj (if true will show its details)
         //2. Connection details
         //3. Node name
-        public void UpdateVariables(IOeNode newNode, int node = 1)
+        public void UpdateVariables(IOeNode newNode, int node = 1, bool trigger = true)
         {
             // setting variables of the new NODE first
             IOeNode currNode;
@@ -422,27 +423,26 @@ namespace BridgeSQL
             }
             string[] currDetails = GetNodeDetails(currNode);
 
-            //ommit initiation, all items are empty
-            if (currNode != null
-                && (newDetails[0] != currDetails[0]
+
+            if ((Mode == "extract"
+                || Mode == "upload"
+                || Mode == "compareDir"
+                )
+                && currNode != null                 //ommit initiation, all items are empty
+                && (newDetails[0] != currDetails[0] //changed details
                 || newDetails[1] != currDetails[1]
-                || newDetails[3] != currDetails[3])
+                || newDetails[3] != currDetails[3]
+                )
                 )
             {
                 ResetWhereSSP(false);
                 ResetWhereFiles(false);
             }
 
-            if (node == 2)
-            {
-                NODE2 = newNode;
-            }
-            else
-            {
-                NODE = newNode;
-            }
+            if (node == 2) { NODE2 = newNode; }
+            else { NODE = newNode; }
 
-            if (UpdatedVariables != null)
+            if (trigger && UpdatedVariables != null)
             {
                 UpdatedVariables(Mode);
             }
@@ -478,11 +478,13 @@ namespace BridgeSQL
             get
             {
                 bool flag = false;
+
                 if (Mode == "compareDir"
                     || Mode == "upload")
                 {
+                    if (FormRepoPath() == "") return flag;
                     flag = Util.ValidatePath(FormRepoPath())
-                          && Util.HasFile(FormRepoPath(), "sql");
+                          && Util.HasFile(FormRepoPath(), ManaSQLConfig.Extension);
                 }
                 else if (Mode == "compareFile1"
                     || Mode == "compareFile2"
@@ -498,10 +500,12 @@ namespace BridgeSQL
             get
             {
                 bool flag = false;
+
                 if (Mode == "compareDir")
                 {
+                    if (FormRepoPath2() == "") return flag;
                     flag = Util.ValidatePath(FormRepoPath2())
-                        && Util.HasFile(FormRepoPath(), "sql");
+                        && Util.HasFile(FormRepoPath2(), ManaSQLConfig.Extension);
                 }
                 else if (Mode == "compareFile1"
                     || Mode == "compareFile2"
@@ -673,6 +677,47 @@ namespace BridgeSQL
                 }
                 return temp.Length == 0 ? temp : temp.Substring(1);
             }
+        }
+
+        public List<string> WhereSSPToFilename
+        {
+            get
+            {
+                List<string> equivalentFilename = new List<string>();
+                foreach (string ssp in WhereSSPStore)
+                {
+                    equivalentFilename.Add(string.Format(@"{0}.{1}", ssp, ManaSQLConfig.Extension));
+                }
+                return equivalentFilename;
+            }
+        }
+
+        public bool ExistsSSPFilename(int index = -1)
+        {
+            bool isExist = false;
+            List<string> temp = WhereSSPToFilename;
+
+            // check index only
+            if (index > -1)
+            {
+                if (temp.Count == 0)
+                {
+                    isExist = false;
+                    return isExist;
+                }
+                isExist = Util.ValidatePath(string.Format(@"{0}\{1}", GetRepoPath(), temp[index]), "file");
+            }
+
+            // index -1 indicates all
+            else
+            {
+                foreach (string currFilename in temp)
+                {
+                    isExist = Util.ValidatePath(string.Format(@"{0}\{1}", GetRepoPath(), temp[index]), "file");
+                    if (!isExist) break;
+                }
+            }
+            return isExist;
         }
 
         public List<string> WhereFileList
@@ -858,7 +903,7 @@ namespace BridgeSQL
             List<string> total = new List<string>();
             foreach (string ssp in WhereSSPStore)
             {
-                total.Add(GetRepoPath(string.Format(@"{0}.sql", ssp)));
+                total.Add(GetRepoPath(string.Format(@"{0}.{1}", ssp, ManaSQLConfig.Extension)));
             }
             return total;
         }

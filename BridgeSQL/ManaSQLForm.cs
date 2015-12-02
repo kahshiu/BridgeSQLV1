@@ -26,10 +26,11 @@ namespace BridgeSQL
         public string message = "";
         public ISsmsFunctionalityProvider6 mainPlug;
 
-        private string errorMsg = @"Error: Some paths do not exist or do not contain sql files."
-            + Environment.NewLine
-            + "No action taken. Program will exist."
-            ;
+        private string errorMsg = string.Format(
+            @"Error: Some paths do not exist or do not contain {0} files. {1} No action taken. Program will exit."
+                , ManaSQLConfig.Extension
+                , Environment.NewLine
+            );
 
         public ManaSQLForm(ISsmsFunctionalityProvider6 thePlug)
         {
@@ -830,9 +831,9 @@ namespace BridgeSQL
         private string GetWarningText(string repoPath)
         {
             string warningText = "Directory Not Exist";
-            if (!Util.HasFile(repoPath, "sql"))
+            if (!Util.HasFile(repoPath, ManaSQLConfig.Extension))
             {
-                warningText = "Directory contains no sql file";
+                warningText = string.Format(@"Directory contains no {0} file", ManaSQLConfig.Extension);
             }
             return warningText;
         }
@@ -1178,7 +1179,7 @@ namespace BridgeSQL
 
                 if (isActive)
                 {
-                    string[] filenames = Util.GetFilesWithExtension(ManaSQLConfig.Upload.FormRepoPath(), "sql").ToArray();
+                    string[] filenames = Util.GetFilesWithExtension(ManaSQLConfig.Upload.FormRepoPath(), ManaSQLConfig.Extension).ToArray();
                     uploadSSP.Items.Clear();
                     uploadSSP.Items.AddRange(filenames);
                 }
