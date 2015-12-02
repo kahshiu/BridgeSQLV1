@@ -1141,8 +1141,8 @@ namespace BridgeSQL
 
                 compareFileAction1.Enabled = isListed;
                 compareFileAction2.Enabled = isListed && isFileExist1 && isFileExist2;
-                compareFileAction3.Enabled = isListed && isFileExist1 && isFileExist2;
-                compareFileAction4.Enabled = isListed && isFileExist1 && isFileExist2;
+                compareFileAction3.Enabled = isListed && isFileExist1;
+                compareFileAction4.Enabled = isListed && isFileExist2;
             }
 
             if (Util.Contains(new string[] { "all", "compareDir" }, list))
