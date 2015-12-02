@@ -35,6 +35,8 @@ namespace BridgeSQL
 
         public static FixedSettings Extract = new FixedSettings("extract");
         public static FixedSettings Upload = new FixedSettings("upload");
+        public static FixedSettings UploadFile1 = new FixedSettings("uploadFile1");
+        public static FixedSettings UploadFile2 = new FixedSettings("uploadFile2");
         public static FixedSettings CompareFile1 = new FixedSettings("compareFile1");
         public static FixedSettings CompareFile2 = new FixedSettings("compareFile2");
         public static FixedSettings CompareDir = new FixedSettings("compareDir");
@@ -380,7 +382,7 @@ namespace BridgeSQL
                 DBAction = DBActions[0];
                 FileAction = FileActions[1];
             }
-            else if (Mode == "upload")
+            else if (Mode == "upload" || Mode == "uploadFile1" || Mode == "uploadFile2")
             {
                 SeqAction = SeqActions[1];
                 DBAction = DBActions[1];
@@ -480,7 +482,10 @@ namespace BridgeSQL
                 bool flag = false;
 
                 if (Mode == "compareDir"
-                    || Mode == "upload")
+                    || Mode == "upload"
+                    || Mode == "uploadFile1"
+                    || Mode == "uploadFile2"
+                    )
                 {
                     if (FormRepoPath() == "") return flag;
                     flag = Util.ValidatePath(FormRepoPath())
@@ -509,6 +514,8 @@ namespace BridgeSQL
                 }
                 else if (Mode == "compareFile1"
                     || Mode == "compareFile2"
+                    || Mode == "uploadFile2"
+                    || Mode == "uploadFile1"
                     || Mode == "extract"
                     || Mode == "upload")
                 { flag = true; }
@@ -525,6 +532,8 @@ namespace BridgeSQL
                 if (Mode == "compareDir"
                     || Mode == "compareFile1"
                     || Mode == "compareFile2"
+                    || Mode == "uploadFile1"
+                    || Mode == "uploadFile2"
                     || Mode == "extract"
                     || Mode == "upload")
                 { flag = !ManaSQLConfig.EnableLogging || (ManaSQLConfig.EnableLogging && FormLogPath() != ""); }
@@ -541,6 +550,8 @@ namespace BridgeSQL
                 if (Mode == "compareDir") { flag = FormOutPath() != ""; }
                 else if (Mode == "compareFile1"
                     || Mode == "compareFile2"
+                    || Mode == "uploadFile1"
+                    || Mode == "uploadFile2"
                     || Mode == "extract"
                     || Mode == "upload")
                 { flag = true; }
@@ -571,6 +582,9 @@ namespace BridgeSQL
             set
             {
                 _RepoPath = value;
+                if (Mode == "compareFile1") ManaSQLConfig.UploadFile1.RepoPath = value;
+                else if (Mode == "compareFile2") ManaSQLConfig.UploadFile2.RepoPath = value;
+
                 if (UpdatedVariables != null)
                     UpdatedVariables(Mode + "-RepoPath");
             }
@@ -592,6 +606,9 @@ namespace BridgeSQL
             set
             {
                 _LogPath = value;
+                if (Mode == "compareFile1") ManaSQLConfig.UploadFile1.LogPath = value;
+                else if (Mode == "compareFile2") ManaSQLConfig.UploadFile2.LogPath = value;
+
                 if (UpdatedVariables != null)
                     UpdatedVariables(Mode + "-LogPath");
             }
@@ -639,7 +656,11 @@ namespace BridgeSQL
                             objtype = "StoredProcedures";
                         }
                     }
-                    else if (Mode == "compareFile2" || Mode == "compareFile1")
+                    else if (Mode == "compareFile1" 
+                        || Mode == "compareFile2" 
+                        || Mode == "uploadFile1"
+                        || Mode == "uploadFile2"
+                        )
                     {
                         //if (validDBI)
                         if (theNode.Type == "StoredProcedure" && validDBI)
@@ -1015,7 +1036,7 @@ namespace BridgeSQL
                             success = false;
                         }
                     }
-                    else if (Mode == "upload")
+                    else if (Mode == "upload" || Mode == "uploadFile1" || Mode == "uploadFile2")
                     {
                         string temp = "";
                         foreach (string filename in WhereFileStore)

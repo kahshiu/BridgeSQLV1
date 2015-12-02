@@ -26,10 +26,13 @@ namespace BridgeSQL
             IOeNode theNode = (IOeNode)node;
             IDatabaseObjectInfo DBI;
 
+            ManaSQLConfig.UploadFile2.UpdateVariables(theNode);
             if (theNode.IsDatabaseObject && theNode.TryGetDatabaseObject(out DBI))
             {
                 ManaSQLConfig.CompareFile2.ResetWhereSSP(false);
                 ManaSQLConfig.CompareFile2.AppendWhereSSP(DBI.ObjectName,false);
+                ManaSQLConfig.UploadFile2.ResetWhereFiles(false);
+                ManaSQLConfig.UploadFile2.AppendWhereFile(string.Format("{0}.{1}", DBI.ObjectName, ManaSQLConfig.Extension), false);
             }
             ManaSQLConfig.CompareFile2.UpdateVariables(theNode);
         }

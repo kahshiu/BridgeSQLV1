@@ -161,6 +161,8 @@
             this.exploreText = new System.Windows.Forms.ToolStripMenuItem();
             this.fileSearch = new System.Windows.Forms.OpenFileDialog();
             this.favPaths = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.compareFileAction4 = new System.Windows.Forms.Button();
+            this.compareFileAction3 = new System.Windows.Forms.Button();
             this.tab.SuspendLayout();
             this.extract.SuspendLayout();
             this.upload.SuspendLayout();
@@ -601,6 +603,8 @@
             this.compareFile.Controls.Add(this.compareFile2TempPath);
             this.compareFile.Controls.Add(this.compareFile1TempPath);
             this.compareFile.Controls.Add(this.compareFileAction2);
+            this.compareFile.Controls.Add(this.compareFileAction3);
+            this.compareFile.Controls.Add(this.compareFileAction4);
             this.compareFile.Controls.Add(this.compareFileAction1);
             this.compareFile.Controls.Add(this.compareFile1Indicator);
             this.compareFile.Controls.Add(this.compareFile2Indicator);
@@ -631,6 +635,7 @@
             this.compareFile.TabIndex = 3;
             this.compareFile.Text = "Compare File";
             this.compareFile.UseVisualStyleBackColor = true;
+            this.compareFile.Click += new System.EventHandler(this.compareFile_Click);
             // 
             // compareFile2LogCreate
             // 
@@ -1583,6 +1588,29 @@
             this.favPaths.Name = "favPaths";
             this.favPaths.Size = new System.Drawing.Size(67, 4);
             // 
+            // 
+            // compareFileAction4
+            // 
+            this.compareFileAction4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareFileAction4.Location = new System.Drawing.Point(505, 512);
+            this.compareFileAction4.Name = "compareFileAction4";
+            this.compareFileAction4.Size = new System.Drawing.Size(172, 44);
+            this.compareFileAction4.TabIndex = 10;
+            this.compareFileAction4.Text = "Upload File 2";
+            this.compareFileAction4.UseVisualStyleBackColor = true;
+            this.compareFileAction4.Click += new System.EventHandler(this.compareFileAction1_Click);
+            // 
+            // compareFileAction3
+            // 
+            this.compareFileAction3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareFileAction3.Location = new System.Drawing.Point(204, 512);
+            this.compareFileAction3.Name = "compareFileAction3";
+            this.compareFileAction3.Size = new System.Drawing.Size(172, 44);
+            this.compareFileAction3.TabIndex = 10;
+            this.compareFileAction3.Text = "Upload File 1";
+            this.compareFileAction3.UseVisualStyleBackColor = true;
+            this.compareFileAction3.Click += new System.EventHandler(this.compareFileAction1_Click);
+            // 
             // ManaSQLForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1745,5 +1773,7 @@
         private System.Windows.Forms.CheckBox compareFile2TempPath;
         private System.Windows.Forms.Label compareDirLogLocationPath;
         private System.Windows.Forms.Label compareDirResultLocationPath;
+        private System.Windows.Forms.Button compareFileAction3;
+        private System.Windows.Forms.Button compareFileAction4;
     }
 }

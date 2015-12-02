@@ -12,7 +12,7 @@ namespace BridgeSQL
         public override bool AppliesTo(ObjectExplorerNodeDescriptorBase oeNode)
         {
             var theNode = (IOeNode)oeNode;
-            return 
+            return
                 ManaSQLConfig.ValidGenPaths
                 && ManaSQLConfig.ShowCompareFile
                 && theNode.Type == "StoredProcedure";
@@ -26,10 +26,13 @@ namespace BridgeSQL
             IOeNode theNode = (IOeNode)node;
             IDatabaseObjectInfo DBI;
 
+            ManaSQLConfig.UploadFile1.UpdateVariables(theNode);
             if (theNode.IsDatabaseObject && theNode.TryGetDatabaseObject(out DBI))
             {
                 ManaSQLConfig.CompareFile1.ResetWhereSSP(false);
-                ManaSQLConfig.CompareFile1.AppendWhereSSP(DBI.ObjectName,false);
+                ManaSQLConfig.CompareFile1.AppendWhereSSP(DBI.ObjectName, false);
+                ManaSQLConfig.UploadFile1.ResetWhereFiles(false);
+                ManaSQLConfig.UploadFile1.AppendWhereFile(string.Format("{0}.{1}", DBI.ObjectName, ManaSQLConfig.Extension), false);
             }
             ManaSQLConfig.CompareFile1.UpdateVariables(theNode);
         }

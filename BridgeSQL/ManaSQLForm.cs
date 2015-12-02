@@ -413,6 +413,34 @@ namespace BridgeSQL
                     , false
                     );
             }
+            else if (control.Equals(compareFileAction3))
+            {
+                if (ManaSQLConfig.UploadFile1.ValidPaths)
+                {
+                    args = ManaSQLConfig.UploadFile1.CompileArgs();
+                    args = "data " + args;
+                    ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+                }
+                else
+                {
+                    MessageBox.Show(errorMsg);
+                }
+            }
+            else if (control.Equals(compareFileAction4))
+            {
+                args = ManaSQLConfig.UploadFile2.CompileArgs();
+
+                if (ManaSQLConfig.UploadFile2.ValidPaths)
+                {
+                    args = ManaSQLConfig.UploadFile1.CompileArgs();
+                    args = "data " + args;
+                    ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+                }
+                else
+                {
+                    MessageBox.Show(errorMsg);
+                }
+            }
             // SVN merging
         }
 
@@ -1113,6 +1141,8 @@ namespace BridgeSQL
 
                 compareFileAction1.Enabled = isListed;
                 compareFileAction2.Enabled = isListed && isFileExist1 && isFileExist2;
+                compareFileAction3.Enabled = isListed && isFileExist1 && isFileExist2;
+                compareFileAction4.Enabled = isListed && isFileExist1 && isFileExist2;
             }
 
             if (Util.Contains(new string[] { "all", "compareDir" }, list))
