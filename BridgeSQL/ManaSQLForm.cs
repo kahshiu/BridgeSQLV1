@@ -1107,8 +1107,12 @@ namespace BridgeSQL
                     && ManaSQLConfig.CompareFile1.WhereSSPList.Count == 1
                     && ManaSQLConfig.CompareFile2.WhereSSPList.Count == 1
                     ;
+
+                bool isFileExist1 = ManaSQLConfig.CompareFile1.ExistsSSPFilename(0);
+                bool isFileExist2 = ManaSQLConfig.CompareFile2.ExistsSSPFilename(0);
+
                 compareFileAction1.Enabled = isListed;
-                compareFileAction2.Enabled = isListed;
+                compareFileAction2.Enabled = isListed && isFileExist1 && isFileExist2;
             }
 
             if (Util.Contains(new string[] { "all", "compareDir" }, list))
