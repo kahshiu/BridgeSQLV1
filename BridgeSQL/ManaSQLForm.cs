@@ -21,10 +21,12 @@ namespace BridgeSQL
         //[return: MarshalAs(UnmanagedType.Bool)]
         //static extern bool GetCaretPos(out Point lpPoint);
 
+        public ISsmsFunctionalityProvider6 mainPlug;
         public TextBox currentTextBox;
         public bool currentTextBoxIsValid = false;
+        public string filterText = "";
+        public bool filterTextCasing = false;
         public string message = "";
-        public ISsmsFunctionalityProvider6 mainPlug;
 
         private string errorMsg = string.Format(
             @"Error: Some paths do not exist or do not contain {0} files. {1} No action taken. Program will exit."
@@ -50,6 +52,7 @@ namespace BridgeSQL
             ManaSQLConfig.Upload.UpdatedVariables += new FixedSettings.VariablesHandler(RefreshLabel);
             ManaSQLConfig.Upload.UpdatedWhere += new FixedSettings.WhereHandler(RefreshListBoxItems);
             ManaSQLConfig.Upload.UpdatedWhere += new FixedSettings.WhereHandler(RefreshSelectedListBoxItems);
+            ManaSQLConfig.Upload.UpdatedWhere += new FixedSettings.WhereHandler(RefreshLabel);
 
             // page:comparefile
             // -------------- file 1
@@ -1190,6 +1193,12 @@ namespace BridgeSQL
             {
                 compareDirResultLocationPath.Text = ManaSQLConfig.CompareDir.GetOutPath();
             }
+
+            if (Util.Contains(new string[] { "all", "upload-WhereFileStore" }, list))
+            {
+                uploadSSPSelected.Items.Clear();
+                uploadSSPSelected.Items.AddRange(ManaSQLConfig.Upload.WhereFileList.ToArray());
+            }
         }
 
         // START: LISTBOXES
@@ -1213,9 +1222,7 @@ namespace BridgeSQL
 
                 if (isActive)
                 {
-                    string[] filenames = Util.GetFilesWithExtension(ManaSQLConfig.Upload.FormRepoPath(), ManaSQLConfig.Extension).ToArray();
-                    uploadSSP.Items.Clear();
-                    uploadSSP.Items.AddRange(filenames);
+                    FilterUploadList();
                 }
                 else
                 {
@@ -1228,6 +1235,25 @@ namespace BridgeSQL
                 customPathList.Items.Clear();
                 customPathList.Items.AddRange(ManaSQLConfig.GetCustomPaths().ToArray());
             }
+        }
+
+        private void FilterUploadList()
+        {
+            List<string> filenames = Util.GetFilesWithExtension(ManaSQLConfig.Upload.FormRepoPath(), ManaSQLConfig.Extension);
+            if (filterText != null && filterText != "")
+            {
+                for (int i = filenames.Count - 1; i > -1; i--)
+                {
+                    if (!Regex.IsMatch(
+                        filenames[i]
+                        , filterText
+                        , filterTextCasing?RegexOptions.IgnoreCase:RegexOptions.None)
+                        ) filenames.RemoveAt(i);
+                }
+            }
+
+            uploadSSP.Items.Clear();
+            uploadSSP.Items.AddRange(filenames.ToArray());
         }
 
         private void RefreshSelectedListBoxItems(string list)
@@ -1355,6 +1381,30 @@ namespace BridgeSQL
                 else if (control is CheckBox) (control as CheckBox).Enabled = isActive;
                 else if (control is ListBox) (control as ListBox).Enabled = isActive;
             }
+        }
+
+        private void FilterUploadListLeave(object sender, EventArgs e)
+        {
+            var control = sender as TextBox;
+            filterText = control.Text;
+            FilterUploadList();
+        }
+
+        private void FilterUploadListKey(object sender, KeyEventArgs e)
+        {
+            var control = sender as TextBox;
+            if (e.KeyCode == Keys.Enter)
+            {
+                filterText = control.Text;
+                FilterUploadList();
+            }
+        }
+
+        private void FilterUploadListCase(object sender, EventArgs e)
+        {
+            var control = sender as CheckBox;
+            filterTextCasing = control.CheckState == CheckState.Checked;
+            FilterUploadList();
         }
     }
 }

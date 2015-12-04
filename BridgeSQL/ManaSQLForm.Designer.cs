@@ -50,6 +50,12 @@
             this.extractRepo = new System.Windows.Forms.TextBox();
             this.extractRepoLabel = new System.Windows.Forms.Label();
             this.upload = new System.Windows.Forms.TabPage();
+            this.uploadSSPSelected = new System.Windows.Forms.ListBox();
+            this.uploadCheckCase = new System.Windows.Forms.CheckBox();
+            this.uploadSSPFilterInstruction = new System.Windows.Forms.Label();
+            this.uploadSSPFilterLabel = new System.Windows.Forms.Label();
+            this.uploadSSPFilter = new System.Windows.Forms.TextBox();
+            this.uploadSSPSumLabel = new System.Windows.Forms.Label();
             this.uploadLogCreate = new System.Windows.Forms.Button();
             this.uploadRepoCreate = new System.Windows.Forms.Button();
             this.uploadDDir = new System.Windows.Forms.CheckBox();
@@ -81,6 +87,8 @@
             this.compareFile2TempPath = new System.Windows.Forms.CheckBox();
             this.compareFile1TempPath = new System.Windows.Forms.CheckBox();
             this.compareFileAction2 = new System.Windows.Forms.Button();
+            this.compareFileAction3 = new System.Windows.Forms.Button();
+            this.compareFileAction4 = new System.Windows.Forms.Button();
             this.compareFileAction1 = new System.Windows.Forms.Button();
             this.compareFile1Indicator = new System.Windows.Forms.Label();
             this.compareFile2Indicator = new System.Windows.Forms.Label();
@@ -161,8 +169,6 @@
             this.exploreText = new System.Windows.Forms.ToolStripMenuItem();
             this.fileSearch = new System.Windows.Forms.OpenFileDialog();
             this.favPaths = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.compareFileAction4 = new System.Windows.Forms.Button();
-            this.compareFileAction3 = new System.Windows.Forms.Button();
             this.tab.SuspendLayout();
             this.extract.SuspendLayout();
             this.upload.SuspendLayout();
@@ -308,7 +314,7 @@
             // 
             this.extractList.Location = new System.Drawing.Point(382, 276);
             this.extractList.Name = "extractList";
-            this.extractList.Size = new System.Drawing.Size(125, 23);
+            this.extractList.Size = new System.Drawing.Size(140, 23);
             this.extractList.TabIndex = 3;
             this.extractList.Text = "Extract to File";
             this.extractList.UseVisualStyleBackColor = true;
@@ -318,7 +324,7 @@
             // 
             this.extractClear.Location = new System.Drawing.Point(382, 305);
             this.extractClear.Name = "extractClear";
-            this.extractClear.Size = new System.Drawing.Size(125, 23);
+            this.extractClear.Size = new System.Drawing.Size(140, 23);
             this.extractClear.TabIndex = 4;
             this.extractClear.Text = "Clear";
             this.extractClear.UseVisualStyleBackColor = true;
@@ -384,6 +390,12 @@
             // 
             // upload
             // 
+            this.upload.Controls.Add(this.uploadSSPSelected);
+            this.upload.Controls.Add(this.uploadCheckCase);
+            this.upload.Controls.Add(this.uploadSSPFilterInstruction);
+            this.upload.Controls.Add(this.uploadSSPFilterLabel);
+            this.upload.Controls.Add(this.uploadSSPFilter);
+            this.upload.Controls.Add(this.uploadSSPSumLabel);
             this.upload.Controls.Add(this.uploadLogCreate);
             this.upload.Controls.Add(this.uploadRepoCreate);
             this.upload.Controls.Add(this.uploadDDir);
@@ -409,6 +421,62 @@
             this.upload.TabIndex = 1;
             this.upload.Text = "Upload";
             this.upload.UseVisualStyleBackColor = true;
+            // 
+            // uploadSSPSelected
+            // 
+            this.uploadSSPSelected.FormattingEnabled = true;
+            this.uploadSSPSelected.ItemHeight = 16;
+            this.uploadSSPSelected.Location = new System.Drawing.Point(582, 276);
+            this.uploadSSPSelected.Name = "uploadSSPSelected";
+            this.uploadSSPSelected.Size = new System.Drawing.Size(367, 420);
+            this.uploadSSPSelected.TabIndex = 16;
+            // 
+            // uploadCheckCase
+            // 
+            this.uploadCheckCase.AutoSize = true;
+            this.uploadCheckCase.Location = new System.Drawing.Point(382, 469);
+            this.uploadCheckCase.Name = "uploadCheckCase";
+            this.uploadCheckCase.Size = new System.Drawing.Size(121, 21);
+            this.uploadCheckCase.TabIndex = 15;
+            this.uploadCheckCase.Text = "Case sensitive";
+            this.uploadCheckCase.UseVisualStyleBackColor = true;
+            this.uploadCheckCase.Click += new System.EventHandler(this.FilterUploadListCase);
+            // 
+            // uploadSSPFilterInstruction
+            // 
+            this.uploadSSPFilterInstruction.AutoSize = true;
+            this.uploadSSPFilterInstruction.Location = new System.Drawing.Point(379, 421);
+            this.uploadSSPFilterInstruction.Name = "uploadSSPFilterInstruction";
+            this.uploadSSPFilterInstruction.Size = new System.Drawing.Size(147, 17);
+            this.uploadSSPFilterInstruction.TabIndex = 14;
+            this.uploadSSPFilterInstruction.Text = "[Press \"Enter\" to filter]";
+            // 
+            // uploadSSPFilterLabel
+            // 
+            this.uploadSSPFilterLabel.AutoSize = true;
+            this.uploadSSPFilterLabel.Location = new System.Drawing.Point(379, 404);
+            this.uploadSSPFilterLabel.Name = "uploadSSPFilterLabel";
+            this.uploadSSPFilterLabel.Size = new System.Drawing.Size(111, 17);
+            this.uploadSSPFilterLabel.TabIndex = 13;
+            this.uploadSSPFilterLabel.Text = "Filter SSP Name";
+            // 
+            // uploadSSPFilter
+            // 
+            this.uploadSSPFilter.Location = new System.Drawing.Point(382, 441);
+            this.uploadSSPFilter.Name = "uploadSSPFilter";
+            this.uploadSSPFilter.Size = new System.Drawing.Size(140, 22);
+            this.uploadSSPFilter.TabIndex = 12;
+            this.uploadSSPFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FilterUploadListKey);
+            this.uploadSSPFilter.Leave += new System.EventHandler(this.FilterUploadListLeave);
+            // 
+            // uploadSSPSumLabel
+            // 
+            this.uploadSSPSumLabel.AutoSize = true;
+            this.uploadSSPSumLabel.Location = new System.Drawing.Point(579, 256);
+            this.uploadSSPSumLabel.Name = "uploadSSPSumLabel";
+            this.uploadSSPSumLabel.Size = new System.Drawing.Size(143, 17);
+            this.uploadSSPSumLabel.TabIndex = 9;
+            this.uploadSSPSumLabel.Text = "Selected Files to load";
             // 
             // uploadLogCreate
             // 
@@ -443,28 +511,28 @@
             // 
             // uploadSelectFromFile
             // 
-            this.uploadSelectFromFile.Location = new System.Drawing.Point(383, 276);
+            this.uploadSelectFromFile.Location = new System.Drawing.Point(382, 305);
             this.uploadSelectFromFile.Name = "uploadSelectFromFile";
             this.uploadSelectFromFile.Size = new System.Drawing.Size(140, 23);
             this.uploadSelectFromFile.TabIndex = 3;
-            this.uploadSelectFromFile.Text = "Tick entries in file";
+            this.uploadSelectFromFile.Text = "Tick Entries in File";
             this.uploadSelectFromFile.UseVisualStyleBackColor = true;
             this.uploadSelectFromFile.Click += new System.EventHandler(this.uploadSelectFromFile_Click);
             // 
             // uploadList
             // 
-            this.uploadList.Location = new System.Drawing.Point(383, 332);
+            this.uploadList.Location = new System.Drawing.Point(382, 276);
             this.uploadList.Name = "uploadList";
             this.uploadList.Size = new System.Drawing.Size(140, 23);
             this.uploadList.TabIndex = 5;
-            this.uploadList.Text = "Load to database";
+            this.uploadList.Text = "Load to Database";
             this.uploadList.UseVisualStyleBackColor = true;
             this.uploadList.Click += new System.EventHandler(this.uploadList_Click);
             // 
             // uploadCheckAll
             // 
             this.uploadCheckAll.AutoSize = true;
-            this.uploadCheckAll.Location = new System.Drawing.Point(383, 305);
+            this.uploadCheckAll.Location = new System.Drawing.Point(382, 334);
             this.uploadCheckAll.Name = "uploadCheckAll";
             this.uploadCheckAll.Size = new System.Drawing.Size(88, 21);
             this.uploadCheckAll.TabIndex = 4;
@@ -521,9 +589,9 @@
             this.uploadSSPLabel.AutoSize = true;
             this.uploadSSPLabel.Location = new System.Drawing.Point(6, 256);
             this.uploadSSPLabel.Name = "uploadSSPLabel";
-            this.uploadSSPLabel.Size = new System.Drawing.Size(84, 17);
+            this.uploadSSPLabel.Size = new System.Drawing.Size(111, 17);
             this.uploadSSPLabel.TabIndex = 0;
-            this.uploadSSPLabel.Text = "Files to load";
+            this.uploadSSPLabel.Text = "Files in directory";
             // 
             // uploadLogLabel
             // 
@@ -635,7 +703,6 @@
             this.compareFile.TabIndex = 3;
             this.compareFile.Text = "Compare File";
             this.compareFile.UseVisualStyleBackColor = true;
-            this.compareFile.Click += new System.EventHandler(this.compareFile_Click);
             // 
             // compareFile2LogCreate
             // 
@@ -758,6 +825,28 @@
             this.compareFileAction2.Text = "Compare Files";
             this.compareFileAction2.UseVisualStyleBackColor = true;
             this.compareFileAction2.Click += new System.EventHandler(this.compareFileAction1_Click);
+            // 
+            // compareFileAction3
+            // 
+            this.compareFileAction3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareFileAction3.Location = new System.Drawing.Point(204, 512);
+            this.compareFileAction3.Name = "compareFileAction3";
+            this.compareFileAction3.Size = new System.Drawing.Size(172, 44);
+            this.compareFileAction3.TabIndex = 10;
+            this.compareFileAction3.Text = "Upload File 1 to DB";
+            this.compareFileAction3.UseVisualStyleBackColor = true;
+            this.compareFileAction3.Click += new System.EventHandler(this.compareFileAction1_Click);
+            // 
+            // compareFileAction4
+            // 
+            this.compareFileAction4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareFileAction4.Location = new System.Drawing.Point(505, 512);
+            this.compareFileAction4.Name = "compareFileAction4";
+            this.compareFileAction4.Size = new System.Drawing.Size(172, 44);
+            this.compareFileAction4.TabIndex = 10;
+            this.compareFileAction4.Text = "Upload File 2 to DB";
+            this.compareFileAction4.UseVisualStyleBackColor = true;
+            this.compareFileAction4.Click += new System.EventHandler(this.compareFileAction1_Click);
             // 
             // compareFileAction1
             // 
@@ -1588,29 +1677,6 @@
             this.favPaths.Name = "favPaths";
             this.favPaths.Size = new System.Drawing.Size(67, 4);
             // 
-            // 
-            // compareFileAction4
-            // 
-            this.compareFileAction4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareFileAction4.Location = new System.Drawing.Point(505, 512);
-            this.compareFileAction4.Name = "compareFileAction4";
-            this.compareFileAction4.Size = new System.Drawing.Size(172, 44);
-            this.compareFileAction4.TabIndex = 10;
-            this.compareFileAction4.Text = "Upload File 2";
-            this.compareFileAction4.UseVisualStyleBackColor = true;
-            this.compareFileAction4.Click += new System.EventHandler(this.compareFileAction1_Click);
-            // 
-            // compareFileAction3
-            // 
-            this.compareFileAction3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareFileAction3.Location = new System.Drawing.Point(204, 512);
-            this.compareFileAction3.Name = "compareFileAction3";
-            this.compareFileAction3.Size = new System.Drawing.Size(172, 44);
-            this.compareFileAction3.TabIndex = 10;
-            this.compareFileAction3.Text = "Upload File 1";
-            this.compareFileAction3.UseVisualStyleBackColor = true;
-            this.compareFileAction3.Click += new System.EventHandler(this.compareFileAction1_Click);
-            // 
             // ManaSQLForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1773,7 +1839,13 @@
         private System.Windows.Forms.CheckBox compareFile2TempPath;
         private System.Windows.Forms.Label compareDirLogLocationPath;
         private System.Windows.Forms.Label compareDirResultLocationPath;
+        private System.Windows.Forms.Label uploadSSPSumLabel;
+        private System.Windows.Forms.Label uploadSSPFilterLabel;
+        private System.Windows.Forms.TextBox uploadSSPFilter;
         private System.Windows.Forms.Button compareFileAction3;
         private System.Windows.Forms.Button compareFileAction4;
+        private System.Windows.Forms.Label uploadSSPFilterInstruction;
+        private System.Windows.Forms.CheckBox uploadCheckCase;
+        private System.Windows.Forms.ListBox uploadSSPSelected;
     }
 }
