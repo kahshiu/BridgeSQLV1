@@ -67,6 +67,8 @@ namespace BridgeSQL
 
         public void OnShutdown()
         {
+            MSettings.UpdateSettings();
+            MSettings.SaveSettings();
         }
 
         //deprecated, but required to fulfill the implementation
