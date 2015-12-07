@@ -26,6 +26,7 @@ namespace BridgeSQL
             IOeNode theNode = (IOeNode)node;
             IDatabaseObjectInfo DBI;
 
+            ManaSQLConfig.PageIndex = 2;
             ManaSQLConfig.UploadFile2.UpdateVariables(theNode);
             if (theNode.IsDatabaseObject && theNode.TryGetDatabaseObject(out DBI))
             {

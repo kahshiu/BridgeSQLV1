@@ -20,6 +20,7 @@ namespace BridgeSQL
         private static int _ServerNamingIndex; // auto, IP, machine
         private static int _LogNamingIndex;
         private static bool _IsLogNamingUsed;
+        private static int _PageIndex;
 
         private static bool _EnableLogging;
         private static bool _ShowExtract;
@@ -70,6 +71,9 @@ namespace BridgeSQL
         public static event ComboBoxHandler UpdatedComboBox;
         public delegate void ComboBoxHandler(string varname);
 
+        public static event PageHandler UpdatedPage;
+        public delegate void PageHandler(string varname);
+
         public static event NonVisualDataHandler UpdatedNonVisualData;
         public delegate void NonVisualDataHandler(string varname);
 
@@ -77,6 +81,7 @@ namespace BridgeSQL
         {
             MSettings.ReadSettings();
 
+            PageIndex = 0;
             EnableLogging = MSettings.IsLogEnable;
             ShowExtract = MSettings.IsExtract;
             ShowCompareFile = MSettings.IsCompareFile;
@@ -103,6 +108,17 @@ namespace BridgeSQL
         public static bool ValidProgPath { get { return Util.ValidatePath(ProgPath, "file", "SqlMana.exe"); } }
         public static bool ValidTProcPath { get { return Util.ValidatePath(TProcPath, "file", "TortoiseProc.exe"); } }
         public static bool ValidGenPaths { get { return ValidRepoPath && ValidProgPath && ValidTProcPath; } }
+
+        public static int PageIndex
+        {
+            get { return _PageIndex; }
+            set
+            {
+                _PageIndex = value;
+                if (UpdatedPage != null)
+                    UpdatedPage(Mode + "-Page");
+            }
+        }
 
         public static int ServerNamingIndex
         {

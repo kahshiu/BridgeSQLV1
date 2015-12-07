@@ -75,6 +75,7 @@ namespace BridgeSQL
             ManaSQLConfig.UpdatedList += new ManaSQLConfig.ListHandler(RefreshSelectedListBoxItems);
             ManaSQLConfig.UpdatedComboBox += new ManaSQLConfig.ComboBoxHandler(RefreshComboBox);
 
+            ManaSQLConfig.UpdatedPage += new ManaSQLConfig.PageHandler(RefreshPage);
             //non visuals
             //ManaSQLConfig.UpdatedNonVisualData += new ManaSQLConfig.NonVisualDataHandler();         
         }
@@ -881,6 +882,11 @@ namespace BridgeSQL
             return warningText;
         }
 
+        // START: PAGES
+        private void RefreshPage(string list)
+        {
+            tab.SelectedIndex = ManaSQLConfig.PageIndex;
+        }
 
         // START: CHECKBOXES
         // Generic function, from DS
@@ -1103,6 +1109,9 @@ namespace BridgeSQL
             }
         }
 
+        // START: COMBOBOXES
+        // Generic function, from DS
+        // Based on datastore (config), update buttons 
         public void RefreshComboBox(string list)
         {
             if (Util.Contains(new string[] { "all", "general-ServerNamingIndex" }, list))

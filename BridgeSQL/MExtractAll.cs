@@ -21,6 +21,7 @@ namespace BridgeSQL
         public override void OnAction(ObjectExplorerNodeDescriptorBase node)
         {
             //throw new NotImplementedException();
+            ManaSQLConfig.PageIndex = 0;
             string args = ManaSQLConfig.Extract.CompileArgs(1);
             args = "data " + args;
             ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);

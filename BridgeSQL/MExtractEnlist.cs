@@ -30,6 +30,7 @@ namespace BridgeSQL
 
             if (theNode.IsDatabaseObject && theNode.TryGetDatabaseObject(out DBI))
             {
+                ManaSQLConfig.PageIndex = 0;
                 ManaSQLConfig.Extract.AppendWhereSSP(DBI.ObjectName);
             }
         }
