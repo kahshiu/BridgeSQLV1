@@ -135,9 +135,6 @@
             this.compareDirRepo2Label = new System.Windows.Forms.Label();
             this.compareDirRepoLabel = new System.Windows.Forms.Label();
             this.settings = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.useIP = new System.Windows.Forms.CheckBox();
-            this.useComName = new System.Windows.Forms.CheckBox();
             this.customGrp = new System.Windows.Forms.GroupBox();
             this.customPathRemove = new System.Windows.Forms.Button();
             this.customPathAdd = new System.Windows.Forms.Button();
@@ -182,7 +179,6 @@
             this.compareFile.SuspendLayout();
             this.compare2.SuspendLayout();
             this.settings.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.customGrp.SuspendLayout();
             this.generalGrp.SuspendLayout();
             this.displayGrp.SuspendLayout();
@@ -234,7 +230,7 @@
             this.extractLogCreate.Location = new System.Drawing.Point(301, 199);
             this.extractLogCreate.Name = "extractLogCreate";
             this.extractLogCreate.Size = new System.Drawing.Size(75, 23);
-            this.extractLogCreate.TabIndex = 6;
+            this.extractLogCreate.TabIndex = 4;
             this.extractLogCreate.Text = "Create";
             this.extractLogCreate.UseVisualStyleBackColor = true;
             this.extractLogCreate.Click += new System.EventHandler(this.CreateDir);
@@ -244,7 +240,7 @@
             this.extractRepoCreate.Location = new System.Drawing.Point(301, 112);
             this.extractRepoCreate.Name = "extractRepoCreate";
             this.extractRepoCreate.Size = new System.Drawing.Size(75, 23);
-            this.extractRepoCreate.TabIndex = 6;
+            this.extractRepoCreate.TabIndex = 2;
             this.extractRepoCreate.Text = "Create";
             this.extractRepoCreate.UseVisualStyleBackColor = true;
             this.extractRepoCreate.Click += new System.EventHandler(this.CreateDir);
@@ -323,7 +319,7 @@
             this.extractList.Location = new System.Drawing.Point(382, 276);
             this.extractList.Name = "extractList";
             this.extractList.Size = new System.Drawing.Size(140, 23);
-            this.extractList.TabIndex = 3;
+            this.extractList.TabIndex = 6;
             this.extractList.Text = "Extract to File";
             this.extractList.UseVisualStyleBackColor = true;
             this.extractList.Click += new System.EventHandler(this.ExtractActions);
@@ -333,7 +329,7 @@
             this.extractClear.Location = new System.Drawing.Point(382, 305);
             this.extractClear.Name = "extractClear";
             this.extractClear.Size = new System.Drawing.Size(140, 23);
-            this.extractClear.TabIndex = 4;
+            this.extractClear.TabIndex = 7;
             this.extractClear.Text = "Clear";
             this.extractClear.UseVisualStyleBackColor = true;
             this.extractClear.Click += new System.EventHandler(this.ExtractActions);
@@ -346,13 +342,14 @@
             this.extractSSP.Name = "extractSSP";
             this.extractSSP.Size = new System.Drawing.Size(367, 436);
             this.extractSSP.TabIndex = 0;
+            this.extractSSP.TabStop = false;
             // 
             // extractLog
             // 
             this.extractLog.Location = new System.Drawing.Point(9, 171);
             this.extractLog.Name = "extractLog";
             this.extractLog.Size = new System.Drawing.Size(367, 22);
-            this.extractLog.TabIndex = 2;
+            this.extractLog.TabIndex = 3;
             this.extractLog.Enter += new System.EventHandler(this.StoreTextRef);
             this.extractLog.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.extractLog.Leave += new System.EventHandler(this.UpdatePathWithLeave);
@@ -437,7 +434,8 @@
             this.uploadSSPSelected.Location = new System.Drawing.Point(582, 276);
             this.uploadSSPSelected.Name = "uploadSSPSelected";
             this.uploadSSPSelected.Size = new System.Drawing.Size(367, 420);
-            this.uploadSSPSelected.TabIndex = 16;
+            this.uploadSSPSelected.TabIndex = 0;
+            this.uploadSSPSelected.TabStop = false;
             // 
             // uploadCheckCase
             // 
@@ -445,7 +443,7 @@
             this.uploadCheckCase.Location = new System.Drawing.Point(382, 469);
             this.uploadCheckCase.Name = "uploadCheckCase";
             this.uploadCheckCase.Size = new System.Drawing.Size(121, 21);
-            this.uploadCheckCase.TabIndex = 15;
+            this.uploadCheckCase.TabIndex = 10;
             this.uploadCheckCase.Text = "Case sensitive";
             this.uploadCheckCase.UseVisualStyleBackColor = true;
             this.uploadCheckCase.Click += new System.EventHandler(this.FilterUploadListCase);
@@ -456,7 +454,7 @@
             this.uploadSSPFilterInstruction.Location = new System.Drawing.Point(379, 421);
             this.uploadSSPFilterInstruction.Name = "uploadSSPFilterInstruction";
             this.uploadSSPFilterInstruction.Size = new System.Drawing.Size(147, 17);
-            this.uploadSSPFilterInstruction.TabIndex = 14;
+            this.uploadSSPFilterInstruction.TabIndex = 0;
             this.uploadSSPFilterInstruction.Text = "[Press \"Enter\" to filter]";
             // 
             // uploadSSPFilterLabel
@@ -465,7 +463,7 @@
             this.uploadSSPFilterLabel.Location = new System.Drawing.Point(379, 404);
             this.uploadSSPFilterLabel.Name = "uploadSSPFilterLabel";
             this.uploadSSPFilterLabel.Size = new System.Drawing.Size(111, 17);
-            this.uploadSSPFilterLabel.TabIndex = 13;
+            this.uploadSSPFilterLabel.TabIndex = 0;
             this.uploadSSPFilterLabel.Text = "Filter SSP Name";
             // 
             // uploadSSPFilter
@@ -473,7 +471,7 @@
             this.uploadSSPFilter.Location = new System.Drawing.Point(382, 441);
             this.uploadSSPFilter.Name = "uploadSSPFilter";
             this.uploadSSPFilter.Size = new System.Drawing.Size(140, 22);
-            this.uploadSSPFilter.TabIndex = 12;
+            this.uploadSSPFilter.TabIndex = 9;
             this.uploadSSPFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FilterUploadListKey);
             this.uploadSSPFilter.Leave += new System.EventHandler(this.FilterUploadListLeave);
             // 
@@ -483,7 +481,7 @@
             this.uploadSSPSumLabel.Location = new System.Drawing.Point(579, 256);
             this.uploadSSPSumLabel.Name = "uploadSSPSumLabel";
             this.uploadSSPSumLabel.Size = new System.Drawing.Size(143, 17);
-            this.uploadSSPSumLabel.TabIndex = 9;
+            this.uploadSSPSumLabel.TabIndex = 0;
             this.uploadSSPSumLabel.Text = "Selected Files to load";
             // 
             // uploadLogCreate
@@ -491,7 +489,7 @@
             this.uploadLogCreate.Location = new System.Drawing.Point(301, 199);
             this.uploadLogCreate.Name = "uploadLogCreate";
             this.uploadLogCreate.Size = new System.Drawing.Size(75, 23);
-            this.uploadLogCreate.TabIndex = 8;
+            this.uploadLogCreate.TabIndex = 4;
             this.uploadLogCreate.Text = "Create";
             this.uploadLogCreate.UseVisualStyleBackColor = true;
             this.uploadLogCreate.Click += new System.EventHandler(this.CreateDir);
@@ -501,7 +499,7 @@
             this.uploadRepoCreate.Location = new System.Drawing.Point(301, 112);
             this.uploadRepoCreate.Name = "uploadRepoCreate";
             this.uploadRepoCreate.Size = new System.Drawing.Size(75, 23);
-            this.uploadRepoCreate.TabIndex = 7;
+            this.uploadRepoCreate.TabIndex = 2;
             this.uploadRepoCreate.Text = "Create";
             this.uploadRepoCreate.UseVisualStyleBackColor = true;
             this.uploadRepoCreate.Click += new System.EventHandler(this.CreateDir);
@@ -512,7 +510,7 @@
             this.uploadDDir.Location = new System.Drawing.Point(9, 216);
             this.uploadDDir.Name = "uploadDDir";
             this.uploadDDir.Size = new System.Drawing.Size(172, 21);
-            this.uploadDDir.TabIndex = 6;
+            this.uploadDDir.TabIndex = 5;
             this.uploadDDir.Text = "Use default directories";
             this.uploadDDir.UseVisualStyleBackColor = true;
             this.uploadDDir.CheckedChanged += new System.EventHandler(this.CheckBoxUI_Click);
@@ -522,7 +520,7 @@
             this.uploadSelectFromFile.Location = new System.Drawing.Point(382, 305);
             this.uploadSelectFromFile.Name = "uploadSelectFromFile";
             this.uploadSelectFromFile.Size = new System.Drawing.Size(140, 23);
-            this.uploadSelectFromFile.TabIndex = 3;
+            this.uploadSelectFromFile.TabIndex = 7;
             this.uploadSelectFromFile.Text = "Tick Entries in File";
             this.uploadSelectFromFile.UseVisualStyleBackColor = true;
             this.uploadSelectFromFile.Click += new System.EventHandler(this.uploadSelectFromFile_Click);
@@ -532,7 +530,7 @@
             this.uploadList.Location = new System.Drawing.Point(382, 276);
             this.uploadList.Name = "uploadList";
             this.uploadList.Size = new System.Drawing.Size(140, 23);
-            this.uploadList.TabIndex = 5;
+            this.uploadList.TabIndex = 6;
             this.uploadList.Text = "Load to Database";
             this.uploadList.UseVisualStyleBackColor = true;
             this.uploadList.Click += new System.EventHandler(this.uploadList_Click);
@@ -543,7 +541,7 @@
             this.uploadCheckAll.Location = new System.Drawing.Point(382, 334);
             this.uploadCheckAll.Name = "uploadCheckAll";
             this.uploadCheckAll.Size = new System.Drawing.Size(88, 21);
-            this.uploadCheckAll.TabIndex = 4;
+            this.uploadCheckAll.TabIndex = 8;
             this.uploadCheckAll.Text = "Check All";
             this.uploadCheckAll.UseVisualStyleBackColor = true;
             this.uploadCheckAll.Click += new System.EventHandler(this.uploadCheckAll_Click);
@@ -575,7 +573,7 @@
             this.uploadLog.Location = new System.Drawing.Point(9, 171);
             this.uploadLog.Name = "uploadLog";
             this.uploadLog.Size = new System.Drawing.Size(367, 22);
-            this.uploadLog.TabIndex = 2;
+            this.uploadLog.TabIndex = 3;
             this.uploadLog.Enter += new System.EventHandler(this.StoreTextRef);
             this.uploadLog.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.uploadLog.Leave += new System.EventHandler(this.UpdatePathWithLeave);
@@ -663,6 +661,7 @@
             this.uploadSSP.Name = "uploadSSP";
             this.uploadSSP.Size = new System.Drawing.Size(367, 429);
             this.uploadSSP.TabIndex = 0;
+            this.uploadSSP.TabStop = false;
             this.uploadSSP.SelectedIndexChanged += new System.EventHandler(this.uploadSSP_SelectedIndexChanged);
             // 
             // compareFile
@@ -717,7 +716,7 @@
             this.compareFile2LogCreate.Location = new System.Drawing.Point(797, 199);
             this.compareFile2LogCreate.Name = "compareFile2LogCreate";
             this.compareFile2LogCreate.Size = new System.Drawing.Size(75, 23);
-            this.compareFile2LogCreate.TabIndex = 20;
+            this.compareFile2LogCreate.TabIndex = 10;
             this.compareFile2LogCreate.Text = "Create";
             this.compareFile2LogCreate.UseVisualStyleBackColor = true;
             // 
@@ -726,7 +725,7 @@
             this.compareFile2RepoCreate.Location = new System.Drawing.Point(797, 112);
             this.compareFile2RepoCreate.Name = "compareFile2RepoCreate";
             this.compareFile2RepoCreate.Size = new System.Drawing.Size(75, 23);
-            this.compareFile2RepoCreate.TabIndex = 19;
+            this.compareFile2RepoCreate.TabIndex = 8;
             this.compareFile2RepoCreate.Text = "Create";
             this.compareFile2RepoCreate.UseVisualStyleBackColor = true;
             // 
@@ -735,7 +734,7 @@
             this.compareFile1LogCreate.Location = new System.Drawing.Point(301, 199);
             this.compareFile1LogCreate.Name = "compareFile1LogCreate";
             this.compareFile1LogCreate.Size = new System.Drawing.Size(75, 23);
-            this.compareFile1LogCreate.TabIndex = 18;
+            this.compareFile1LogCreate.TabIndex = 4;
             this.compareFile1LogCreate.Text = "Create";
             this.compareFile1LogCreate.UseVisualStyleBackColor = true;
             // 
@@ -744,7 +743,7 @@
             this.compareFile1RepoCreate.Location = new System.Drawing.Point(301, 112);
             this.compareFile1RepoCreate.Name = "compareFile1RepoCreate";
             this.compareFile1RepoCreate.Size = new System.Drawing.Size(75, 23);
-            this.compareFile1RepoCreate.TabIndex = 17;
+            this.compareFile1RepoCreate.TabIndex = 2;
             this.compareFile1RepoCreate.Text = "Create";
             this.compareFile1RepoCreate.UseVisualStyleBackColor = true;
             // 
@@ -756,7 +755,7 @@
             this.compareFile2Obj.Name = "compareFile2Obj";
             this.compareFile2Obj.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.compareFile2Obj.Size = new System.Drawing.Size(46, 17);
-            this.compareFile2Obj.TabIndex = 16;
+            this.compareFile2Obj.TabIndex = 0;
             this.compareFile2Obj.Text = "label2";
             // 
             // compareFile1Obj
@@ -767,7 +766,7 @@
             this.compareFile1Obj.Name = "compareFile1Obj";
             this.compareFile1Obj.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.compareFile1Obj.Size = new System.Drawing.Size(46, 17);
-            this.compareFile1Obj.TabIndex = 15;
+            this.compareFile1Obj.TabIndex = 0;
             this.compareFile1Obj.Text = "label1";
             // 
             // compareFile2DDir
@@ -776,7 +775,7 @@
             this.compareFile2DDir.Location = new System.Drawing.Point(505, 216);
             this.compareFile2DDir.Name = "compareFile2DDir";
             this.compareFile2DDir.Size = new System.Drawing.Size(172, 21);
-            this.compareFile2DDir.TabIndex = 14;
+            this.compareFile2DDir.TabIndex = 11;
             this.compareFile2DDir.Text = "Use default directories";
             this.compareFile2DDir.UseVisualStyleBackColor = true;
             this.compareFile2DDir.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -787,7 +786,7 @@
             this.compareFile1DDir.Location = new System.Drawing.Point(9, 216);
             this.compareFile1DDir.Name = "compareFile1DDir";
             this.compareFile1DDir.Size = new System.Drawing.Size(172, 21);
-            this.compareFile1DDir.TabIndex = 13;
+            this.compareFile1DDir.TabIndex = 5;
             this.compareFile1DDir.Text = "Use default directories";
             this.compareFile1DDir.UseVisualStyleBackColor = true;
             this.compareFile1DDir.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -798,7 +797,7 @@
             this.compareFileNote.Location = new System.Drawing.Point(502, 340);
             this.compareFileNote.Name = "compareFileNote";
             this.compareFileNote.Size = new System.Drawing.Size(390, 119);
-            this.compareFileNote.TabIndex = 12;
+            this.compareFileNote.TabIndex = 0;
             this.compareFileNote.Text = resources.GetString("compareFileNote.Text");
             // 
             // compareFile2TempPath
@@ -807,7 +806,7 @@
             this.compareFile2TempPath.Location = new System.Drawing.Point(505, 243);
             this.compareFile2TempPath.Name = "compareFile2TempPath";
             this.compareFile2TempPath.Size = new System.Drawing.Size(139, 21);
-            this.compareFile2TempPath.TabIndex = 11;
+            this.compareFile2TempPath.TabIndex = 12;
             this.compareFile2TempPath.Text = "Use Temp Folder";
             this.compareFile2TempPath.UseVisualStyleBackColor = true;
             this.compareFile2TempPath.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -818,7 +817,7 @@
             this.compareFile1TempPath.Location = new System.Drawing.Point(9, 243);
             this.compareFile1TempPath.Name = "compareFile1TempPath";
             this.compareFile1TempPath.Size = new System.Drawing.Size(139, 21);
-            this.compareFile1TempPath.TabIndex = 11;
+            this.compareFile1TempPath.TabIndex = 6;
             this.compareFile1TempPath.Text = "Use Temp Folder";
             this.compareFile1TempPath.UseVisualStyleBackColor = true;
             this.compareFile1TempPath.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -829,7 +828,7 @@
             this.compareFileAction2.Location = new System.Drawing.Point(204, 390);
             this.compareFileAction2.Name = "compareFileAction2";
             this.compareFileAction2.Size = new System.Drawing.Size(172, 44);
-            this.compareFileAction2.TabIndex = 10;
+            this.compareFileAction2.TabIndex = 14;
             this.compareFileAction2.Text = "Compare Files";
             this.compareFileAction2.UseVisualStyleBackColor = true;
             this.compareFileAction2.Click += new System.EventHandler(this.compareFileAction1_Click);
@@ -840,7 +839,7 @@
             this.compareFileAction3.Location = new System.Drawing.Point(204, 512);
             this.compareFileAction3.Name = "compareFileAction3";
             this.compareFileAction3.Size = new System.Drawing.Size(172, 44);
-            this.compareFileAction3.TabIndex = 10;
+            this.compareFileAction3.TabIndex = 15;
             this.compareFileAction3.Text = "Upload File 1 to DB";
             this.compareFileAction3.UseVisualStyleBackColor = true;
             this.compareFileAction3.Click += new System.EventHandler(this.compareFileAction1_Click);
@@ -851,7 +850,7 @@
             this.compareFileAction4.Location = new System.Drawing.Point(505, 512);
             this.compareFileAction4.Name = "compareFileAction4";
             this.compareFileAction4.Size = new System.Drawing.Size(172, 44);
-            this.compareFileAction4.TabIndex = 10;
+            this.compareFileAction4.TabIndex = 16;
             this.compareFileAction4.Text = "Upload File 2 to DB";
             this.compareFileAction4.UseVisualStyleBackColor = true;
             this.compareFileAction4.Click += new System.EventHandler(this.compareFileAction1_Click);
@@ -862,7 +861,7 @@
             this.compareFileAction1.Location = new System.Drawing.Point(204, 340);
             this.compareFileAction1.Name = "compareFileAction1";
             this.compareFileAction1.Size = new System.Drawing.Size(172, 44);
-            this.compareFileAction1.TabIndex = 10;
+            this.compareFileAction1.TabIndex = 13;
             this.compareFileAction1.Text = "Write Files";
             this.compareFileAction1.UseVisualStyleBackColor = true;
             this.compareFileAction1.Click += new System.EventHandler(this.compareFileAction1_Click);
@@ -875,7 +874,7 @@
             this.compareFile1Indicator.Location = new System.Drawing.Point(298, 297);
             this.compareFile1Indicator.Name = "compareFile1Indicator";
             this.compareFile1Indicator.Size = new System.Drawing.Size(78, 29);
-            this.compareFile1Indicator.TabIndex = 9;
+            this.compareFile1Indicator.TabIndex = 0;
             this.compareFile1Indicator.Text = "LEFT";
             // 
             // compareFile2Indicator
@@ -885,7 +884,7 @@
             this.compareFile2Indicator.Location = new System.Drawing.Point(500, 297);
             this.compareFile2Indicator.Name = "compareFile2Indicator";
             this.compareFile2Indicator.Size = new System.Drawing.Size(94, 29);
-            this.compareFile2Indicator.TabIndex = 9;
+            this.compareFile2Indicator.TabIndex = 0;
             this.compareFile2Indicator.Text = "RIGHT";
             // 
             // compareFile2Log
@@ -893,7 +892,7 @@
             this.compareFile2Log.Location = new System.Drawing.Point(505, 171);
             this.compareFile2Log.Name = "compareFile2Log";
             this.compareFile2Log.Size = new System.Drawing.Size(367, 22);
-            this.compareFile2Log.TabIndex = 5;
+            this.compareFile2Log.TabIndex = 9;
             this.compareFile2Log.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareFile2Log.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareFile2Log.Leave += new System.EventHandler(this.UpdatePathWithLeave);
@@ -904,7 +903,7 @@
             this.compareFile1Log.Location = new System.Drawing.Point(9, 171);
             this.compareFile1Log.Name = "compareFile1Log";
             this.compareFile1Log.Size = new System.Drawing.Size(367, 22);
-            this.compareFile1Log.TabIndex = 5;
+            this.compareFile1Log.TabIndex = 3;
             this.compareFile1Log.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareFile1Log.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareFile1Log.Leave += new System.EventHandler(this.UpdatePathWithLeave);
@@ -915,7 +914,7 @@
             this.compareFile2Repo.Location = new System.Drawing.Point(505, 84);
             this.compareFile2Repo.Name = "compareFile2Repo";
             this.compareFile2Repo.Size = new System.Drawing.Size(367, 22);
-            this.compareFile2Repo.TabIndex = 5;
+            this.compareFile2Repo.TabIndex = 7;
             this.compareFile2Repo.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareFile2Repo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareFile2Repo.Leave += new System.EventHandler(this.UpdatePathWithLeave);
@@ -926,7 +925,7 @@
             this.compareFile1Repo.Location = new System.Drawing.Point(9, 84);
             this.compareFile1Repo.Name = "compareFile1Repo";
             this.compareFile1Repo.Size = new System.Drawing.Size(367, 22);
-            this.compareFile1Repo.TabIndex = 5;
+            this.compareFile1Repo.TabIndex = 1;
             this.compareFile1Repo.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareFile1Repo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareFile1Repo.Leave += new System.EventHandler(this.UpdatePathWithLeave);
@@ -940,7 +939,7 @@
             this.compareFile2LogWarning.Location = new System.Drawing.Point(502, 196);
             this.compareFile2LogWarning.Name = "compareFile2LogWarning";
             this.compareFile2LogWarning.Size = new System.Drawing.Size(144, 17);
-            this.compareFile2LogWarning.TabIndex = 6;
+            this.compareFile2LogWarning.TabIndex = 0;
             this.compareFile2LogWarning.Text = "Directory not exist!";
             // 
             // compareFile1LogWarning
@@ -951,7 +950,7 @@
             this.compareFile1LogWarning.Location = new System.Drawing.Point(6, 196);
             this.compareFile1LogWarning.Name = "compareFile1LogWarning";
             this.compareFile1LogWarning.Size = new System.Drawing.Size(144, 17);
-            this.compareFile1LogWarning.TabIndex = 6;
+            this.compareFile1LogWarning.TabIndex = 0;
             this.compareFile1LogWarning.Text = "Directory not exist!";
             // 
             // compareFile2RepoWarning
@@ -962,7 +961,7 @@
             this.compareFile2RepoWarning.Location = new System.Drawing.Point(502, 109);
             this.compareFile2RepoWarning.Name = "compareFile2RepoWarning";
             this.compareFile2RepoWarning.Size = new System.Drawing.Size(144, 17);
-            this.compareFile2RepoWarning.TabIndex = 6;
+            this.compareFile2RepoWarning.TabIndex = 0;
             this.compareFile2RepoWarning.Text = "Directory not exist!";
             // 
             // compareFile1RepoWarning
@@ -973,7 +972,7 @@
             this.compareFile1RepoWarning.Location = new System.Drawing.Point(6, 109);
             this.compareFile1RepoWarning.Name = "compareFile1RepoWarning";
             this.compareFile1RepoWarning.Size = new System.Drawing.Size(144, 17);
-            this.compareFile1RepoWarning.TabIndex = 6;
+            this.compareFile1RepoWarning.TabIndex = 0;
             this.compareFile1RepoWarning.Text = "Directory not exist!";
             // 
             // compareFile2LogLabel
@@ -982,7 +981,7 @@
             this.compareFile2LogLabel.Location = new System.Drawing.Point(502, 151);
             this.compareFile2LogLabel.Name = "compareFile2LogLabel";
             this.compareFile2LogLabel.Size = new System.Drawing.Size(149, 17);
-            this.compareFile2LogLabel.TabIndex = 4;
+            this.compareFile2LogLabel.TabIndex = 0;
             this.compareFile2LogLabel.Text = "Directory to write log 2";
             // 
             // compareFile1LogLabel
@@ -991,7 +990,7 @@
             this.compareFile1LogLabel.Location = new System.Drawing.Point(6, 151);
             this.compareFile1LogLabel.Name = "compareFile1LogLabel";
             this.compareFile1LogLabel.Size = new System.Drawing.Size(149, 17);
-            this.compareFile1LogLabel.TabIndex = 4;
+            this.compareFile1LogLabel.TabIndex = 0;
             this.compareFile1LogLabel.Text = "Directory to write log 1";
             // 
             // compareFile2RepoLabel
@@ -1000,7 +999,7 @@
             this.compareFile2RepoLabel.Location = new System.Drawing.Point(502, 64);
             this.compareFile2RepoLabel.Name = "compareFile2RepoLabel";
             this.compareFile2RepoLabel.Size = new System.Drawing.Size(148, 17);
-            this.compareFile2RepoLabel.TabIndex = 4;
+            this.compareFile2RepoLabel.TabIndex = 0;
             this.compareFile2RepoLabel.Text = "Directory to write file 2";
             // 
             // compareFile1RepoLabel
@@ -1009,7 +1008,7 @@
             this.compareFile1RepoLabel.Location = new System.Drawing.Point(6, 64);
             this.compareFile1RepoLabel.Name = "compareFile1RepoLabel";
             this.compareFile1RepoLabel.Size = new System.Drawing.Size(148, 17);
-            this.compareFile1RepoLabel.TabIndex = 4;
+            this.compareFile1RepoLabel.TabIndex = 0;
             this.compareFile1RepoLabel.Text = "Directory to write file 1";
             // 
             // compareFile2DB
@@ -1018,7 +1017,7 @@
             this.compareFile2DB.Location = new System.Drawing.Point(657, 31);
             this.compareFile2DB.Name = "compareFile2DB";
             this.compareFile2DB.Size = new System.Drawing.Size(46, 17);
-            this.compareFile2DB.TabIndex = 3;
+            this.compareFile2DB.TabIndex = 0;
             this.compareFile2DB.Text = "label6";
             // 
             // compareFile1DB
@@ -1027,7 +1026,7 @@
             this.compareFile1DB.Location = new System.Drawing.Point(161, 31);
             this.compareFile1DB.Name = "compareFile1DB";
             this.compareFile1DB.Size = new System.Drawing.Size(46, 17);
-            this.compareFile1DB.TabIndex = 3;
+            this.compareFile1DB.TabIndex = 0;
             this.compareFile1DB.Text = "label6";
             // 
             // compareFile2DBLabel
@@ -1036,7 +1035,7 @@
             this.compareFile2DBLabel.Location = new System.Drawing.Point(502, 31);
             this.compareFile2DBLabel.Name = "compareFile2DBLabel";
             this.compareFile2DBLabel.Size = new System.Drawing.Size(110, 17);
-            this.compareFile2DBLabel.TabIndex = 2;
+            this.compareFile2DBLabel.TabIndex = 0;
             this.compareFile2DBLabel.Text = "Database Name";
             // 
             // compareFile1DBLabel
@@ -1045,7 +1044,7 @@
             this.compareFile1DBLabel.Location = new System.Drawing.Point(6, 31);
             this.compareFile1DBLabel.Name = "compareFile1DBLabel";
             this.compareFile1DBLabel.Size = new System.Drawing.Size(110, 17);
-            this.compareFile1DBLabel.TabIndex = 2;
+            this.compareFile1DBLabel.TabIndex = 0;
             this.compareFile1DBLabel.Text = "Database Name";
             // 
             // compareFile2Server
@@ -1054,7 +1053,7 @@
             this.compareFile2Server.Location = new System.Drawing.Point(657, 14);
             this.compareFile2Server.Name = "compareFile2Server";
             this.compareFile2Server.Size = new System.Drawing.Size(46, 17);
-            this.compareFile2Server.TabIndex = 1;
+            this.compareFile2Server.TabIndex = 0;
             this.compareFile2Server.Text = "label4";
             // 
             // compareFile1Server
@@ -1063,7 +1062,7 @@
             this.compareFile1Server.Location = new System.Drawing.Point(161, 14);
             this.compareFile1Server.Name = "compareFile1Server";
             this.compareFile1Server.Size = new System.Drawing.Size(46, 17);
-            this.compareFile1Server.TabIndex = 1;
+            this.compareFile1Server.TabIndex = 0;
             this.compareFile1Server.Text = "label4";
             // 
             // compareFile2ServerLabel
@@ -1119,7 +1118,7 @@
             this.compareDirRepo2Create.Location = new System.Drawing.Point(303, 199);
             this.compareDirRepo2Create.Name = "compareDirRepo2Create";
             this.compareDirRepo2Create.Size = new System.Drawing.Size(75, 23);
-            this.compareDirRepo2Create.TabIndex = 52;
+            this.compareDirRepo2Create.TabIndex = 4;
             this.compareDirRepo2Create.Text = "Create";
             this.compareDirRepo2Create.UseVisualStyleBackColor = true;
             // 
@@ -1128,7 +1127,7 @@
             this.compareDirRepoCreate.Location = new System.Drawing.Point(303, 112);
             this.compareDirRepoCreate.Name = "compareDirRepoCreate";
             this.compareDirRepoCreate.Size = new System.Drawing.Size(75, 23);
-            this.compareDirRepoCreate.TabIndex = 52;
+            this.compareDirRepoCreate.TabIndex = 2;
             this.compareDirRepoCreate.Text = "Create";
             this.compareDirRepoCreate.UseVisualStyleBackColor = true;
             // 
@@ -1137,7 +1136,7 @@
             this.compareDirLogCreate.Location = new System.Drawing.Point(305, 305);
             this.compareDirLogCreate.Name = "compareDirLogCreate";
             this.compareDirLogCreate.Size = new System.Drawing.Size(75, 23);
-            this.compareDirLogCreate.TabIndex = 51;
+            this.compareDirLogCreate.TabIndex = 6;
             this.compareDirLogCreate.Text = "Create";
             this.compareDirLogCreate.UseVisualStyleBackColor = true;
             // 
@@ -1146,7 +1145,7 @@
             this.compareDirResultCreate.Location = new System.Drawing.Point(303, 409);
             this.compareDirResultCreate.Name = "compareDirResultCreate";
             this.compareDirResultCreate.Size = new System.Drawing.Size(75, 23);
-            this.compareDirResultCreate.TabIndex = 50;
+            this.compareDirResultCreate.TabIndex = 8;
             this.compareDirResultCreate.Text = "Create";
             this.compareDirResultCreate.UseVisualStyleBackColor = true;
             // 
@@ -1156,7 +1155,7 @@
             this.compareDirDDir.Location = new System.Drawing.Point(505, 238);
             this.compareDirDDir.Name = "compareDirDDir";
             this.compareDirDDir.Size = new System.Drawing.Size(172, 21);
-            this.compareDirDDir.TabIndex = 49;
+            this.compareDirDDir.TabIndex = 9;
             this.compareDirDDir.Text = "Use default directories";
             this.compareDirDDir.UseVisualStyleBackColor = true;
             this.compareDirDDir.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -1167,7 +1166,7 @@
             this.compareDirNote.Location = new System.Drawing.Point(502, 64);
             this.compareDirNote.Name = "compareDirNote";
             this.compareDirNote.Size = new System.Drawing.Size(425, 119);
-            this.compareDirNote.TabIndex = 48;
+            this.compareDirNote.TabIndex = 0;
             this.compareDirNote.Text = resources.GetString("compareDirNote.Text");
             // 
             // compareDirResultLabel
@@ -1176,7 +1175,7 @@
             this.compareDirResultLabel.Location = new System.Drawing.Point(8, 344);
             this.compareDirResultLabel.Name = "compareDirResultLabel";
             this.compareDirResultLabel.Size = new System.Drawing.Size(184, 17);
-            this.compareDirResultLabel.TabIndex = 47;
+            this.compareDirResultLabel.TabIndex = 0;
             this.compareDirResultLabel.Text = "Directory of compare Result";
             // 
             // compareDirResult
@@ -1184,7 +1183,7 @@
             this.compareDirResult.Location = new System.Drawing.Point(11, 381);
             this.compareDirResult.Name = "compareDirResult";
             this.compareDirResult.Size = new System.Drawing.Size(367, 22);
-            this.compareDirResult.TabIndex = 45;
+            this.compareDirResult.TabIndex = 7;
             this.compareDirResult.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareDirResult.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareDirResult.Leave += new System.EventHandler(this.UpdatePathWithLeave);
@@ -1198,7 +1197,7 @@
             this.compareDirResultWarning.Location = new System.Drawing.Point(8, 406);
             this.compareDirResultWarning.Name = "compareDirResultWarning";
             this.compareDirResultWarning.Size = new System.Drawing.Size(144, 17);
-            this.compareDirResultWarning.TabIndex = 46;
+            this.compareDirResultWarning.TabIndex = 0;
             this.compareDirResultWarning.Text = "Directory not exist!";
             // 
             // compareDirLogLocationPath
@@ -1207,7 +1206,7 @@
             this.compareDirLogLocationPath.Location = new System.Drawing.Point(8, 257);
             this.compareDirLogLocationPath.Name = "compareDirLogLocationPath";
             this.compareDirLogLocationPath.Size = new System.Drawing.Size(103, 17);
-            this.compareDirLogLocationPath.TabIndex = 44;
+            this.compareDirLogLocationPath.TabIndex = 0;
             this.compareDirLogLocationPath.Text = "[Location Path]";
             // 
             // compareDirResultLocationPath
@@ -1216,7 +1215,7 @@
             this.compareDirResultLocationPath.Location = new System.Drawing.Point(8, 361);
             this.compareDirResultLocationPath.Name = "compareDirResultLocationPath";
             this.compareDirResultLocationPath.Size = new System.Drawing.Size(103, 17);
-            this.compareDirResultLocationPath.TabIndex = 44;
+            this.compareDirResultLocationPath.TabIndex = 0;
             this.compareDirResultLocationPath.Text = "[Location Path]";
             // 
             // compareDirLogLabel
@@ -1225,7 +1224,7 @@
             this.compareDirLogLabel.Location = new System.Drawing.Point(8, 238);
             this.compareDirLogLabel.Name = "compareDirLogLabel";
             this.compareDirLogLabel.Size = new System.Drawing.Size(168, 17);
-            this.compareDirLogLabel.TabIndex = 44;
+            this.compareDirLogLabel.TabIndex = 0;
             this.compareDirLogLabel.Text = "Directory of compare Log";
             // 
             // compareDirCompare
@@ -1234,7 +1233,7 @@
             this.compareDirCompare.Location = new System.Drawing.Point(505, 265);
             this.compareDirCompare.Name = "compareDirCompare";
             this.compareDirCompare.Size = new System.Drawing.Size(214, 44);
-            this.compareDirCompare.TabIndex = 41;
+            this.compareDirCompare.TabIndex = 10;
             this.compareDirCompare.Text = "Compare Directory";
             this.compareDirCompare.UseVisualStyleBackColor = true;
             this.compareDirCompare.Click += new System.EventHandler(this.compareDirCompare_Click);
@@ -1244,7 +1243,7 @@
             this.compareDirLog.Location = new System.Drawing.Point(11, 277);
             this.compareDirLog.Name = "compareDirLog";
             this.compareDirLog.Size = new System.Drawing.Size(369, 22);
-            this.compareDirLog.TabIndex = 25;
+            this.compareDirLog.TabIndex = 5;
             this.compareDirLog.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareDirLog.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareDirLog.Leave += new System.EventHandler(this.UpdatePathWithLeave);
@@ -1255,7 +1254,7 @@
             this.compareDirRepo2.Location = new System.Drawing.Point(11, 171);
             this.compareDirRepo2.Name = "compareDirRepo2";
             this.compareDirRepo2.Size = new System.Drawing.Size(367, 22);
-            this.compareDirRepo2.TabIndex = 25;
+            this.compareDirRepo2.TabIndex = 3;
             this.compareDirRepo2.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareDirRepo2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareDirRepo2.Leave += new System.EventHandler(this.UpdatePathWithLeave);
@@ -1266,7 +1265,7 @@
             this.compareDirRepo.Location = new System.Drawing.Point(9, 84);
             this.compareDirRepo.Name = "compareDirRepo";
             this.compareDirRepo.Size = new System.Drawing.Size(369, 22);
-            this.compareDirRepo.TabIndex = 26;
+            this.compareDirRepo.TabIndex = 1;
             this.compareDirRepo.Enter += new System.EventHandler(this.StoreTextRef);
             this.compareDirRepo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.compareDirRepo.Leave += new System.EventHandler(this.UpdatePathWithLeave);
@@ -1280,7 +1279,7 @@
             this.compareDirLogWarning.Location = new System.Drawing.Point(10, 302);
             this.compareDirLogWarning.Name = "compareDirLogWarning";
             this.compareDirLogWarning.Size = new System.Drawing.Size(144, 17);
-            this.compareDirLogWarning.TabIndex = 29;
+            this.compareDirLogWarning.TabIndex = 0;
             this.compareDirLogWarning.Text = "Directory not exist!";
             // 
             // compareDirRepo2Warning
@@ -1291,7 +1290,7 @@
             this.compareDirRepo2Warning.Location = new System.Drawing.Point(8, 196);
             this.compareDirRepo2Warning.Name = "compareDirRepo2Warning";
             this.compareDirRepo2Warning.Size = new System.Drawing.Size(144, 17);
-            this.compareDirRepo2Warning.TabIndex = 30;
+            this.compareDirRepo2Warning.TabIndex = 0;
             this.compareDirRepo2Warning.Text = "Directory not exist!";
             // 
             // compareDirRepoWarning
@@ -1302,7 +1301,7 @@
             this.compareDirRepoWarning.Location = new System.Drawing.Point(6, 109);
             this.compareDirRepoWarning.Name = "compareDirRepoWarning";
             this.compareDirRepoWarning.Size = new System.Drawing.Size(144, 17);
-            this.compareDirRepoWarning.TabIndex = 27;
+            this.compareDirRepoWarning.TabIndex = 0;
             this.compareDirRepoWarning.Text = "Directory not exist!";
             // 
             // compareDirRepo2Label
@@ -1311,7 +1310,7 @@
             this.compareDirRepo2Label.Location = new System.Drawing.Point(6, 151);
             this.compareDirRepo2Label.Name = "compareDirRepo2Label";
             this.compareDirRepo2Label.Size = new System.Drawing.Size(109, 17);
-            this.compareDirRepo2Label.TabIndex = 20;
+            this.compareDirRepo2Label.TabIndex = 0;
             this.compareDirRepo2Label.Text = "Target directory";
             // 
             // compareDirRepoLabel
@@ -1320,12 +1319,11 @@
             this.compareDirRepoLabel.Location = new System.Drawing.Point(6, 64);
             this.compareDirRepoLabel.Name = "compareDirRepoLabel";
             this.compareDirRepoLabel.Size = new System.Drawing.Size(99, 17);
-            this.compareDirRepoLabel.TabIndex = 21;
+            this.compareDirRepoLabel.TabIndex = 0;
             this.compareDirRepoLabel.Text = "Base directory";
             // 
             // settings
             // 
-            this.settings.Controls.Add(this.groupBox1);
             this.settings.Controls.Add(this.customGrp);
             this.settings.Controls.Add(this.saveSetting);
             this.settings.Controls.Add(this.generalGrp);
@@ -1338,39 +1336,6 @@
             this.settings.Text = "Settings";
             this.settings.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.useIP);
-            this.groupBox1.Controls.Add(this.useComName);
-            this.groupBox1.Location = new System.Drawing.Point(569, 471);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(389, 242);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
-            // 
-            // useIP
-            // 
-            this.useIP.AutoSize = true;
-            this.useIP.Location = new System.Drawing.Point(42, 48);
-            this.useIP.Name = "useIP";
-            this.useIP.Size = new System.Drawing.Size(71, 21);
-            this.useIP.TabIndex = 30;
-            this.useIP.Text = "Use IP";
-            this.useIP.UseVisualStyleBackColor = true;
-            this.useIP.Click += new System.EventHandler(this.CheckBoxUI_Click);
-            // 
-            // useComName
-            // 
-            this.useComName.AutoSize = true;
-            this.useComName.Location = new System.Drawing.Point(42, 76);
-            this.useComName.Name = "useComName";
-            this.useComName.Size = new System.Drawing.Size(123, 21);
-            this.useComName.TabIndex = 31;
-            this.useComName.Text = "Use Hostname";
-            this.useComName.UseVisualStyleBackColor = true;
-            this.useComName.Click += new System.EventHandler(this.CheckBoxUI_Click);
-            // 
             // customGrp
             // 
             this.customGrp.Controls.Add(this.customPathRemove);
@@ -1381,7 +1346,7 @@
             this.customGrp.Location = new System.Drawing.Point(569, 47);
             this.customGrp.Name = "customGrp";
             this.customGrp.Size = new System.Drawing.Size(389, 341);
-            this.customGrp.TabIndex = 1;
+            this.customGrp.TabIndex = 3;
             this.customGrp.TabStop = false;
             this.customGrp.Text = "Favourite Paths";
             // 
@@ -1391,7 +1356,7 @@
             this.customPathRemove.Location = new System.Drawing.Point(299, 307);
             this.customPathRemove.Name = "customPathRemove";
             this.customPathRemove.Size = new System.Drawing.Size(75, 27);
-            this.customPathRemove.TabIndex = 4;
+            this.customPathRemove.TabIndex = 19;
             this.customPathRemove.Text = "Remove";
             this.customPathRemove.UseVisualStyleBackColor = true;
             this.customPathRemove.Click += new System.EventHandler(this.CustomPathActions);
@@ -1403,7 +1368,7 @@
             this.customPathAdd.Location = new System.Drawing.Point(218, 307);
             this.customPathAdd.Name = "customPathAdd";
             this.customPathAdd.Size = new System.Drawing.Size(75, 27);
-            this.customPathAdd.TabIndex = 4;
+            this.customPathAdd.TabIndex = 18;
             this.customPathAdd.Text = "Add";
             this.customPathAdd.UseVisualStyleBackColor = true;
             this.customPathAdd.Click += new System.EventHandler(this.CustomPathActions);
@@ -1416,7 +1381,7 @@
             this.customPathWarning.Location = new System.Drawing.Point(6, 304);
             this.customPathWarning.Name = "customPathWarning";
             this.customPathWarning.Size = new System.Drawing.Size(130, 17);
-            this.customPathWarning.TabIndex = 28;
+            this.customPathWarning.TabIndex = 0;
             this.customPathWarning.Text = "Invalid Directory!";
             // 
             // customPathList
@@ -1426,7 +1391,7 @@
             this.customPathList.Location = new System.Drawing.Point(6, 22);
             this.customPathList.Name = "customPathList";
             this.customPathList.Size = new System.Drawing.Size(368, 244);
-            this.customPathList.TabIndex = 0;
+            this.customPathList.TabIndex = 16;
             this.customPathList.SelectedIndexChanged += new System.EventHandler(this.SelectCustomPathForRemove);
             // 
             // customPath
@@ -1434,7 +1399,7 @@
             this.customPath.Location = new System.Drawing.Point(7, 279);
             this.customPath.Name = "customPath";
             this.customPath.Size = new System.Drawing.Size(367, 22);
-            this.customPath.TabIndex = 3;
+            this.customPath.TabIndex = 17;
             this.customPath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.customPath.Leave += new System.EventHandler(this.UpdatePathWithLeave);
             this.customPath.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowTextContext);
@@ -1444,7 +1409,7 @@
             this.saveSetting.Location = new System.Drawing.Point(787, 6);
             this.saveSetting.Name = "saveSetting";
             this.saveSetting.Size = new System.Drawing.Size(171, 41);
-            this.saveSetting.TabIndex = 4;
+            this.saveSetting.TabIndex = 1;
             this.saveSetting.Text = "Save Settings";
             this.saveSetting.UseVisualStyleBackColor = true;
             this.saveSetting.Click += new System.EventHandler(this.SaveSettings);
@@ -1468,7 +1433,7 @@
             this.generalGrp.Location = new System.Drawing.Point(174, 47);
             this.generalGrp.Name = "generalGrp";
             this.generalGrp.Size = new System.Drawing.Size(389, 341);
-            this.generalGrp.TabIndex = 1;
+            this.generalGrp.TabIndex = 0;
             this.generalGrp.TabStop = false;
             this.generalGrp.Text = "General Paths";
             // 
@@ -1479,7 +1444,7 @@
             this.logNaming.Location = new System.Drawing.Point(212, 283);
             this.logNaming.Name = "logNaming";
             this.logNaming.Size = new System.Drawing.Size(162, 24);
-            this.logNaming.TabIndex = 35;
+            this.logNaming.TabIndex = 15;
             this.logNaming.DropDownClosed += new System.EventHandler(this.SelectedComboUI);
             // 
             // enableLogging
@@ -1488,7 +1453,7 @@
             this.enableLogging.Location = new System.Drawing.Point(212, 313);
             this.enableLogging.Name = "enableLogging";
             this.enableLogging.Size = new System.Drawing.Size(129, 21);
-            this.enableLogging.TabIndex = 1;
+            this.enableLogging.TabIndex = 16;
             this.enableLogging.Text = "Enable Logging";
             this.enableLogging.UseVisualStyleBackColor = true;
             this.enableLogging.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -1500,7 +1465,7 @@
             this.serverNaming.Location = new System.Drawing.Point(7, 283);
             this.serverNaming.Name = "serverNaming";
             this.serverNaming.Size = new System.Drawing.Size(162, 24);
-            this.serverNaming.TabIndex = 34;
+            this.serverNaming.TabIndex = 14;
             this.serverNaming.DropDownClosed += new System.EventHandler(this.SelectedComboUI);
             // 
             // logNamingLabel
@@ -1509,7 +1474,7 @@
             this.logNamingLabel.Location = new System.Drawing.Point(211, 263);
             this.logNamingLabel.Name = "logNamingLabel";
             this.logNamingLabel.Size = new System.Drawing.Size(137, 17);
-            this.logNamingLabel.TabIndex = 32;
+            this.logNamingLabel.TabIndex = 0;
             this.logNamingLabel.Text = "Log Naming [Subdir]";
             // 
             // serverNamingLabel
@@ -1518,7 +1483,7 @@
             this.serverNamingLabel.Location = new System.Drawing.Point(6, 263);
             this.serverNamingLabel.Name = "serverNamingLabel";
             this.serverNamingLabel.Size = new System.Drawing.Size(102, 17);
-            this.serverNamingLabel.TabIndex = 32;
+            this.serverNamingLabel.TabIndex = 0;
             this.serverNamingLabel.Text = "Server Naming";
             // 
             // generalSQLMana
@@ -1526,7 +1491,7 @@
             this.generalSQLMana.Location = new System.Drawing.Point(7, 124);
             this.generalSQLMana.Name = "generalSQLMana";
             this.generalSQLMana.Size = new System.Drawing.Size(369, 22);
-            this.generalSQLMana.TabIndex = 29;
+            this.generalSQLMana.TabIndex = 12;
             this.generalSQLMana.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.generalSQLMana.Leave += new System.EventHandler(this.UpdatePathWithLeave);
             this.generalSQLMana.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowTextContext);
@@ -1539,7 +1504,7 @@
             this.generalSQLManaWarning.Location = new System.Drawing.Point(6, 148);
             this.generalSQLManaWarning.Name = "generalSQLManaWarning";
             this.generalSQLManaWarning.Size = new System.Drawing.Size(163, 17);
-            this.generalSQLManaWarning.TabIndex = 28;
+            this.generalSQLManaWarning.TabIndex = 0;
             this.generalSQLManaWarning.Text = "Invalid Program Path!";
             // 
             // generalTProcWarning
@@ -1550,7 +1515,7 @@
             this.generalTProcWarning.Location = new System.Drawing.Point(6, 228);
             this.generalTProcWarning.Name = "generalTProcWarning";
             this.generalTProcWarning.Size = new System.Drawing.Size(163, 17);
-            this.generalTProcWarning.TabIndex = 28;
+            this.generalTProcWarning.TabIndex = 0;
             this.generalTProcWarning.Text = "Invalid Program Path!";
             // 
             // generalRepoWarning
@@ -1561,7 +1526,7 @@
             this.generalRepoWarning.Location = new System.Drawing.Point(8, 70);
             this.generalRepoWarning.Name = "generalRepoWarning";
             this.generalRepoWarning.Size = new System.Drawing.Size(130, 17);
-            this.generalRepoWarning.TabIndex = 28;
+            this.generalRepoWarning.TabIndex = 0;
             this.generalRepoWarning.Text = "Invalid Directory!";
             // 
             // generalRepo
@@ -1569,7 +1534,7 @@
             this.generalRepo.Location = new System.Drawing.Point(9, 45);
             this.generalRepo.Name = "generalRepo";
             this.generalRepo.Size = new System.Drawing.Size(367, 22);
-            this.generalRepo.TabIndex = 3;
+            this.generalRepo.TabIndex = 11;
             this.generalRepo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.generalRepo.Leave += new System.EventHandler(this.UpdatePathWithLeave);
             this.generalRepo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowTextContext);
@@ -1580,7 +1545,7 @@
             this.generalTProcLabel.Location = new System.Drawing.Point(6, 183);
             this.generalTProcLabel.Name = "generalTProcLabel";
             this.generalTProcLabel.Size = new System.Drawing.Size(126, 17);
-            this.generalTProcLabel.TabIndex = 2;
+            this.generalTProcLabel.TabIndex = 0;
             this.generalTProcLabel.Text = "Tortoise Proc Path";
             // 
             // generalTProc
@@ -1588,7 +1553,7 @@
             this.generalTProc.Location = new System.Drawing.Point(7, 203);
             this.generalTProc.Name = "generalTProc";
             this.generalTProc.Size = new System.Drawing.Size(367, 22);
-            this.generalTProc.TabIndex = 3;
+            this.generalTProc.TabIndex = 13;
             this.generalTProc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.generalTProc.Leave += new System.EventHandler(this.UpdatePathWithLeave);
             this.generalTProc.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowTextContext);
@@ -1599,7 +1564,7 @@
             this.generalRepoLabel.Location = new System.Drawing.Point(6, 25);
             this.generalRepoLabel.Name = "generalRepoLabel";
             this.generalRepoLabel.Size = new System.Drawing.Size(130, 17);
-            this.generalRepoLabel.TabIndex = 2;
+            this.generalRepoLabel.TabIndex = 0;
             this.generalRepoLabel.Text = "General Repo Path";
             // 
             // generalSQLManaLabel
@@ -1608,7 +1573,7 @@
             this.generalSQLManaLabel.Location = new System.Drawing.Point(8, 103);
             this.generalSQLManaLabel.Name = "generalSQLManaLabel";
             this.generalSQLManaLabel.Size = new System.Drawing.Size(108, 17);
-            this.generalSQLManaLabel.TabIndex = 2;
+            this.generalSQLManaLabel.TabIndex = 0;
             this.generalSQLManaLabel.Text = "Mana SQL Path";
             // 
             // displayGrp
@@ -1635,7 +1600,7 @@
             this.dspSVNBlame.Location = new System.Drawing.Point(7, 238);
             this.dspSVNBlame.Name = "dspSVNBlame";
             this.dspSVNBlame.Size = new System.Drawing.Size(101, 21);
-            this.dspSVNBlame.TabIndex = 6;
+            this.dspSVNBlame.TabIndex = 10;
             this.dspSVNBlame.Text = "SVN Blame";
             this.dspSVNBlame.UseVisualStyleBackColor = true;
             this.dspSVNBlame.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -1646,7 +1611,7 @@
             this.dspCompareFile.Location = new System.Drawing.Point(7, 49);
             this.dspCompareFile.Name = "dspCompareFile";
             this.dspCompareFile.Size = new System.Drawing.Size(113, 21);
-            this.dspCompareFile.TabIndex = 0;
+            this.dspCompareFile.TabIndex = 3;
             this.dspCompareFile.Text = "Compare File";
             this.dspCompareFile.UseVisualStyleBackColor = true;
             this.dspCompareFile.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -1657,7 +1622,7 @@
             this.dspExtract.Location = new System.Drawing.Point(7, 22);
             this.dspExtract.Name = "dspExtract";
             this.dspExtract.Size = new System.Drawing.Size(86, 21);
-            this.dspExtract.TabIndex = 0;
+            this.dspExtract.TabIndex = 2;
             this.dspExtract.Text = "Extractor";
             this.dspExtract.UseVisualStyleBackColor = true;
             this.dspExtract.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -1679,7 +1644,7 @@
             this.dspSVNRepoStatus.Location = new System.Drawing.Point(7, 76);
             this.dspSVNRepoStatus.Name = "dspSVNRepoStatus";
             this.dspSVNRepoStatus.Size = new System.Drawing.Size(134, 21);
-            this.dspSVNRepoStatus.TabIndex = 3;
+            this.dspSVNRepoStatus.TabIndex = 4;
             this.dspSVNRepoStatus.Text = "SVN Repostatus";
             this.dspSVNRepoStatus.UseVisualStyleBackColor = true;
             this.dspSVNRepoStatus.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -1690,7 +1655,7 @@
             this.dspSVNDiff.Location = new System.Drawing.Point(7, 184);
             this.dspSVNDiff.Name = "dspSVNDiff";
             this.dspSVNDiff.Size = new System.Drawing.Size(83, 21);
-            this.dspSVNDiff.TabIndex = 1;
+            this.dspSVNDiff.TabIndex = 8;
             this.dspSVNDiff.Text = "SVN Diff";
             this.dspSVNDiff.UseVisualStyleBackColor = true;
             this.dspSVNDiff.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -1701,7 +1666,7 @@
             this.dspSVNUpdate.Location = new System.Drawing.Point(7, 130);
             this.dspSVNUpdate.Name = "dspSVNUpdate";
             this.dspSVNUpdate.Size = new System.Drawing.Size(108, 21);
-            this.dspSVNUpdate.TabIndex = 4;
+            this.dspSVNUpdate.TabIndex = 6;
             this.dspSVNUpdate.Text = "SVN Update";
             this.dspSVNUpdate.UseVisualStyleBackColor = true;
             this.dspSVNUpdate.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -1712,7 +1677,7 @@
             this.dspSVNMerge.Location = new System.Drawing.Point(7, 211);
             this.dspSVNMerge.Name = "dspSVNMerge";
             this.dspSVNMerge.Size = new System.Drawing.Size(102, 21);
-            this.dspSVNMerge.TabIndex = 2;
+            this.dspSVNMerge.TabIndex = 9;
             this.dspSVNMerge.Text = "SVN Merge";
             this.dspSVNMerge.UseVisualStyleBackColor = true;
             this.dspSVNMerge.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -1723,7 +1688,7 @@
             this.dspSVNLog.Location = new System.Drawing.Point(7, 157);
             this.dspSVNLog.Name = "dspSVNLog";
             this.dspSVNLog.Size = new System.Drawing.Size(124, 21);
-            this.dspSVNLog.TabIndex = 0;
+            this.dspSVNLog.TabIndex = 7;
             this.dspSVNLog.Text = "SVN Show Log";
             this.dspSVNLog.UseVisualStyleBackColor = true;
             this.dspSVNLog.Click += new System.EventHandler(this.CheckBoxUI_Click);
@@ -1778,8 +1743,6 @@
             this.compare2.ResumeLayout(false);
             this.compare2.PerformLayout();
             this.settings.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.customGrp.ResumeLayout(false);
             this.customGrp.PerformLayout();
             this.generalGrp.ResumeLayout(false);
@@ -1933,9 +1896,6 @@
         private System.Windows.Forms.Label uploadSSPFilterInstruction;
         private System.Windows.Forms.CheckBox uploadCheckCase;
         private System.Windows.Forms.ListBox uploadSSPSelected;
-        private System.Windows.Forms.CheckBox useIP;
-        private System.Windows.Forms.CheckBox useComName;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label serverNamingLabel;
         private System.Windows.Forms.ComboBox serverNaming;
         private System.Windows.Forms.ComboBox logNaming;
