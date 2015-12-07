@@ -17,6 +17,9 @@ namespace BridgeSQL
         private static string _RepoPath;
         private static string _ProgPath;
         private static string _TProcPath;
+        private static int _ServerNamingIndex; // auto, IP, machine
+        private static int _LogNamingIndex;
+        private static bool _IsLogNamingUsed;
 
         private static bool _EnableLogging;
         private static bool _ShowExtract;
@@ -32,6 +35,20 @@ namespace BridgeSQL
         private static int _SelectedCustomPath = -1;
         private static string _customPathText;
         private static List<string> _customPaths = new List<string>();
+        public static List<string> ServerNamings = new List<string>()
+        {
+            "Login Servername"
+            ,"Hostname"
+            ,"IP Address"
+        };
+        public static List<string> LogNamings = new List<string>()
+        {
+            "None"
+            ,"Daily"
+            ,"Weekly"
+            ,"Monthly"
+            ,"Yearly"
+        };
 
         public static FixedSettings Extract = new FixedSettings("extract");
         public static FixedSettings Upload = new FixedSettings("upload");
@@ -49,6 +66,9 @@ namespace BridgeSQL
 
         public static event CheckBoxHandler UpdatedCheckBox;
         public delegate void CheckBoxHandler(string varname);
+
+        public static event ComboBoxHandler UpdatedComboBox;
+        public delegate void ComboBoxHandler(string varname);
 
         public static event NonVisualDataHandler UpdatedNonVisualData;
         public delegate void NonVisualDataHandler(string varname);
@@ -70,6 +90,8 @@ namespace BridgeSQL
             RepoPath = MSettings.GenRepoPath;
             ProgPath = MSettings.GenManaPath;
             TProcPath = MSettings.GenTProcPath;
+            ServerNamingIndex = MSettings.ServerNamingIndex;
+            LogNamingIndex = MSettings.LogNamingIndex;
 
             ResetCustomPaths();
             AddRangeCustomPaths(MSettings.CustomPaths.ToArray());
@@ -82,12 +104,65 @@ namespace BridgeSQL
         public static bool ValidTProcPath { get { return Util.ValidatePath(TProcPath, "file", "TortoiseProc.exe"); } }
         public static bool ValidGenPaths { get { return ValidRepoPath && ValidProgPath && ValidTProcPath; } }
 
+        public static int ServerNamingIndex
+        {
+            get { return _ServerNamingIndex; }
+            set
+            {
+                _ServerNamingIndex = value;
+
+                //refresh naming convention in pages
+                Extract.UpdateVariables(Extract.NODE);
+                Upload.UpdateVariables(Upload.NODE);
+                UploadFile1.UpdateVariables(UploadFile1.NODE);
+                UploadFile2.UpdateVariables(UploadFile2.NODE);
+                CompareFile1.UpdateVariables(CompareFile1.NODE);
+                CompareFile2.UpdateVariables(CompareFile2.NODE);
+                CompareDir.UpdateVariables(CompareDir.NODE);
+
+                if (UpdatedComboBox != null)
+                    UpdatedComboBox(Mode + "-ServerNamingIndex");
+            }
+        }
+
+        public static bool IsLogNamingUsed
+        {
+            get { return _IsLogNamingUsed; }
+            set
+            {
+                _IsLogNamingUsed = value;
+                //refresh naming convention in pages
+                Extract.UpdateVariables(Extract.NODE);
+                Upload.UpdateVariables(Upload.NODE);
+                UploadFile1.UpdateVariables(UploadFile1.NODE);
+                UploadFile2.UpdateVariables(UploadFile2.NODE);
+                CompareFile1.UpdateVariables(CompareFile1.NODE);
+                CompareFile2.UpdateVariables(CompareFile2.NODE);
+                CompareDir.UpdateVariables(CompareDir.NODE);
+                if (UpdatedComboBox != null)
+                    UpdatedComboBox(Mode + "-LogNamingIndex");
+            }
+        }
+
+        public static int LogNamingIndex
+        {
+            get { return _LogNamingIndex; }
+            set
+            {
+                _LogNamingIndex = value;
+                IsLogNamingUsed = EnableLogging && value > 0;
+                if (UpdatedComboBox != null)
+                    UpdatedComboBox(Mode + "-LogNamingIndex");
+            }
+        }
+
         public static Boolean EnableLogging
         {
             get { return _EnableLogging; }
             set
             {
                 _EnableLogging = value;
+                IsLogNamingUsed = value && LogNamingIndex > 0;
                 if (UpdatedCheckBox != null)
                     UpdatedCheckBox(Mode + "-EnableLogging");
             }
@@ -425,7 +500,6 @@ namespace BridgeSQL
             }
             string[] currDetails = GetNodeDetails(currNode);
 
-
             if ((Mode == "extract"
                 || Mode == "upload"
                 || Mode == "compareDir"
@@ -640,7 +714,10 @@ namespace BridgeSQL
             {
                 if (theNode.HasConnection && theNode.TryGetConnection(out CON))
                 {
-                    servername = CON.Server;
+                    if (ManaSQLConfig.ServerNamingIndex == 1) { servername = Util.GetMachine(CON.Server); }
+                    else if (ManaSQLConfig.ServerNamingIndex == 2) { servername = Util.GetIP(CON.Server); }
+                    else { servername = CON.Server; }
+
                     validDBI = theNode.TryGetDatabaseObject(out DBI);
 
                     if (Mode == "extract" || Mode == "upload" || Mode == "compareDir")
@@ -656,8 +733,8 @@ namespace BridgeSQL
                             objtype = "StoredProcedures";
                         }
                     }
-                    else if (Mode == "compareFile1" 
-                        || Mode == "compareFile2" 
+                    else if (Mode == "compareFile1"
+                        || Mode == "compareFile2"
                         || Mode == "uploadFile1"
                         || Mode == "uploadFile2"
                         )
@@ -869,6 +946,7 @@ namespace BridgeSQL
         public string FormLogPath()
         {
             string path = "";
+            string subdir = "";
             bool isStrict = (IsDefault || UseTemp) ? true : _isStrict;
             bool hasDB = (SERVER != "" && DB != "");
 
@@ -900,6 +978,29 @@ namespace BridgeSQL
                         path = _LogPath;
                     }
                 }
+                if (ManaSQLConfig.IsLogNamingUsed)
+                {
+                    if (ManaSQLConfig.LogNamingIndex == 1) //daily
+                    {
+                        subdir = DateTime.Now.ToString("yyyy-MM-dd");
+                    }
+                    else if (ManaSQLConfig.LogNamingIndex == 2) //weekly
+                    {
+                        subdir = Util.GetWeekDay1(DateTime.Now);
+                    }
+                    else if (ManaSQLConfig.LogNamingIndex == 3) //monthly
+                    {
+                        subdir = Util.GetMonthDay1(DateTime.Now);
+                    }
+                    else if (ManaSQLConfig.LogNamingIndex == 4) //yearly
+                    {
+                        subdir = Util.GetYearDay1(DateTime.Now);
+                    }
+                }
+                if (Mode == "compareDir")
+                    path = string.Format(@"{0}\{1}", path, "compared");
+                if (subdir != "")
+                    path = string.Format(@"{0}\{1}", path, subdir);
             }
             return path;
         }
@@ -908,6 +1009,8 @@ namespace BridgeSQL
         public string FormOutPath()
         {
             string path = "";
+            string subdir = "";
+
             if (IsDefault)
             {
                 path = ManaSQLConfig.RepoPath;
@@ -916,6 +1019,29 @@ namespace BridgeSQL
             {
                 path = _OutPath;
             }
+            if (ManaSQLConfig.IsLogNamingUsed)
+            {
+                if (ManaSQLConfig.LogNamingIndex == 1) //daily
+                {
+                    subdir = DateTime.Now.ToString("yyyy-MM-dd");
+                }
+                else if (ManaSQLConfig.LogNamingIndex == 2) //weekly
+                {
+                    subdir = Util.GetWeekDay1(DateTime.Now);
+                }
+                else if (ManaSQLConfig.LogNamingIndex == 3) //monthly
+                {
+                    subdir = Util.GetMonthDay1(DateTime.Now);
+                }
+                else if (ManaSQLConfig.LogNamingIndex == 4) //yearly
+                {
+                    subdir = Util.GetYearDay1(DateTime.Now);
+                }
+            }
+            if (Mode == "compareDir")
+                path = string.Format(@"{0}\{1}", path, "compared");
+            if (subdir != "")
+                path = string.Format(@"{0}\{1}", path, subdir);
             return path;
         }
 
@@ -949,10 +1075,9 @@ namespace BridgeSQL
             string path = FormLogPath();
             if (path == "") return path;
             if (Mode == "compareDir")
-            {
-                path = string.Format(@"{0}\{1}\{2}", path, "compared", AutomationDate);
-            }
-            if (filename != "") path = string.Format(@"{0}\{1}", path, filename);
+                path = string.Format(@"{0}\{1}", path, AutomationDate);
+            if (filename != "")
+                path = string.Format(@"{0}\{1}", path, filename);
             return path;
         }
 
@@ -962,7 +1087,7 @@ namespace BridgeSQL
             string path = FormOutPath();
             if (path == "") return path;
 
-            path = string.Format(@"{0}\{1}\{2}", path, "compared", AutomationDate);
+            path = string.Format(@"{0}\{1}", path, AutomationDate);
             if (filename == "") filename = "result.txt";
             if (filename != "") path = string.Format(@"{0}\{1}", path, filename);
             return path;

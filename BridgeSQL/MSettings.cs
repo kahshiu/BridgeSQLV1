@@ -28,6 +28,8 @@ namespace BridgeSQL
         public static string GenManaPath = @"C:\SSMS_plugins\SQLMana\SqlMana.exe";
         public static string GenTProcPath = @"c:\Program Files\TortoiseSVN\bin\TortoiseProc.exe";
         public static List<string> CustomPaths = new List<string>();
+        public static int ServerNamingIndex = 1;
+        public static int LogNamingIndex = 0;
 
         public static void ReadBridgeSQLRegKey()
         {
@@ -87,6 +89,15 @@ namespace BridgeSQL
                                     }
                                 }
                             }
+                            else if (pair[0] == "servernamingindex") {
+                                bool isSuccessParse = Int32.TryParse(pair[1], out ServerNamingIndex);
+                                if (!isSuccessParse) ServerNamingIndex = 0;
+                            }
+                            else if (pair[0] == "lognamingindex")
+                            {
+                                bool isSuccessParse = Int32.TryParse(pair[1], out LogNamingIndex);
+                                if (!isSuccessParse) LogNamingIndex = 0;
+                            }
                         }
                     }
                     file.Close();
@@ -109,6 +120,8 @@ namespace BridgeSQL
             GenRepoPath = ManaSQLConfig.RepoPath;
             GenManaPath = ManaSQLConfig.ProgPath;
             GenTProcPath = ManaSQLConfig.TProcPath;
+            ServerNamingIndex = ManaSQLConfig.ServerNamingIndex;
+            LogNamingIndex = ManaSQLConfig.LogNamingIndex;
             CustomPaths.Clear();
             CustomPaths.AddRange(ManaSQLConfig.GetCustomPaths());
         }
@@ -132,6 +145,8 @@ namespace BridgeSQL
             total = total + FormString("manapath", GenManaPath);
             total = total + FormString("tprocpath", GenTProcPath);
             total = total + FormString("custompaths", CustomPaths.ToArray());
+            total = total + FormString("servernamingindex", ServerNamingIndex.ToString());
+            total = total + FormString("lognamingindex", LogNamingIndex.ToString());
 
             File.WriteAllText(filePath, total);
         }

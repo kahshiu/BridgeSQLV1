@@ -5,11 +5,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Net;
 
 namespace BridgeSQL
 {
     class Util
     {
+        public static string GetYearDay1(DateTime dt, string format = "yyyy-MM-dd")
+        {
+            return string.Format(@"{0}-01-01", dt.Year.ToString());
+        }
+
+        public static string GetMonthDay1(DateTime dt, string format = "yyyy-MM-dd")
+        {
+            int delta = dt.Day - 1;
+            dt = dt.AddDays(-1 * delta);
+            return dt.ToString(format);
+        }
+
+        public static string GetWeekDay1(DateTime dt, string format = "yyyy-MM-dd")
+        {
+            int delta = DayOfWeek.Monday - dt.DayOfWeek;
+            dt = dt.AddDays(delta);
+            return dt.ToString(format);
+        }
+
         public static string[] SanitizeStringList(string list, char delim = ',')
         {
             string[] fragments = list.Split(delim);
@@ -42,6 +62,31 @@ namespace BridgeSQL
                 }
             }
             return files;
+        }
+
+        public static string GetIP(string host, int index = 0)
+        {
+            IPHostEntry resolved = Dns.GetHostEntry(host);
+            IPAddress[] IPs = resolved.AddressList;
+            if (IPs == null || IPs.Length == 0)
+            {
+                return "";
+            }
+            else
+            {
+                return IPs[index].ToString();
+            }
+        }
+
+        public static string GetMachine(string IP)
+        {
+            IPHostEntry resolved = Dns.GetHostEntry(IP);
+            return resolved.HostName;
+        }
+
+        public static bool IsIP(string IP)
+        {
+            return Regex.IsMatch(IP, @"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\");
         }
 
         public static bool HasFile(string directory, string fileExtension)

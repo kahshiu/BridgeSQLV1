@@ -135,6 +135,9 @@
             this.compareDirRepo2Label = new System.Windows.Forms.Label();
             this.compareDirRepoLabel = new System.Windows.Forms.Label();
             this.settings = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.useIP = new System.Windows.Forms.CheckBox();
+            this.useComName = new System.Windows.Forms.CheckBox();
             this.customGrp = new System.Windows.Forms.GroupBox();
             this.customPathRemove = new System.Windows.Forms.Button();
             this.customPathAdd = new System.Windows.Forms.Button();
@@ -143,6 +146,11 @@
             this.customPath = new System.Windows.Forms.TextBox();
             this.saveSetting = new System.Windows.Forms.Button();
             this.generalGrp = new System.Windows.Forms.GroupBox();
+            this.logNaming = new System.Windows.Forms.ComboBox();
+            this.enableLogging = new System.Windows.Forms.CheckBox();
+            this.serverNaming = new System.Windows.Forms.ComboBox();
+            this.logNamingLabel = new System.Windows.Forms.Label();
+            this.serverNamingLabel = new System.Windows.Forms.Label();
             this.generalSQLMana = new System.Windows.Forms.TextBox();
             this.generalSQLManaWarning = new System.Windows.Forms.Label();
             this.generalTProcWarning = new System.Windows.Forms.Label();
@@ -150,7 +158,6 @@
             this.generalRepo = new System.Windows.Forms.TextBox();
             this.generalTProcLabel = new System.Windows.Forms.Label();
             this.generalTProc = new System.Windows.Forms.TextBox();
-            this.enableLogging = new System.Windows.Forms.CheckBox();
             this.generalRepoLabel = new System.Windows.Forms.Label();
             this.generalSQLManaLabel = new System.Windows.Forms.Label();
             this.displayGrp = new System.Windows.Forms.GroupBox();
@@ -175,6 +182,7 @@
             this.compareFile.SuspendLayout();
             this.compare2.SuspendLayout();
             this.settings.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.customGrp.SuspendLayout();
             this.generalGrp.SuspendLayout();
             this.displayGrp.SuspendLayout();
@@ -1317,6 +1325,7 @@
             // 
             // settings
             // 
+            this.settings.Controls.Add(this.groupBox1);
             this.settings.Controls.Add(this.customGrp);
             this.settings.Controls.Add(this.saveSetting);
             this.settings.Controls.Add(this.generalGrp);
@@ -1328,6 +1337,39 @@
             this.settings.TabIndex = 2;
             this.settings.Text = "Settings";
             this.settings.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.useIP);
+            this.groupBox1.Controls.Add(this.useComName);
+            this.groupBox1.Location = new System.Drawing.Point(569, 471);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(389, 242);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
+            // 
+            // useIP
+            // 
+            this.useIP.AutoSize = true;
+            this.useIP.Location = new System.Drawing.Point(42, 48);
+            this.useIP.Name = "useIP";
+            this.useIP.Size = new System.Drawing.Size(71, 21);
+            this.useIP.TabIndex = 30;
+            this.useIP.Text = "Use IP";
+            this.useIP.UseVisualStyleBackColor = true;
+            this.useIP.Click += new System.EventHandler(this.CheckBoxUI_Click);
+            // 
+            // useComName
+            // 
+            this.useComName.AutoSize = true;
+            this.useComName.Location = new System.Drawing.Point(42, 76);
+            this.useComName.Name = "useComName";
+            this.useComName.Size = new System.Drawing.Size(123, 21);
+            this.useComName.TabIndex = 31;
+            this.useComName.Text = "Use Hostname";
+            this.useComName.UseVisualStyleBackColor = true;
+            this.useComName.Click += new System.EventHandler(this.CheckBoxUI_Click);
             // 
             // customGrp
             // 
@@ -1409,6 +1451,11 @@
             // 
             // generalGrp
             // 
+            this.generalGrp.Controls.Add(this.logNaming);
+            this.generalGrp.Controls.Add(this.enableLogging);
+            this.generalGrp.Controls.Add(this.serverNaming);
+            this.generalGrp.Controls.Add(this.logNamingLabel);
+            this.generalGrp.Controls.Add(this.serverNamingLabel);
             this.generalGrp.Controls.Add(this.generalSQLMana);
             this.generalGrp.Controls.Add(this.generalSQLManaWarning);
             this.generalGrp.Controls.Add(this.generalTProcWarning);
@@ -1416,7 +1463,6 @@
             this.generalGrp.Controls.Add(this.generalRepo);
             this.generalGrp.Controls.Add(this.generalTProcLabel);
             this.generalGrp.Controls.Add(this.generalTProc);
-            this.generalGrp.Controls.Add(this.enableLogging);
             this.generalGrp.Controls.Add(this.generalRepoLabel);
             this.generalGrp.Controls.Add(this.generalSQLManaLabel);
             this.generalGrp.Location = new System.Drawing.Point(174, 47);
@@ -1425,6 +1471,55 @@
             this.generalGrp.TabIndex = 1;
             this.generalGrp.TabStop = false;
             this.generalGrp.Text = "General Paths";
+            // 
+            // logNaming
+            // 
+            this.logNaming.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.logNaming.FormattingEnabled = true;
+            this.logNaming.Location = new System.Drawing.Point(212, 283);
+            this.logNaming.Name = "logNaming";
+            this.logNaming.Size = new System.Drawing.Size(162, 24);
+            this.logNaming.TabIndex = 35;
+            this.logNaming.DropDownClosed += new System.EventHandler(this.SelectedComboUI);
+            // 
+            // enableLogging
+            // 
+            this.enableLogging.AutoSize = true;
+            this.enableLogging.Location = new System.Drawing.Point(212, 313);
+            this.enableLogging.Name = "enableLogging";
+            this.enableLogging.Size = new System.Drawing.Size(129, 21);
+            this.enableLogging.TabIndex = 1;
+            this.enableLogging.Text = "Enable Logging";
+            this.enableLogging.UseVisualStyleBackColor = true;
+            this.enableLogging.Click += new System.EventHandler(this.CheckBoxUI_Click);
+            // 
+            // serverNaming
+            // 
+            this.serverNaming.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.serverNaming.FormattingEnabled = true;
+            this.serverNaming.Location = new System.Drawing.Point(7, 283);
+            this.serverNaming.Name = "serverNaming";
+            this.serverNaming.Size = new System.Drawing.Size(162, 24);
+            this.serverNaming.TabIndex = 34;
+            this.serverNaming.DropDownClosed += new System.EventHandler(this.SelectedComboUI);
+            // 
+            // logNamingLabel
+            // 
+            this.logNamingLabel.AutoSize = true;
+            this.logNamingLabel.Location = new System.Drawing.Point(211, 263);
+            this.logNamingLabel.Name = "logNamingLabel";
+            this.logNamingLabel.Size = new System.Drawing.Size(137, 17);
+            this.logNamingLabel.TabIndex = 32;
+            this.logNamingLabel.Text = "Log Naming [Subdir]";
+            // 
+            // serverNamingLabel
+            // 
+            this.serverNamingLabel.AutoSize = true;
+            this.serverNamingLabel.Location = new System.Drawing.Point(6, 263);
+            this.serverNamingLabel.Name = "serverNamingLabel";
+            this.serverNamingLabel.Size = new System.Drawing.Size(102, 17);
+            this.serverNamingLabel.TabIndex = 32;
+            this.serverNamingLabel.Text = "Server Naming";
             // 
             // generalSQLMana
             // 
@@ -1497,17 +1592,6 @@
             this.generalTProc.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
             this.generalTProc.Leave += new System.EventHandler(this.UpdatePathWithLeave);
             this.generalTProc.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ShowTextContext);
-            // 
-            // enableLogging
-            // 
-            this.enableLogging.AutoSize = true;
-            this.enableLogging.Location = new System.Drawing.Point(254, 314);
-            this.enableLogging.Name = "enableLogging";
-            this.enableLogging.Size = new System.Drawing.Size(129, 21);
-            this.enableLogging.TabIndex = 1;
-            this.enableLogging.Text = "Enable Logging";
-            this.enableLogging.UseVisualStyleBackColor = true;
-            this.enableLogging.Click += new System.EventHandler(this.CheckBoxUI_Click);
             // 
             // generalRepoLabel
             // 
@@ -1694,6 +1778,8 @@
             this.compare2.ResumeLayout(false);
             this.compare2.PerformLayout();
             this.settings.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.customGrp.ResumeLayout(false);
             this.customGrp.PerformLayout();
             this.generalGrp.ResumeLayout(false);
@@ -1847,5 +1933,12 @@
         private System.Windows.Forms.Label uploadSSPFilterInstruction;
         private System.Windows.Forms.CheckBox uploadCheckCase;
         private System.Windows.Forms.ListBox uploadSSPSelected;
+        private System.Windows.Forms.CheckBox useIP;
+        private System.Windows.Forms.CheckBox useComName;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label serverNamingLabel;
+        private System.Windows.Forms.ComboBox serverNaming;
+        private System.Windows.Forms.ComboBox logNaming;
+        private System.Windows.Forms.Label logNamingLabel;
     }
 }

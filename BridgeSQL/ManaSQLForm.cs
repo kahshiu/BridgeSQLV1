@@ -73,6 +73,7 @@ namespace BridgeSQL
             ManaSQLConfig.UpdatedText += new ManaSQLConfig.TextHandler(RefreshTextBox);
             ManaSQLConfig.UpdatedList += new ManaSQLConfig.ListHandler(RefreshListBoxItems);
             ManaSQLConfig.UpdatedList += new ManaSQLConfig.ListHandler(RefreshSelectedListBoxItems);
+            ManaSQLConfig.UpdatedComboBox += new ManaSQLConfig.ComboBoxHandler(RefreshComboBox);
 
             //non visuals
             //ManaSQLConfig.UpdatedNonVisualData += new ManaSQLConfig.NonVisualDataHandler();         
@@ -96,11 +97,14 @@ namespace BridgeSQL
             compareFile2Server.Text = "SELECT NODE";
             compareFile2DB.Text = "SELECT NODE";
             compareFile2Obj.Text = "SELECT NODE";
+            serverNaming.Items.AddRange(ManaSQLConfig.ServerNamings.ToArray());
+            logNaming.Items.AddRange(ManaSQLConfig.LogNamings.ToArray());
 
             RefreshCheckBoxes("all");
             RefreshTextBox("all");
             RefreshListBoxItems("all");
             RefreshButton("all");
+            RefreshComboBox("all");
         }
 
         // START: CONTEXT MENU
@@ -272,6 +276,14 @@ namespace BridgeSQL
             var control = sender as CheckBox;
             bool isChecked = control.CheckState == CheckState.Checked;
             UpdateCheckBoxes(control.Name, isChecked);
+        }
+
+        // START: ALL COMBOBOX
+        private void SelectedComboUI(object sender, EventArgs e)
+        {
+            var control = sender as ComboBox;
+            int index = control.SelectedIndex;
+            UpdateComboBox(control.Name, index);
         }
 
         // START: PAGE EXTRACT
@@ -1088,6 +1100,30 @@ namespace BridgeSQL
             if (Util.Contains(new string[] { "all", "compareDirDDir" }, list))
             {
                 ManaSQLConfig.CompareDir.IsDefault = flag;
+            }
+        }
+
+        public void RefreshComboBox(string list)
+        {
+            if (Util.Contains(new string[] { "all", "general-ServerNamingIndex" }, list))
+            {
+                serverNaming.SelectedIndex = ManaSQLConfig.ServerNamingIndex;
+            }
+            if (Util.Contains(new string[] { "all", "general-LogNamingIndex" }, list))
+            {
+                logNaming.SelectedIndex = ManaSQLConfig.LogNamingIndex;
+                logNaming.Enabled = ManaSQLConfig.EnableLogging;
+            }
+        }
+        public void UpdateComboBox(string list, int val)
+        {
+            if (Util.Contains(new string[] { "all", "serverNaming" }, list))
+            {
+                ManaSQLConfig.ServerNamingIndex = serverNaming.SelectedIndex;
+            }
+            if (Util.Contains(new string[] { "all", "logNaming" }, list))
+            {
+                ManaSQLConfig.LogNamingIndex = logNaming.SelectedIndex;
             }
         }
 
