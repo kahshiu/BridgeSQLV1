@@ -732,7 +732,9 @@ namespace BridgeSQL
                 {
                     if (ManaSQLConfig.ServerNamingIndex == 1) { servername = Util.GetMachine(CON.Server); }
                     else if (ManaSQLConfig.ServerNamingIndex == 2) { servername = Util.GetIP(CON.Server); }
-                    else { servername = CON.Server; }
+                    
+                    // general handling of errors from IP/ host searchname attempt
+                    if (servername == "") { servername = CON.Server; }
 
                     validDBI = theNode.TryGetDatabaseObject(out DBI);
 

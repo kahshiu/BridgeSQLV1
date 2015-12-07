@@ -66,22 +66,34 @@ namespace BridgeSQL
 
         public static string GetIP(string host, int index = 0)
         {
-            IPHostEntry resolved = Dns.GetHostEntry(host);
-            IPAddress[] IPs = resolved.AddressList;
-            if (IPs == null || IPs.Length == 0)
+            string theIP = "";
+            try
             {
-                return "";
+                IPHostEntry resolved = Dns.GetHostEntry(host);
+                IPAddress[] IPs = resolved.AddressList;
+                if (IPs != null && IPs.Length != 0)
+                    theIP = IPs[index].ToString();
             }
-            else
+            catch (Exception ex)
             {
-                return IPs[index].ToString();
+
             }
+            return theIP;
         }
 
         public static string GetMachine(string IP)
         {
-            IPHostEntry resolved = Dns.GetHostEntry(IP);
-            return resolved.HostName;
+            string name = "";
+            try
+            {
+                IPHostEntry resolved = Dns.GetHostEntry(IP);
+                name = resolved.HostName;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return name;
         }
 
         public static bool IsIP(string IP)
