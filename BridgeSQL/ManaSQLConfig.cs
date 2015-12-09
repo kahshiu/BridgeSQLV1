@@ -523,7 +523,7 @@ namespace BridgeSQL
                 && currNode != null                 //ommit initiation, all items are empty
                 && (newDetails[0] != currDetails[0] //changed details
                 || newDetails[1] != currDetails[1]
-                || newDetails[3] != currDetails[3]
+                || newDetails[3] != currDetails[3]  
                 )
                 )
             {

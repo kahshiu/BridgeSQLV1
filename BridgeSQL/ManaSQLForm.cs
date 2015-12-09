@@ -392,7 +392,7 @@ namespace BridgeSQL
             string args;
 
             //TODO: implement defensive code here
-            if (control.Equals(compareFileAction1))
+            if (control.Equals(compareFileWrite))
             {
                 if (ManaSQLConfig.CompareFile1.ValidPaths && ManaSQLConfig.CompareFile2.ValidPaths)
                 {
@@ -403,13 +403,20 @@ namespace BridgeSQL
                     args = ManaSQLConfig.CompareFile2.CompileArgs();
                     args = "data " + args;
                     ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+
+                    System.Threading.Thread.Sleep(500);
+                    // TODO: addback the files so can upload later
+                    ManaSQLConfig.UploadFile1.AppendWhereFile(string.Format("{0}.{1}", ManaSQLConfig.CompareFile1.OBJ, ManaSQLConfig.Extension), false);
+                    ManaSQLConfig.UploadFile2.AppendWhereFile(string.Format("{0}.{1}", ManaSQLConfig.CompareFile2.OBJ, ManaSQLConfig.Extension), false);
+                    RefreshButton("compareFile1");
+                    //RefreshButton("compareFile2"); // just one is needed
                 }
                 else
                 {
                     MessageBox.Show(errorMsg);
                 }
             }
-            else if (control.Equals(compareFileAction2))
+            else if (control.Equals(compareFileCompare))
             {
                 string pathRight = ManaSQLConfig.CompareFile1.FormSelectedSSPFilePaths()[0];
                 string pathLeft = ManaSQLConfig.CompareFile2.FormSelectedSSPFilePaths()[0];
@@ -429,12 +436,12 @@ namespace BridgeSQL
                     , false
                     );
             }
-            else if (control.Equals(compareFileAction3))
+            else if (control.Equals(compareFileUpload1))
             {
                 if (ManaSQLConfig.UploadFile1.ValidPaths)
                 {
                     args = ManaSQLConfig.UploadFile1.CompileArgs();
-                    args = "data " + args;
+                    args = string.Format(@"data {0}", args);
                     ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
                 }
                 else
@@ -442,14 +449,14 @@ namespace BridgeSQL
                     MessageBox.Show(errorMsg);
                 }
             }
-            else if (control.Equals(compareFileAction4))
+            else if (control.Equals(compareFileUpload2))
             {
                 args = ManaSQLConfig.UploadFile2.CompileArgs();
 
                 if (ManaSQLConfig.UploadFile2.ValidPaths)
                 {
-                    args = ManaSQLConfig.UploadFile1.CompileArgs();
-                    args = "data " + args;
+                    args = ManaSQLConfig.UploadFile2.CompileArgs();
+                    args = string.Format(@"data {0}", args);
                     ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
                 }
                 else
@@ -1187,10 +1194,10 @@ namespace BridgeSQL
                 bool isFileExist1 = ManaSQLConfig.CompareFile1.ExistsSSPFilename(0);
                 bool isFileExist2 = ManaSQLConfig.CompareFile2.ExistsSSPFilename(0);
 
-                compareFileAction1.Enabled = isListed;
-                compareFileAction2.Enabled = isListed && isFileExist1 && isFileExist2;
-                compareFileAction3.Enabled = isListed && isFileExist1;
-                compareFileAction4.Enabled = isListed && isFileExist2;
+                compareFileWrite.Enabled = isListed;
+                compareFileCompare.Enabled = isListed && isFileExist1 && isFileExist2;
+                compareFileUpload1.Enabled = isListed && isFileExist1;
+                compareFileUpload2.Enabled = isListed && isFileExist2;
             }
 
             if (Util.Contains(new string[] { "all", "compareDir" }, list))
@@ -1292,8 +1299,9 @@ namespace BridgeSQL
                     if (!Regex.IsMatch(
                         filenames[i]
                         , filterText
-                        , filterTextCasing?RegexOptions.IgnoreCase:RegexOptions.None)
-                        ) filenames.RemoveAt(i);
+                        , filterTextCasing ? RegexOptions.IgnoreCase : RegexOptions.None)
+                        )
+                        filenames.RemoveAt(i);
                 }
             }
 

@@ -86,10 +86,12 @@
             this.compareFileNote = new System.Windows.Forms.Label();
             this.compareFile2TempPath = new System.Windows.Forms.CheckBox();
             this.compareFile1TempPath = new System.Windows.Forms.CheckBox();
-            this.compareFileAction2 = new System.Windows.Forms.Button();
-            this.compareFileAction3 = new System.Windows.Forms.Button();
-            this.compareFileAction4 = new System.Windows.Forms.Button();
-            this.compareFileAction1 = new System.Windows.Forms.Button();
+            this.compareFileCompare = new System.Windows.Forms.Button();
+            this.compareFileCommit2 = new System.Windows.Forms.Button();
+            this.compareFileCommit1 = new System.Windows.Forms.Button();
+            this.compareFileUpload1 = new System.Windows.Forms.Button();
+            this.compareFileUpload2 = new System.Windows.Forms.Button();
+            this.compareFileWrite = new System.Windows.Forms.Button();
             this.compareFile1Indicator = new System.Windows.Forms.Label();
             this.compareFile2Indicator = new System.Windows.Forms.Label();
             this.compareFile2Log = new System.Windows.Forms.TextBox();
@@ -677,10 +679,12 @@
             this.compareFile.Controls.Add(this.compareFileNote);
             this.compareFile.Controls.Add(this.compareFile2TempPath);
             this.compareFile.Controls.Add(this.compareFile1TempPath);
-            this.compareFile.Controls.Add(this.compareFileAction2);
-            this.compareFile.Controls.Add(this.compareFileAction3);
-            this.compareFile.Controls.Add(this.compareFileAction4);
-            this.compareFile.Controls.Add(this.compareFileAction1);
+            this.compareFile.Controls.Add(this.compareFileCompare);
+            this.compareFile.Controls.Add(this.compareFileCommit2);
+            this.compareFile.Controls.Add(this.compareFileCommit1);
+            this.compareFile.Controls.Add(this.compareFileUpload1);
+            this.compareFile.Controls.Add(this.compareFileUpload2);
+            this.compareFile.Controls.Add(this.compareFileWrite);
             this.compareFile.Controls.Add(this.compareFile1Indicator);
             this.compareFile.Controls.Add(this.compareFile2Indicator);
             this.compareFile.Controls.Add(this.compareFile2Log);
@@ -794,7 +798,7 @@
             // compareFileNote
             // 
             this.compareFileNote.AutoSize = true;
-            this.compareFileNote.Location = new System.Drawing.Point(502, 340);
+            this.compareFileNote.Location = new System.Drawing.Point(502, 339);
             this.compareFileNote.Name = "compareFileNote";
             this.compareFileNote.Size = new System.Drawing.Size(390, 119);
             this.compareFileNote.TabIndex = 0;
@@ -822,49 +826,73 @@
             this.compareFile1TempPath.UseVisualStyleBackColor = true;
             this.compareFile1TempPath.Click += new System.EventHandler(this.CheckBoxUI_Click);
             // 
-            // compareFileAction2
+            // compareFileCompare
             // 
-            this.compareFileAction2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareFileAction2.Location = new System.Drawing.Point(204, 390);
-            this.compareFileAction2.Name = "compareFileAction2";
-            this.compareFileAction2.Size = new System.Drawing.Size(172, 44);
-            this.compareFileAction2.TabIndex = 14;
-            this.compareFileAction2.Text = "Compare Files";
-            this.compareFileAction2.UseVisualStyleBackColor = true;
-            this.compareFileAction2.Click += new System.EventHandler(this.compareFileAction1_Click);
+            this.compareFileCompare.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareFileCompare.Location = new System.Drawing.Point(215, 389);
+            this.compareFileCompare.Name = "compareFileCompare";
+            this.compareFileCompare.Size = new System.Drawing.Size(172, 44);
+            this.compareFileCompare.TabIndex = 14;
+            this.compareFileCompare.Text = "Compare Files";
+            this.compareFileCompare.UseVisualStyleBackColor = true;
+            this.compareFileCompare.Click += new System.EventHandler(this.compareFileAction1_Click);
             // 
-            // compareFileAction3
+            // compareFileCommit2
             // 
-            this.compareFileAction3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareFileAction3.Location = new System.Drawing.Point(204, 512);
-            this.compareFileAction3.Name = "compareFileAction3";
-            this.compareFileAction3.Size = new System.Drawing.Size(172, 44);
-            this.compareFileAction3.TabIndex = 15;
-            this.compareFileAction3.Text = "Upload File 1 to DB";
-            this.compareFileAction3.UseVisualStyleBackColor = true;
-            this.compareFileAction3.Click += new System.EventHandler(this.compareFileAction1_Click);
+            this.compareFileCommit2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareFileCommit2.Location = new System.Drawing.Point(505, 488);
+            this.compareFileCommit2.Name = "compareFileCommit2";
+            this.compareFileCommit2.Size = new System.Drawing.Size(172, 44);
+            this.compareFileCommit2.TabIndex = 15;
+            this.compareFileCommit2.Text = "Commit File2";
+            this.compareFileCommit2.UseVisualStyleBackColor = true;
+            this.compareFileCommit2.Visible = false;
+            this.compareFileCommit2.Click += new System.EventHandler(this.compareFileAction1_Click);
             // 
-            // compareFileAction4
+            // compareFileCommit1
             // 
-            this.compareFileAction4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareFileAction4.Location = new System.Drawing.Point(505, 512);
-            this.compareFileAction4.Name = "compareFileAction4";
-            this.compareFileAction4.Size = new System.Drawing.Size(172, 44);
-            this.compareFileAction4.TabIndex = 16;
-            this.compareFileAction4.Text = "Upload File 2 to DB";
-            this.compareFileAction4.UseVisualStyleBackColor = true;
-            this.compareFileAction4.Click += new System.EventHandler(this.compareFileAction1_Click);
+            this.compareFileCommit1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareFileCommit1.Location = new System.Drawing.Point(215, 488);
+            this.compareFileCommit1.Name = "compareFileCommit1";
+            this.compareFileCommit1.Size = new System.Drawing.Size(172, 44);
+            this.compareFileCommit1.TabIndex = 15;
+            this.compareFileCommit1.Text = "Commit File1";
+            this.compareFileCommit1.UseVisualStyleBackColor = true;
+            this.compareFileCommit1.Visible = false;
+            this.compareFileCommit1.Click += new System.EventHandler(this.compareFileAction1_Click);
             // 
-            // compareFileAction1
+            // compareFileUpload1
             // 
-            this.compareFileAction1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.compareFileAction1.Location = new System.Drawing.Point(204, 340);
-            this.compareFileAction1.Name = "compareFileAction1";
-            this.compareFileAction1.Size = new System.Drawing.Size(172, 44);
-            this.compareFileAction1.TabIndex = 13;
-            this.compareFileAction1.Text = "Write Files";
-            this.compareFileAction1.UseVisualStyleBackColor = true;
-            this.compareFileAction1.Click += new System.EventHandler(this.compareFileAction1_Click);
+            this.compareFileUpload1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareFileUpload1.Location = new System.Drawing.Point(215, 538);
+            this.compareFileUpload1.Name = "compareFileUpload1";
+            this.compareFileUpload1.Size = new System.Drawing.Size(172, 44);
+            this.compareFileUpload1.TabIndex = 15;
+            this.compareFileUpload1.Text = "Upload File1 to DB";
+            this.compareFileUpload1.UseVisualStyleBackColor = true;
+            this.compareFileUpload1.Click += new System.EventHandler(this.compareFileAction1_Click);
+            // 
+            // compareFileUpload2
+            // 
+            this.compareFileUpload2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareFileUpload2.Location = new System.Drawing.Point(505, 538);
+            this.compareFileUpload2.Name = "compareFileUpload2";
+            this.compareFileUpload2.Size = new System.Drawing.Size(172, 44);
+            this.compareFileUpload2.TabIndex = 16;
+            this.compareFileUpload2.Text = "Upload File2 to DB";
+            this.compareFileUpload2.UseVisualStyleBackColor = true;
+            this.compareFileUpload2.Click += new System.EventHandler(this.compareFileAction1_Click);
+            // 
+            // compareFileWrite
+            // 
+            this.compareFileWrite.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.compareFileWrite.Location = new System.Drawing.Point(215, 339);
+            this.compareFileWrite.Name = "compareFileWrite";
+            this.compareFileWrite.Size = new System.Drawing.Size(172, 44);
+            this.compareFileWrite.TabIndex = 13;
+            this.compareFileWrite.Text = "Write Files";
+            this.compareFileWrite.UseVisualStyleBackColor = true;
+            this.compareFileWrite.Click += new System.EventHandler(this.compareFileAction1_Click);
             // 
             // compareFile1Indicator
             // 
@@ -1810,7 +1838,7 @@
         private System.Windows.Forms.Label compareFile2ServerLabel;
         private System.Windows.Forms.Label compareFile1Indicator;
         private System.Windows.Forms.Label compareFile2Indicator;
-        private System.Windows.Forms.Button compareFileAction1;
+        private System.Windows.Forms.Button compareFileWrite;
         private System.Windows.Forms.Label uploadLogWarning;
         private System.Windows.Forms.TextBox uploadLog;
         private System.Windows.Forms.Label uploadLogLabel;
@@ -1880,7 +1908,7 @@
         private System.Windows.Forms.Button compareDirLogCreate;
         private System.Windows.Forms.Button compareDirResultCreate;
         private System.Windows.Forms.ContextMenuStrip favPaths;
-        private System.Windows.Forms.Button compareFileAction2;
+        private System.Windows.Forms.Button compareFileCompare;
         private System.Windows.Forms.Button compareFile2LogCreate;
         private System.Windows.Forms.Button compareFile2RepoCreate;
         private System.Windows.Forms.Button compareFile1LogCreate;
@@ -1891,8 +1919,7 @@
         private System.Windows.Forms.Label uploadSSPSumLabel;
         private System.Windows.Forms.Label uploadSSPFilterLabel;
         private System.Windows.Forms.TextBox uploadSSPFilter;
-        private System.Windows.Forms.Button compareFileAction3;
-        private System.Windows.Forms.Button compareFileAction4;
+        private System.Windows.Forms.Button compareFileUpload1;
         private System.Windows.Forms.Label uploadSSPFilterInstruction;
         private System.Windows.Forms.CheckBox uploadCheckCase;
         private System.Windows.Forms.ListBox uploadSSPSelected;
@@ -1900,5 +1927,8 @@
         private System.Windows.Forms.ComboBox serverNaming;
         private System.Windows.Forms.ComboBox logNaming;
         private System.Windows.Forms.Label logNamingLabel;
+        private System.Windows.Forms.Button compareFileCommit2;
+        private System.Windows.Forms.Button compareFileCommit1;
+        private System.Windows.Forms.Button compareFileUpload2;
     }
 }
