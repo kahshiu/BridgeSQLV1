@@ -190,5 +190,17 @@ namespace BridgeSQL
             }
             return index;
         }
+
+        // clean connection string from Redgate IConnection2
+        public static string FormAuthString(string stock, string db = "")
+        {
+            string temp = stock;
+            if (db != "")
+            {
+                temp = Regex.Replace(temp, @"Initial Catalog\s{0,}=[\w\s]{0,};", "", RegexOptions.IgnoreCase);
+                temp = temp + string.Format(";Initial Catalog={0}",db);
+            }
+            return temp;
+        }
     }
 }

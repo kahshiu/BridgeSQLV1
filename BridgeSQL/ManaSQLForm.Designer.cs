@@ -175,6 +175,13 @@
             this.exploreText = new System.Windows.Forms.ToolStripMenuItem();
             this.fileSearch = new System.Windows.Forms.OpenFileDialog();
             this.favPaths = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.customRepoPaths = new System.Windows.Forms.ListBox();
+            this.customRepoPath = new System.Windows.Forms.TextBox();
+            this.customRepoPathAdd = new System.Windows.Forms.Button();
+            this.customRepoPathRemove = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.customRepoPathWarning = new System.Windows.Forms.Label();
             this.tab.SuspendLayout();
             this.extract.SuspendLayout();
             this.upload.SuspendLayout();
@@ -185,6 +192,7 @@
             this.generalGrp.SuspendLayout();
             this.displayGrp.SuspendLayout();
             this.textContextMenu.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab
@@ -342,7 +350,7 @@
             this.extractSSP.ItemHeight = 16;
             this.extractSSP.Location = new System.Drawing.Point(9, 276);
             this.extractSSP.Name = "extractSSP";
-            this.extractSSP.Size = new System.Drawing.Size(367, 436);
+            this.extractSSP.Size = new System.Drawing.Size(367, 420);
             this.extractSSP.TabIndex = 0;
             this.extractSSP.TabStop = false;
             // 
@@ -1352,6 +1360,8 @@
             // 
             // settings
             // 
+            this.settings.Controls.Add(this.label1);
+            this.settings.Controls.Add(this.groupBox1);
             this.settings.Controls.Add(this.customGrp);
             this.settings.Controls.Add(this.saveSetting);
             this.settings.Controls.Add(this.generalGrp);
@@ -1371,7 +1381,7 @@
             this.customGrp.Controls.Add(this.customPathWarning);
             this.customGrp.Controls.Add(this.customPathList);
             this.customGrp.Controls.Add(this.customPath);
-            this.customGrp.Location = new System.Drawing.Point(569, 47);
+            this.customGrp.Location = new System.Drawing.Point(569, 358);
             this.customGrp.Name = "customGrp";
             this.customGrp.Size = new System.Drawing.Size(389, 341);
             this.customGrp.TabIndex = 3;
@@ -1434,9 +1444,9 @@
             // 
             // saveSetting
             // 
-            this.saveSetting.Location = new System.Drawing.Point(787, 6);
+            this.saveSetting.Location = new System.Drawing.Point(6, 490);
             this.saveSetting.Name = "saveSetting";
-            this.saveSetting.Size = new System.Drawing.Size(171, 41);
+            this.saveSetting.Size = new System.Drawing.Size(162, 41);
             this.saveSetting.TabIndex = 1;
             this.saveSetting.Text = "Save Settings";
             this.saveSetting.UseVisualStyleBackColor = true;
@@ -1458,7 +1468,7 @@
             this.generalGrp.Controls.Add(this.generalTProc);
             this.generalGrp.Controls.Add(this.generalRepoLabel);
             this.generalGrp.Controls.Add(this.generalSQLManaLabel);
-            this.generalGrp.Location = new System.Drawing.Point(174, 47);
+            this.generalGrp.Location = new System.Drawing.Point(174, 11);
             this.generalGrp.Name = "generalGrp";
             this.generalGrp.Size = new System.Drawing.Size(389, 341);
             this.generalGrp.TabIndex = 0;
@@ -1615,7 +1625,7 @@
             this.displayGrp.Controls.Add(this.dspSVNUpdate);
             this.displayGrp.Controls.Add(this.dspSVNMerge);
             this.displayGrp.Controls.Add(this.dspSVNLog);
-            this.displayGrp.Location = new System.Drawing.Point(6, 47);
+            this.displayGrp.Location = new System.Drawing.Point(6, 11);
             this.displayGrp.Name = "displayGrp";
             this.displayGrp.Size = new System.Drawing.Size(162, 341);
             this.displayGrp.TabIndex = 0;
@@ -1754,6 +1764,80 @@
             this.favPaths.Name = "favPaths";
             this.favPaths.Size = new System.Drawing.Size(67, 4);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.customRepoPathWarning);
+            this.groupBox1.Controls.Add(this.customRepoPathRemove);
+            this.groupBox1.Controls.Add(this.customRepoPathAdd);
+            this.groupBox1.Controls.Add(this.customRepoPath);
+            this.groupBox1.Controls.Add(this.customRepoPaths);
+            this.groupBox1.Location = new System.Drawing.Point(569, 11);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(389, 341);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Custom Repo Paths";
+            // 
+            // customRepoPaths
+            // 
+            this.customRepoPaths.FormattingEnabled = true;
+            this.customRepoPaths.HorizontalScrollbar = true;
+            this.customRepoPaths.ItemHeight = 16;
+            this.customRepoPaths.Location = new System.Drawing.Point(6, 22);
+            this.customRepoPaths.Name = "customRepoPaths";
+            this.customRepoPaths.Size = new System.Drawing.Size(368, 244);
+            this.customRepoPaths.TabIndex = 0;
+            this.customRepoPaths.SelectedIndexChanged += new System.EventHandler(this.SelectCustomRepoPathForRemove);
+            // 
+            // customRepoPath
+            // 
+            this.customRepoPath.Location = new System.Drawing.Point(7, 279);
+            this.customRepoPath.Name = "customRepoPath";
+            this.customRepoPath.Size = new System.Drawing.Size(367, 22);
+            this.customRepoPath.TabIndex = 18;
+            this.customRepoPath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
+            this.customRepoPath.Leave += new System.EventHandler(this.UpdatePathWithLeave);
+            // 
+            // customRepoPathAdd
+            // 
+            this.customRepoPathAdd.Location = new System.Drawing.Point(218, 307);
+            this.customRepoPathAdd.Name = "customRepoPathAdd";
+            this.customRepoPathAdd.Size = new System.Drawing.Size(75, 23);
+            this.customRepoPathAdd.TabIndex = 19;
+            this.customRepoPathAdd.Text = "Add";
+            this.customRepoPathAdd.UseVisualStyleBackColor = true;
+            this.customRepoPathAdd.Click += new System.EventHandler(this.CustomRepoPathActions);
+            // 
+            // customRepoPathRemove
+            // 
+            this.customRepoPathRemove.Location = new System.Drawing.Point(299, 307);
+            this.customRepoPathRemove.Name = "customRepoPathRemove";
+            this.customRepoPathRemove.Size = new System.Drawing.Size(75, 23);
+            this.customRepoPathRemove.TabIndex = 20;
+            this.customRepoPathRemove.Text = "Remove";
+            this.customRepoPathRemove.UseVisualStyleBackColor = true;
+            this.customRepoPathRemove.Click += new System.EventHandler(this.CustomRepoPathActions);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 358);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(508, 102);
+            this.label1.TabIndex = 5;
+            this.label1.Text = resources.GetString("label1.Text");
+            // 
+            // customRepoPathWarning
+            // 
+            this.customRepoPathWarning.AutoSize = true;
+            this.customRepoPathWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customRepoPathWarning.ForeColor = System.Drawing.Color.Maroon;
+            this.customRepoPathWarning.Location = new System.Drawing.Point(6, 307);
+            this.customRepoPathWarning.Name = "customRepoPathWarning";
+            this.customRepoPathWarning.Size = new System.Drawing.Size(130, 17);
+            this.customRepoPathWarning.TabIndex = 21;
+            this.customRepoPathWarning.Text = "Invalid Directory!";
+            // 
             // ManaSQLForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1771,6 +1855,7 @@
             this.compare2.ResumeLayout(false);
             this.compare2.PerformLayout();
             this.settings.ResumeLayout(false);
+            this.settings.PerformLayout();
             this.customGrp.ResumeLayout(false);
             this.customGrp.PerformLayout();
             this.generalGrp.ResumeLayout(false);
@@ -1778,6 +1863,8 @@
             this.displayGrp.ResumeLayout(false);
             this.displayGrp.PerformLayout();
             this.textContextMenu.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1930,5 +2017,12 @@
         private System.Windows.Forms.Button compareFileCommit2;
         private System.Windows.Forms.Button compareFileCommit1;
         private System.Windows.Forms.Button compareFileUpload2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button customRepoPathRemove;
+        private System.Windows.Forms.Button customRepoPathAdd;
+        private System.Windows.Forms.TextBox customRepoPath;
+        private System.Windows.Forms.ListBox customRepoPaths;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label customRepoPathWarning;
     }
 }

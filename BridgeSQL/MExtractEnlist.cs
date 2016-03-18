@@ -10,6 +10,15 @@ namespace BridgeSQL
 {
     class MExtractEnlist : ActionSimpleOeMenuItemBase
     {
+        private readonly ISsmsFunctionalityProvider6 plug;
+        private ManaSQLCommand cmd;
+
+        public MExtractEnlist(ISsmsFunctionalityProvider6 mPlug, ManaSQLCommand mCmd)
+        {
+            plug = mPlug;
+            cmd = mCmd;
+        }
+
         public override bool AppliesTo(ObjectExplorerNodeDescriptorBase oeNode)
         {
             var theNode = (IOeNode)oeNode;
@@ -30,6 +39,7 @@ namespace BridgeSQL
 
             if (theNode.IsDatabaseObject && theNode.TryGetDatabaseObject(out DBI))
             {
+                cmd.Execute();
                 ManaSQLConfig.PageIndex = 0;
                 ManaSQLConfig.Extract.AppendWhereSSP(DBI.ObjectName);
             }

@@ -149,4 +149,13 @@ Note:
   <metadata name="favPaths.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>423, 17</value>
   </metadata>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Note:
+-- When interacting with DB objects (ie extract to file, upload from file), 
+custom repo path tied to database will overwrite general repo path.
+
+-- Format in Custom Repo Paths:
+MY_CLAIMS_PROD_STAGE&gt;C:\inetpub2_stage_live\CLAIMS_PROD\trunk\SSP
+</value>
+  </data>
 </root>

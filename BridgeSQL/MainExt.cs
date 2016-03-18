@@ -18,7 +18,7 @@ namespace BridgeSQL
         public string Url { get { return @"https://github.com/red-gate/SampleSsmsEcosystemAddin"; } }
 
         private ISsmsFunctionalityProvider6 thePlug;
-        private ManaSQLCommand manaSQLCommand;
+        public ManaSQLCommand manaSQLCommand;
 
         public void OnLoad(ISsmsExtendedFunctionalityProvider provider)
         {
@@ -28,16 +28,26 @@ namespace BridgeSQL
             thePlug = (ISsmsFunctionalityProvider6)provider;
             manaSQLCommand = new ManaSQLCommand(thePlug);
 
-            // adding UI to MSSQL
             thePlug.AddToolbarItem(manaSQLCommand);
-            thePlug.AddTopLevelMenuItem(new MExtractAll());
+
+            // adding quick compare menu
+            var items = new SimpleOeMenuItemBase[ManaSQLConfig.qcm.Count];
+            for (int i = 0; i < ManaSQLConfig.qcm.Count; i++)
+            {
+                items[i] = new QuickCompareSubmenuItem(thePlug, manaSQLCommand, ManaSQLConfig.qcm[i]);
+            }
+            thePlug.AddTopLevelMenuItem(new QuickCompareSubmenu(items));
+
+            // adding UI to MSSQL
+            thePlug.AddTopLevelMenuItem(new MExtractAll(thePlug,manaSQLCommand));
             thePlug.AddTopLevelMenuItem(new MSVN.SVNCommitAll());
             thePlug.AddTopLevelMenuItem(new MSVN.SVNUpdateAll());
 
-            thePlug.AddTopLevelMenuItem(new MExtract());
-            thePlug.AddTopLevelMenuItem(new MExtractEnlist());
-            thePlug.AddTopLevelMenuItem(new MCompareFile1());
-            thePlug.AddTopLevelMenuItem(new MCompareFile2());
+            thePlug.AddTopLevelMenuItem(new MExtractEnlist(thePlug, manaSQLCommand));
+            thePlug.AddTopLevelMenuItem(new MExtract(thePlug, manaSQLCommand));
+            
+            thePlug.AddTopLevelMenuItem(new MCompareFile1(thePlug, manaSQLCommand));
+            thePlug.AddTopLevelMenuItem(new MCompareFile2(thePlug, manaSQLCommand));
 
             // adding in SVN menu strip
             thePlug.AddTopLevelMenuItem(new MSVN.SVNRepoStatus());
@@ -62,6 +72,8 @@ namespace BridgeSQL
 
         private void OnConnectionsChanged(IConnectionsChangedEventArgs args)
         {
+            ManaSQLConfig.Connections = thePlug.GetConnectionsAndDatabases();
+            ManaSQLConfig.MapConnections();
             ManaSQLConfig.Extract.UpdateCON(args.Connections);
         }
 

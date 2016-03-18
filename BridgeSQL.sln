@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BridgeSQL", "BridgeSQL\Brid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlMana", "..\SqlMana\SqlMana\SqlMana.csproj", "{EB43718D-2CE3-4CE8-8BE3-944D638E6178}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B8DB6D4E-D8F8-4C0E-80DB-4BCF0D2BA0FD}"
+	ProjectSection(SolutionItems) = preProject
+		QuickCompareMenu.txt = QuickCompareMenu.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

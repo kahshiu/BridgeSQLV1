@@ -13,6 +13,9 @@ namespace BridgeSQL
         public static string Mode = "general";
         public static string Extension = "sql";
         public static string WinPath = Environment.GetFolderPath(Environment.SpecialFolder.System);
+        public static List<QuickCompareMenu> qcm = new List<QuickCompareMenu>();
+        public static bool fakeCompare2 = false;
+        public static FakeNode fakie = new FakeNode();
 
         private static string _RepoPath;
         private static string _ProgPath;
@@ -34,8 +37,13 @@ namespace BridgeSQL
         private static bool _SvnBlame;
 
         private static int _SelectedCustomPath = -1;
+        private static int _SelectedCustomRepoPath = -1;
+
         private static string _customPathText;
+        private static string _customRepoPathText;
         private static List<string> _customPaths = new List<string>();
+        public static CustomRepoPathManager RPMan = new CustomRepoPathManager();
+
         public static List<string> ServerNamings = new List<string>()
         {
             "Login Servername"
@@ -51,6 +59,7 @@ namespace BridgeSQL
             ,"Yearly"
         };
 
+        public static Dictionary<IConnectionInfo2, IEnumerable<string>> Connections;
         public static FixedSettings Extract = new FixedSettings("extract");
         public static FixedSettings Upload = new FixedSettings("upload");
         public static FixedSettings UploadFile1 = new FixedSettings("uploadFile1");
@@ -97,10 +106,13 @@ namespace BridgeSQL
             TProcPath = MSettings.GenTProcPath;
             ServerNamingIndex = MSettings.ServerNamingIndex;
             LogNamingIndex = MSettings.LogNamingIndex;
+            qcm = MSettings.qcm;
 
             ResetCustomPaths();
             AddRangeCustomPaths(MSettings.CustomPaths.ToArray());
+            AddRangeCustomRepoPaths(MSettings.CustomRepoPaths);
             _customPathText = "";
+            _customRepoPathText = "";
         }
 
         // START: PROPERTIES OF CHECKBOXES
@@ -108,6 +120,18 @@ namespace BridgeSQL
         public static bool ValidProgPath { get { return Util.ValidatePath(ProgPath, "file", "SqlMana.exe"); } }
         public static bool ValidTProcPath { get { return Util.ValidatePath(TProcPath, "file", "TortoiseProc.exe"); } }
         public static bool ValidGenPaths { get { return ValidRepoPath && ValidProgPath && ValidTProcPath; } }
+
+        public static void MapConnections()
+        {
+            foreach (QuickCompareMenu q in qcm)
+            {
+                q.Conn = null;
+                foreach (KeyValuePair<IConnectionInfo2, IEnumerable<string>> entry in Connections)
+                {
+                    if (q.Server == entry.Key.Server) q.Conn = entry.Key;
+                }
+            }
+        }
 
         public static int PageIndex
         {
@@ -133,7 +157,14 @@ namespace BridgeSQL
                 UploadFile1.UpdateVariables(UploadFile1.NODE);
                 UploadFile2.UpdateVariables(UploadFile2.NODE);
                 CompareFile1.UpdateVariables(CompareFile1.NODE);
-                CompareFile2.UpdateVariables(CompareFile2.NODE);
+                if (fakeCompare2)
+                {
+                    CompareFile2.RenameMirrorVariables();
+                }
+                else
+                {
+                    CompareFile2.UpdateVariables(CompareFile2.NODE);
+                }
                 CompareDir.UpdateVariables(CompareDir.NODE);
 
                 if (UpdatedComboBox != null)
@@ -153,7 +184,14 @@ namespace BridgeSQL
                 UploadFile1.UpdateVariables(UploadFile1.NODE);
                 UploadFile2.UpdateVariables(UploadFile2.NODE);
                 CompareFile1.UpdateVariables(CompareFile1.NODE);
-                CompareFile2.UpdateVariables(CompareFile2.NODE);
+                if (fakeCompare2)
+                {
+                    CompareFile2.RenameMirrorVariables();
+                }
+                else
+                {
+                    CompareFile2.UpdateVariables(CompareFile2.NODE);
+                }
                 CompareDir.UpdateVariables(CompareDir.NODE);
                 if (UpdatedComboBox != null)
                     UpdatedComboBox(Mode + "-LogNamingIndex");
@@ -295,6 +333,17 @@ namespace BridgeSQL
             }
         }
 
+        public static int SelectCustomRepoPath
+        {
+            get { return _SelectedCustomRepoPath; }
+            set
+            {
+                _SelectedCustomRepoPath = value;
+                if (UpdatedNonVisualData != null)
+                    UpdatedNonVisualData(Mode + "-SelectCustomRepoPath");
+            }
+        }
+
         public static List<string> GetCustomPaths()
         {
             // check paths first as some might have already been deleted physically after added
@@ -310,7 +359,7 @@ namespace BridgeSQL
 
         public static void AddCustomPath(string path, bool trigger = true)
         {
-            if (Util.ValidatePath(path) && !Util.Contains(_customPaths.ToArray(), path))
+            if (Util.ValidatePath(path))
             {
                 _customPaths.Add(path);
             }
@@ -328,6 +377,13 @@ namespace BridgeSQL
                 UpdatedList(Mode + "-CustomPaths");
         }
 
+        public static void RemoveCustomPaths(int index, bool trigger = true)
+        {
+            _customPaths.RemoveAt(index);
+            if (trigger && UpdatedList != null)
+                UpdatedList(Mode + "-CustomPaths");
+        }
+
         public static void ResetCustomPaths(bool trigger = true)
         {
             _customPaths.Clear();
@@ -335,11 +391,26 @@ namespace BridgeSQL
                 UpdatedList(Mode + "-CustomPaths");
         }
 
-        public static void RemoveCustomPaths(int index, bool trigger = true)
+        // setting up custom repo paths to redirect from default repo
+        public static void AddCustomRepoPath(string combo, bool trigger = true)
         {
-            _customPaths.RemoveAt(index);
+            RPMan.AddPath(combo);
             if (trigger && UpdatedList != null)
-                UpdatedList(Mode + "-CustomPaths");
+                UpdatedList(Mode + "-CustomRepoPaths");
+        }
+
+        public static void AddRangeCustomRepoPaths(string combos, bool trigger = true)
+        {
+            RPMan.AddPaths(combos);
+            if (trigger && UpdatedList != null)
+                UpdatedList(Mode + "-CustomRepoPaths");
+        }
+
+        public static void RemoveCustomRepoPaths(bool trigger = true)
+        {
+            RPMan.KillSelected();
+            if (trigger && UpdatedList != null)
+                UpdatedList(Mode + "-CustomRepoPaths");
         }
 
         public static string CustomPathText
@@ -350,6 +421,17 @@ namespace BridgeSQL
                 _customPathText = value;
                 if (UpdatedText != null)
                     UpdatedText(Mode + "-CustomPath");
+            }
+        }
+
+        public static string CustomRepoPathText
+        {
+            get { return _customRepoPathText; }
+            set
+            {
+                _customRepoPathText = value;
+                if (UpdatedText != null)
+                    UpdatedText(Mode + "-CustomRepoPath");
             }
         }
 
@@ -388,6 +470,26 @@ namespace BridgeSQL
         }
     }
 
+    public class FakeNode
+    {
+        public string Server = "";
+        public string DB = "";
+        public string Type = "";
+        public string Obj = "";
+
+        public void Reset ()
+        {
+            Server = "";
+            DB = "";
+            Type = "";
+            Obj = "";
+        }
+        public bool IsValid ()
+        {
+            return !(Server == "" && DB == "" && Type == "" && Obj == "");
+        }
+    }
+
     public class FixedSettings
     {
         string[] SeqActions =
@@ -417,17 +519,19 @@ namespace BridgeSQL
         //NODE
         //1. Connection string
         public IEnumerable<IConnectionInfo> CONS;
-        public IOeNode NODE;
+        public IOeNode NODE = null;
         public string SERVER = "";
         public string DB = "";
         public string OBJ = "";
         public string TYPE = "";
 
-        public IOeNode NODE2;
+        public IOeNode NODE2 = null;
         public string SERVER2 = "";
         public string DB2 = "";
         public string OBJ2 = "";
         public string TYPE2 = "";
+        private FakeNode FakeNODE2 = null;
+        private IConnectionInfo FakeCON = null;
 
         // 1.0 static items
         private string Mode = "";
@@ -488,6 +592,39 @@ namespace BridgeSQL
             }
         }
 
+        public void ResetMirrorVariables()
+        {
+            FakeNODE2 = null;
+            FakeCON = null;
+        }
+
+        public void RenameMirrorVariables ()
+        {
+            if (ManaSQLConfig.ServerNamingIndex == 1) { SERVER = Util.GetMachine(FakeCON.Server); }
+            else if (ManaSQLConfig.ServerNamingIndex == 2) { SERVER = Util.GetIP(FakeCON.Server); }
+        }
+
+        public void MirrorVariables(FakeNode F2, IConnectionInfo conn, bool trigger = true)
+        {
+            // lookup dictionary
+            NODE = null;
+            FakeNODE2 = F2;
+            FakeCON = conn;
+            RenameMirrorVariables();
+            DB = FakeNODE2.DB;
+            OBJ = FakeNODE2.Obj;
+
+            if(FakeNODE2.Type == "StoredProcedures" || FakeNODE2.Type == "StoredProcedure")
+            {
+                TYPE = "StoredProcedures";
+            }
+            
+            if (trigger && UpdatedVariables != null)
+            {
+                UpdatedVariables("compareFile2");
+            }
+        }
+
         //triggered when changing node selection
         //NODE reflect 
         //1. DatabaseObj (if true will show its details)
@@ -523,7 +660,7 @@ namespace BridgeSQL
                 && currNode != null                 //ommit initiation, all items are empty
                 && (newDetails[0] != currDetails[0] //changed details
                 || newDetails[1] != currDetails[1]
-                || newDetails[3] != currDetails[3]  
+                || newDetails[3] != currDetails[3]
                 )
                 )
             {
@@ -732,7 +869,7 @@ namespace BridgeSQL
                 {
                     if (ManaSQLConfig.ServerNamingIndex == 1) { servername = Util.GetMachine(CON.Server); }
                     else if (ManaSQLConfig.ServerNamingIndex == 2) { servername = Util.GetIP(CON.Server); }
-                    
+
                     // general handling of errors from IP/ host searchname attempt
                     if (servername == "") { servername = CON.Server; }
 
@@ -926,6 +1063,7 @@ namespace BridgeSQL
             string subdir = "";
             bool isStrict = (IsDefault || UseTemp) ? true : _isStrict;
             bool hasDB = (SERVER != "" && DB != "");
+            string defRepoPath;
 
             if (TYPE == "StoredProcedures")
                 subdir = TYPE;
@@ -934,14 +1072,17 @@ namespace BridgeSQL
 
             if ((isStrict && hasDB) || !isStrict)
             {
+                defRepoPath = ManaSQLConfig.RPMan.SearchBy(SERVER, DB);
+                defRepoPath = defRepoPath != null ? defRepoPath : ManaSQLConfig.RepoPath;
+                
                 if (IsDefault)
                 {
-                    path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, SERVER, DB);
+                    path = string.Format(@"{0}\{1}\{2}", defRepoPath, SERVER, DB);
                     if (subdir != "") path = string.Format(@"{0}\{1}", path, subdir);
                 }
                 else if (UseTemp)
                 {
-                    path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, "tempServer", DB);
+                    path = string.Format(@"{0}\{1}\{2}", defRepoPath, "tempServer", DB);
                     if (subdir != "") path = string.Format(@"{0}\{1}", path, subdir);
                 }
                 else
@@ -967,14 +1108,18 @@ namespace BridgeSQL
             string subdir = "";
             bool isStrict = (IsDefault || UseTemp) ? true : _isStrict;
             bool hasDB = (SERVER != "" && DB != "");
+            string defRepoPath;
 
             if ((isStrict && hasDB) || !isStrict)
             {
+                defRepoPath = ManaSQLConfig.RPMan.SearchBy(SERVER, DB);
+                defRepoPath = defRepoPath != null ? defRepoPath : ManaSQLConfig.RepoPath;
+
                 if (Mode == "compareDir")
                 {
                     if (IsDefault)
                     {
-                        path = ManaSQLConfig.RepoPath;
+                        path = defRepoPath;
                     }
                     else
                     {
@@ -985,11 +1130,11 @@ namespace BridgeSQL
                 {
                     if (IsDefault)
                     {
-                        path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, SERVER, "log");
+                        path = string.Format(@"{0}\{1}\{2}", defRepoPath, SERVER, "log");
                     }
                     else if (UseTemp)
                     {
-                        path = string.Format(@"{0}\{1}\{2}", ManaSQLConfig.RepoPath, "tempServer", "log");
+                        path = string.Format(@"{0}\{1}\{2}", defRepoPath, "tempServer", "log");
                     }
                     else
                     {
@@ -1031,7 +1176,8 @@ namespace BridgeSQL
 
             if (IsDefault)
             {
-                path = ManaSQLConfig.RepoPath;
+                path = ManaSQLConfig.RPMan.SearchBy(SERVER, DB);
+                path = path != null ? path : ManaSQLConfig.RepoPath;
             }
             else
             {
@@ -1125,11 +1271,26 @@ namespace BridgeSQL
         // Successful: return appropriate string
         public string CompileArgs(int variant = 0, string template = "\"{0}|{1}\" ")
         {
-            Boolean success = false;
-            string compiled = "";
+            Boolean success = false; 
+            string compiled = "", auth;
+
+            bool proceed2Compile;
             IConnectionInfo CON;
 
-            if (NODE.HasConnection && NODE.TryGetConnection(out CON))
+            if (FakeNODE2 != null)
+            {
+                proceed2Compile = true;
+                CON = FakeCON;
+                auth = Util.FormAuthString(CON.ConnectionString, DB);
+            }
+            else
+            {
+                proceed2Compile = NODE.HasConnection;
+                NODE.TryGetConnection(out CON);
+                auth = CON.ConnectionString;
+            }
+
+            if (proceed2Compile)
             {
                 //Generic settings
                 Regex reg = new Regex("\"");
@@ -1150,6 +1311,7 @@ namespace BridgeSQL
                         , FormTags2()
                         , AutomationDate
                     );
+
                     compiled = compiled + string.Format(template, "RepoPath", reg.Replace(GetRepoPath(), "\\\""));
                     compiled = compiled + string.Format(template, "Repo2Path", reg.Replace(GetRepoPath2(), "\\\""));
                     compiled = compiled + string.Format(template, "LogPath", reg.Replace(GetLogPath(), "\\\""));
@@ -1158,7 +1320,7 @@ namespace BridgeSQL
                 }
                 else
                 {
-                    compiled = compiled + string.Format(template, "AuthString", reg.Replace(CON.ConnectionString, "\\\""));
+                    compiled = compiled + string.Format(template, "AuthString", reg.Replace(auth, "\\\""));
                     compiled = compiled + string.Format(template, "RepoPath", reg.Replace(GetRepoPath(), "\\\""));
 
                     if (Mode == "extract" || Mode == "compareFile1" || Mode == "compareFile2")

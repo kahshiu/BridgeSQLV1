@@ -9,6 +9,15 @@ namespace BridgeSQL
 {
     class MCompareFile2 : ActionSimpleOeMenuItemBase
     {
+        private readonly ISsmsFunctionalityProvider6 plug;
+        private ManaSQLCommand cmd;
+
+        public MCompareFile2(ISsmsFunctionalityProvider6 mPlug, ManaSQLCommand mCmd)
+        {
+            plug = mPlug;
+            cmd = mCmd;
+        }
+
         public override bool AppliesTo(ObjectExplorerNodeDescriptorBase oeNode)
         {
             var theNode = (IOeNode)oeNode;
@@ -26,6 +35,10 @@ namespace BridgeSQL
             IOeNode theNode = (IOeNode)node;
             IDatabaseObjectInfo DBI;
 
+            ManaSQLConfig.UploadFile2.ResetMirrorVariables();
+            ManaSQLConfig.CompareFile2.ResetMirrorVariables();
+
+            cmd.Execute();
             ManaSQLConfig.PageIndex = 2;
             ManaSQLConfig.UploadFile2.UpdateVariables(theNode);
             if (theNode.IsDatabaseObject && theNode.TryGetDatabaseObject(out DBI))

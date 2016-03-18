@@ -7,7 +7,7 @@ using RedGate.SIPFrameworkShared;
 
 namespace BridgeSQL
 {
-    class ManaSQLCommand : ISharedCommand
+    public class ManaSQLCommand : ISharedCommand
     {
         public string Name { get { return "ManaSQL"; } }
         public string Caption { get { return "SQL to text"; } }
@@ -25,7 +25,7 @@ namespace BridgeSQL
         // private Guid formGuid = new Guid("579fa20c-38cb-47776-9f57-6751d10e31d0");
         // request form guid from Redgate to avoid collision
         private Guid formGuid = Guid.NewGuid();
-        private ManaSQLForm manaSettingsForm;
+        public ManaSQLForm manaSettingsForm;
         private IOeNode mainNode;
 
         public ManaSQLCommand(ISsmsFunctionalityProvider6 thePlug)

@@ -114,7 +114,7 @@ namespace BridgeSQL
         private void ShowTextContext(object sender, MouseEventArgs e)
         {
             var control = sender as TextBox;
-            if (e.Button == MouseButtons.Left && (ModifierKeys & Keys.Shift) == Keys.Shift)
+            if (e.Button == MouseButtons.Left && (ModifierKeys & Keys.Control) == Keys.Control)
             {
                 ShowQuickAccess(control, Cursor.Position);
             }
@@ -208,7 +208,7 @@ namespace BridgeSQL
             {
                 UpdateTextBox(control.Name, control.Text);
             }
-            else if (e.KeyCode == Keys.Down && (ModifierKeys & Keys.Shift) == Keys.Shift)
+            else if (e.KeyCode == Keys.Down && (ModifierKeys & Keys.Control) == Keys.Control)
             {
                 //Point pos;
                 //GetCaretPos(out pos);
@@ -394,47 +394,11 @@ namespace BridgeSQL
             //TODO: implement defensive code here
             if (control.Equals(compareFileWrite))
             {
-                if (ManaSQLConfig.CompareFile1.ValidPaths && ManaSQLConfig.CompareFile2.ValidPaths)
-                {
-                    args = ManaSQLConfig.CompareFile1.CompileArgs();
-                    args = "data " + args;
-                    ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
-
-                    args = ManaSQLConfig.CompareFile2.CompileArgs();
-                    args = "data " + args;
-                    ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
-
-                    System.Threading.Thread.Sleep(500);
-                    // TODO: addback the files so can upload later
-                    ManaSQLConfig.UploadFile1.AppendWhereFile(string.Format("{0}.{1}", ManaSQLConfig.CompareFile1.OBJ, ManaSQLConfig.Extension), false);
-                    ManaSQLConfig.UploadFile2.AppendWhereFile(string.Format("{0}.{1}", ManaSQLConfig.CompareFile2.OBJ, ManaSQLConfig.Extension), false);
-                    RefreshButton("compareFile1");
-                    //RefreshButton("compareFile2"); // just one is needed
-                }
-                else
-                {
-                    MessageBox.Show(errorMsg);
-                }
+                ActionCompareFileWrite();
             }
             else if (control.Equals(compareFileCompare))
             {
-                string pathRight = ManaSQLConfig.CompareFile1.FormSelectedSSPFilePaths()[0];
-                string pathLeft = ManaSQLConfig.CompareFile2.FormSelectedSSPFilePaths()[0];
-                string indicatorRight = ManaSQLConfig.CompareFile1.FormTags();
-                string indicatorLeft = ManaSQLConfig.CompareFile2.FormTags();
-
-                ManaProcess.runExe(
-                    ManaSQLConfig.TProcPath
-                    , TProcCommands.Diff(
-                        pathLeft
-                        , pathRight
-                        , indicatorLeft
-                        , indicatorRight
-                        , pathLeft
-                        , pathRight
-                        )
-                    , false
-                    );
+                ActionCompareFileCompare();
             }
             else if (control.Equals(compareFileUpload1))
             {
@@ -465,6 +429,53 @@ namespace BridgeSQL
                 }
             }
             // SVN merging
+        }
+
+        public void ActionCompareFileCompare()
+        {
+            if (!compareFileCompare.Enabled) return;
+
+            string pathRight = ManaSQLConfig.CompareFile1.FormSelectedSSPFilePaths()[0];
+            string pathLeft = ManaSQLConfig.CompareFile2.FormSelectedSSPFilePaths()[0];
+            string indicatorRight = ManaSQLConfig.CompareFile1.FormTags();
+            string indicatorLeft = ManaSQLConfig.CompareFile2.FormTags();
+
+            ManaProcess.runExe(
+                ManaSQLConfig.TProcPath
+                , TProcCommands.Diff(
+                    pathLeft
+                    , pathRight
+                    , indicatorLeft
+                    , indicatorRight
+                    , pathLeft
+                    , pathRight
+                    )
+                , false
+                );
+        }
+
+        public void ActionCompareFileWrite()
+        {
+            string args;
+            if (ManaSQLConfig.CompareFile1.ValidPaths && ManaSQLConfig.CompareFile2.ValidPaths)
+            {
+                args = ManaSQLConfig.CompareFile1.CompileArgs();
+                args = "data " + args;
+                ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+
+                args = ManaSQLConfig.CompareFile2.CompileArgs();
+                args = "data " + args;
+                ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+
+                // TODO: addback the files so can upload later
+                ManaSQLConfig.UploadFile1.AppendWhereFile(string.Format("{0}.{1}", ManaSQLConfig.CompareFile1.OBJ, ManaSQLConfig.Extension), false);
+                ManaSQLConfig.UploadFile2.AppendWhereFile(string.Format("{0}.{1}", ManaSQLConfig.CompareFile2.OBJ, ManaSQLConfig.Extension), false);
+                RefreshButton("compareFile1");
+            }
+            else
+            {
+                MessageBox.Show(errorMsg);
+            }
         }
 
         private void compareDirCompare_Click(object sender, EventArgs e)
@@ -555,6 +566,11 @@ namespace BridgeSQL
             MSettings.SaveSettings();
         }
 
+        private void SelectCustomRepoPathForRemove(object sender, EventArgs e)
+        {
+            ManaSQLConfig.RPMan.SelectAt(customRepoPaths.SelectedIndex);
+        }
+
         private void SelectCustomPathForRemove(object sender, EventArgs e)
         {
             ManaSQLConfig.SelectCustomPath = customPathList.SelectedIndex;
@@ -572,6 +588,36 @@ namespace BridgeSQL
                 , MessageBoxDefaultButton.Button1
                 );
             return confirm == DialogResult.Yes;
+        }
+
+        private void CustomRepoPathActions(object sender, EventArgs e)
+        {
+            var control = sender as Button;
+            if (control.Equals(customRepoPathAdd))
+            {
+                if (control.Text == "Add")
+                {
+                    UpdateListBoxItems("customRepoPathList", new string[1] { ManaSQLConfig.CustomRepoPathText });
+                    UpdateTextBox("customRepoPath", "");
+                }
+                else if (control.Text == "Create" && ConfirmBox(ManaSQLConfig.CustomPathText))
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(customRepoPath.Text);
+                        control.Text = "Add";
+                    }
+                    catch (Exception except)
+                    {
+                        message = string.Format(@"{0}{1}{2}", "Error in creating directory: ", Environment.NewLine, customRepoPath.Text);
+                        MessageBox.Show(message);
+                    }
+                }
+            }
+            else if (control.Equals(customRepoPathRemove))
+            {
+                ManaSQLConfig.RemoveCustomRepoPaths();
+            }
         }
 
         private void CustomPathActions(object sender, EventArgs e)
@@ -799,6 +845,26 @@ namespace BridgeSQL
                 customPathAdd.Text = isValidPath ? "Add" : "Create";
             }
 
+            if (Util.Contains(new string[] { "all", "general-CustomRepoPath" }, list))
+            {
+                theText = ManaSQLConfig.CustomRepoPathText;
+                isValidPath = false;
+
+                if (CustomRepoPath.ValidateFormat(theText))
+                {
+                    string[] temp = CustomRepoPath.DecompileFullString(theText);
+                    if (!ManaSQLConfig.RPMan.IsDuplicate(temp[0], temp[1]))
+                    {
+                        isValidPath = true;
+                    }
+                }
+                isValidPath = isValidPath || theText == "";
+
+                customRepoPath.Text = isValidPath ? theText : "";
+                customRepoPathWarning.Visible = !isValidPath;
+                //customRepoPathAdd.Text = isValidPath ? "Add" : "Create";
+            }
+
             if (isUpdateRepoDependents == "repo")
             {
                 UpdateRepoDependents();
@@ -875,6 +941,10 @@ namespace BridgeSQL
             if (Util.Contains(new string[] { "all", "settings", "customPath" }, list))
             {
                 ManaSQLConfig.CustomPathText = val;
+            }
+            if (Util.Contains(new string[] { "all", "settings", "customRepoPath" }, list))
+            {
+                ManaSQLConfig.CustomRepoPathText = val;
             }
         }
 
@@ -1287,6 +1357,11 @@ namespace BridgeSQL
                 customPathList.Items.Clear();
                 customPathList.Items.AddRange(ManaSQLConfig.GetCustomPaths().ToArray());
             }
+            if (Util.Contains(new string[] { "all", "general-CustomRepoPaths" }, list))
+            {
+                customRepoPaths.Items.Clear();
+                customRepoPaths.Items.AddRange(ManaSQLConfig.RPMan.ArrayPaths());
+            }
         }
 
         private void FilterUploadList()
@@ -1374,6 +1449,14 @@ namespace BridgeSQL
                     {
                         ManaSQLConfig.AddCustomPath(vals[i]);
                     }
+                }
+            }
+
+            if (Util.Contains(new string[] { "all", "customRepoPathList" }, list))
+            {
+                for (int i = 0; i < vals.Length; i++)
+                {
+                    ManaSQLConfig.AddCustomRepoPath(vals[i]);
                 }
             }
         }

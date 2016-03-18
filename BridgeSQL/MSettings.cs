@@ -12,8 +12,10 @@ namespace BridgeSQL
     {
         private static string SettingPath;
         private static string SettingFile = "BrideSQL.settings";
+        private static string SettingFileCompare = "BrideSQL.compare";
 
         public static bool IsInit = true;
+        public static bool IsInitCompare = true;
         public static bool IsExtract = true;
         public static bool IsCompareFile = true;
         public static bool IsLogEnable = true;
@@ -28,8 +30,10 @@ namespace BridgeSQL
         public static string GenManaPath = @"C:\SSMS_plugins\SQLMana\SqlMana.exe";
         public static string GenTProcPath = @"c:\Program Files\TortoiseSVN\bin\TortoiseProc.exe";
         public static List<string> CustomPaths = new List<string>();
+        public static string CustomRepoPaths = "";
         public static int ServerNamingIndex = 1;
         public static int LogNamingIndex = 0;
+        public static List<QuickCompareMenu> qcm = new List<QuickCompareMenu>();
 
         public static void ReadBridgeSQLRegKey()
         {
@@ -46,10 +50,30 @@ namespace BridgeSQL
         {
             ReadBridgeSQLRegKey();
             string filePath = string.Format(@"{0}\{1}", SettingPath, SettingFile);
+            string fileComparePath = string.Format(@"{0}\{1}", SettingPath, SettingFileCompare);
             string fileLine = "";
             string originalValue = "";
             string[] pair;
             IsInit = !File.Exists(filePath);
+            IsInitCompare = !File.Exists(fileComparePath);
+
+            if(!IsInitCompare)
+            {
+                using (StreamReader file = new StreamReader(fileComparePath))
+                {
+                    while ((fileLine = file.ReadLine()) != null)
+                    {
+                        if (fileLine != "")
+                        {
+                            pair = fileLine.Split('|');
+                            pair[0] = pair[0].Trim();
+                            pair[1] = pair[1].Trim();
+                            qcm.Add(new QuickCompareMenu(pair[0],pair[1]));
+                        }
+                    }
+                }
+            }
+
             if (!IsInit)
             {
                 using (StreamReader file = new StreamReader(filePath))
@@ -89,6 +113,12 @@ namespace BridgeSQL
                                     }
                                 }
                             }
+                            else if (pair[0] == "customrepopaths")
+                            {
+                                int startPos = fileLine.IndexOf("|");
+                                CustomRepoPaths = fileLine.Substring(startPos+1);
+                                CustomRepoPaths = CustomRepoPaths.Trim();
+                            }
                             else if (pair[0] == "servernamingindex") {
                                 bool isSuccessParse = Int32.TryParse(pair[1], out ServerNamingIndex);
                                 if (!isSuccessParse) ServerNamingIndex = 0;
@@ -124,6 +154,7 @@ namespace BridgeSQL
             LogNamingIndex = ManaSQLConfig.LogNamingIndex;
             CustomPaths.Clear();
             CustomPaths.AddRange(ManaSQLConfig.GetCustomPaths());
+            CustomRepoPaths = ManaSQLConfig.RPMan.SerializePaths();
         }
 
         public static void SaveSettings()
@@ -145,6 +176,7 @@ namespace BridgeSQL
             total = total + FormString("manapath", GenManaPath);
             total = total + FormString("tprocpath", GenTProcPath);
             total = total + FormString("custompaths", CustomPaths.ToArray());
+            total = total + FormString("customrepopaths", CustomRepoPaths);
             total = total + FormString("servernamingindex", ServerNamingIndex.ToString());
             total = total + FormString("lognamingindex", LogNamingIndex.ToString());
 
