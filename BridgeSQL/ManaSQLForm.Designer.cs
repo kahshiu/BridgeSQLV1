@@ -182,6 +182,7 @@
             this.customRepoPathRemove = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.customRepoPathWarning = new System.Windows.Forms.Label();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tab.SuspendLayout();
             this.extract.SuspendLayout();
             this.upload.SuspendLayout();
@@ -202,6 +203,7 @@
             this.tab.Controls.Add(this.compareFile);
             this.tab.Controls.Add(this.compare2);
             this.tab.Controls.Add(this.settings);
+            this.tab.Controls.Add(this.tabPage1);
             this.tab.Location = new System.Drawing.Point(0, 0);
             this.tab.Name = "tab";
             this.tab.SelectedIndex = 0;
@@ -1838,6 +1840,16 @@
             this.customRepoPathWarning.TabIndex = 21;
             this.customRepoPathWarning.Text = "Invalid Directory!";
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(983, 729);
+            this.tabPage1.TabIndex = 5;
+            this.tabPage1.Text = "Append";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
             // ManaSQLForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -2024,5 +2036,6 @@
         private System.Windows.Forms.ListBox customRepoPaths;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label customRepoPathWarning;
+        private System.Windows.Forms.TabPage tabPage1;
     }
 }

@@ -123,12 +123,16 @@ namespace BridgeSQL
 
         public static void MapConnections()
         {
+            bool validServer;
             foreach (QuickCompareMenu q in qcm)
             {
                 q.Conn = null;
                 foreach (KeyValuePair<IConnectionInfo2, IEnumerable<string>> entry in Connections)
                 {
-                    if (q.Server == entry.Key.Server) q.Conn = entry.Key;
+                    validServer = q.Server == entry.Key.Server
+                    || Util.GetMachine(q.Server) == entry.Key.Server
+                    || Util.GetIP(q.Server) == entry.Key.Server;
+                    if (validServer) q.Conn = entry.Key;
                 }
             }
         }

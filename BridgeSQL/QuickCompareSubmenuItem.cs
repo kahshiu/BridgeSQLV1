@@ -29,12 +29,16 @@ namespace BridgeSQL
             IDatabaseObjectInfo DBI;
             IConnectionInfo CON;
             bool hideFlag = true;
+            bool validServer = false;
             if (theNode.IsDatabaseObject
                 && theNode.TryGetDatabaseObject(out DBI)
                 && theNode.TryGetConnection(out CON)
                 )
             {
-                hideFlag = (CON.Server == q.Server && DBI.DatabaseName == q.DB) || q.Conn == null;
+                validServer = q.Server == CON.Server
+                    || Util.GetMachine(q.Server) == CON.Server
+                    || Util.GetIP(q.Server) == CON.Server;
+                hideFlag = (validServer && q.DB == DBI.DatabaseName) || q.Conn == null;
             }
             return !hideFlag;
         }

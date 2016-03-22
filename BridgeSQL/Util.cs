@@ -96,6 +96,21 @@ namespace BridgeSQL
             return name;
         }
 
+        public static string[] GetAliases(string IP)
+        {
+            string[] name = null;
+            try
+            {
+                IPHostEntry resolved = Dns.GetHostEntry(IP);
+                name = resolved.Aliases;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return name;
+        }
+
         public static bool IsIP(string IP)
         {
             return Regex.IsMatch(IP, @"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\");
