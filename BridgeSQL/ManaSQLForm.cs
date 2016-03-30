@@ -312,17 +312,30 @@ namespace BridgeSQL
                     args = "data " + args;
                     ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
 
-                    // add file just in case its not already added
-                    ManaProcess.runExe(
+                    if (ManaProcess.returnCode < 0)
+                    {
+                        Popups.ResetVars();
+                        Popups.message = "Error writing SQL(s) to file(s). View log?";
+                        Popups.Prompt();
+                        if (Popups.response == DialogResult.OK)
+                        {
+                            ManaProcess.runExe("Explorer", ManaSQLConfig.Extract.GetLogPath(), false);
+                        }
+                    }
+                    else
+                    {
+                        // add file just in case its not already added
+                        ManaProcess.runExe(
                         ManaSQLConfig.TProcPath
-                        , TProcCommands.Add(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
-                        , false
-                    );
-                    ManaProcess.runExe(
-                        ManaSQLConfig.TProcPath
-                        , TProcCommands.Commit(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
-                        , false
+                            , TProcCommands.Add(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
+                            , false
                         );
+                        ManaProcess.runExe(
+                            ManaSQLConfig.TProcPath
+                            , TProcCommands.Commit(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
+                            , false
+                        );
+                    }
                 }
                 else
                 {
@@ -381,15 +394,45 @@ namespace BridgeSQL
 
         private void uploadList_Click(object sender, EventArgs e)
         {
-            if (ManaSQLConfig.Upload.ValidPaths)
+            var control = sender as Button;
+            if (control.Equals(uploadList))
             {
-                string args = ManaSQLConfig.Upload.CompileArgs();
-                args = "data " + args;
-                ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+                if (ManaSQLConfig.Upload.ValidPaths)
+                {
+                    string args = ManaSQLConfig.Upload.CompileArgs();
+                    args = "data " + args;
+                    ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+
+                    if (ManaProcess.returnCode < 0)
+                    {
+                        Popups.ResetVars();
+                        Popups.message = "Error loading SQL content to DB. View log?";
+                        Popups.Prompt();
+                        if (Popups.response == DialogResult.OK)
+                        {
+                            ManaProcess.runExe("Explorer", ManaSQLConfig.Extract.GetLogPath(), false);
+                        }
+                    }
+                }
+                else
+                {
+                    Popups.ResetVars();
+                    Popups.message = errorMsg;
+                    Popups.Alert();
+                }
             }
-            else
+            else if (control.Equals(massCommit))
             {
-                MessageBox.Show(errorMsg);
+                ManaProcess.runExe(
+                    ManaSQLConfig.TProcPath
+                    , TProcCommands.Add(ManaSQLConfig.Upload.FormFilePaths().ToArray())
+                    , false
+                    );
+                ManaProcess.runExe(
+                    ManaSQLConfig.TProcPath
+                    , TProcCommands.Commit(ManaSQLConfig.Upload.FormFilePaths().ToArray())
+                    , false
+                    );
             }
         }
 
@@ -464,6 +507,32 @@ namespace BridgeSQL
                     Popups.message = errorMsg;
                     Popups.Alert();
                 }
+            }
+            else if (control.Equals(compareFileCommit1))
+            {
+                ManaProcess.runExe(
+                    ManaSQLConfig.TProcPath
+                    , TProcCommands.Add(ManaSQLConfig.UploadFile1.FormFilePaths().ToArray())
+                    , false
+                    );
+                ManaProcess.runExe(
+                    ManaSQLConfig.TProcPath
+                    , TProcCommands.Commit(ManaSQLConfig.UploadFile1.FormFilePaths().ToArray())
+                    , false
+                    );
+            }
+            else if (control.Equals(compareFileCommit2))
+            {
+                ManaProcess.runExe(
+                    ManaSQLConfig.TProcPath
+                    , TProcCommands.Add(ManaSQLConfig.UploadFile2.FormFilePaths().ToArray())
+                    , false
+                    );
+                ManaProcess.runExe(
+                    ManaSQLConfig.TProcPath
+                    , TProcCommands.Commit(ManaSQLConfig.UploadFile2.FormFilePaths().ToArray())
+                    , false
+                    );
             }
             // SVN merging
         }
