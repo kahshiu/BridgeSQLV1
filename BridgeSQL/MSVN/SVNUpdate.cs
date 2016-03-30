@@ -16,7 +16,7 @@ namespace BridgeSQL.MSVN
             return
                 ManaSQLConfig.SvnUpdate
                 && ManaSQLConfig.ValidGenPaths
-                && theNode.Type == "StoredProcedure";
+                && ManaSQLConfig.IsAllowedSingleNode(theNode);
         }
         public override string ItemText
         {

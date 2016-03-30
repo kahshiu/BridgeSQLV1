@@ -127,6 +127,20 @@ namespace BridgeSQL
         public static bool ValidTProcPath { get { return Util.ValidatePath(TProcPath, "file", "TortoiseProc.exe"); } }
         public static bool ValidGenPaths { get { return ValidRepoPath && ValidProgPath && ValidTProcPath; } }
 
+        public static bool IsAllowedSingleNode (IOeNode n)
+        {
+            return (n.Type == "StoredProcedure"
+                || Util.IsSVF(n.Path)
+                || Util.IsTVF(n.Path)
+                );
+        }
+
+        public static bool IsAllowedGroupNode (IOeNode n)
+        {
+            return (n.Type == "StoredProcedures"
+               );
+        }
+
         public static void MapConnections()
         {
             bool validServer;

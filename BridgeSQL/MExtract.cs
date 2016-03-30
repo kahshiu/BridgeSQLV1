@@ -8,7 +8,7 @@ namespace BridgeSQL
         private readonly ISsmsFunctionalityProvider6 plug;
         private ManaSQLCommand cmd;
 
-        public MExtract (ISsmsFunctionalityProvider6 mPlug, ManaSQLCommand mCmd)
+        public MExtract(ISsmsFunctionalityProvider6 mPlug, ManaSQLCommand mCmd)
         {
             plug = mPlug;
             cmd = mCmd;
@@ -21,7 +21,7 @@ namespace BridgeSQL
                 ManaSQLConfig.ValidGenPaths
                 && ManaSQLConfig.Extract.ValidPaths
                 && ManaSQLConfig.ShowExtract
-                && theNode.Type == "StoredProcedure";
+                && ManaSQLConfig.IsAllowedSingleNode(theNode);
         }
         public override string ItemText
         {

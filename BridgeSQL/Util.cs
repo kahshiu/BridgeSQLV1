@@ -217,5 +217,14 @@ namespace BridgeSQL
             }
             return temp;
         }
+
+        public static bool IsTVF(string path)
+        {
+            return new Regex(@"/Table-valuedFunctions/UserDefinedFunction").Match(path).Success;
+        }
+        public static bool IsSVF(string path)
+        {
+            return new Regex(@"/Scalar-valuedFunctions/UserDefinedFunction").Match(path).Success;
+        }
     }
 }

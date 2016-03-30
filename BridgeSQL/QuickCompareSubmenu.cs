@@ -16,7 +16,7 @@ namespace BridgeSQL
 
         public override string ItemText
         {
-            get { return "Quick Compare"; }
+            get { return "Mirror DB: Compare"; }
         }
 
         public override bool AppliesTo(ObjectExplorerNodeDescriptorBase oeNode)

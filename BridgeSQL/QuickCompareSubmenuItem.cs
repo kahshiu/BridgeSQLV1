@@ -38,7 +38,10 @@ namespace BridgeSQL
                 validServer = q.Server == CON.Server
                     || Util.GetMachine(q.Server) == CON.Server
                     || Util.GetIP(q.Server) == CON.Server;
-                hideFlag = (validServer && q.DB == DBI.DatabaseName) || q.Conn == null;
+                hideFlag = (validServer && q.DB == DBI.DatabaseName) 
+                    || q.Conn == null
+                    || ManaSQLConfig.IsAllowedSingleNode(theNode)
+                    ;
             }
             return !hideFlag;
         }
