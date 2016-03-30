@@ -27,6 +27,8 @@ namespace BridgeSQL
         public static bool IsSVNMerge = true;
         public static bool IsSVNBlame = true;
         public static bool HideLoad = false;
+        public static bool IsWithExtract = true;
+
         public static string GenRepoPath = @"c:\repoSSP";
         public static string GenManaPath = @"C:\SSMS_plugins\SQLMana\SqlMana.exe";
         public static string GenTProcPath = @"c:\Program Files\TortoiseSVN\bin\TortoiseProc.exe";
@@ -103,6 +105,8 @@ namespace BridgeSQL
                             else if (pair[0] == "svnblame") { Boolean.TryParse(pair[1], out IsSVNMerge); }
 
                             else if (pair[0] == "hideload") { Boolean.TryParse(pair[1], out HideLoad); }
+                            else if (pair[0] == "iswithextract") { Boolean.TryParse(pair[1], out IsWithExtract); }
+
                             else if (pair[0] == "repopath") { GenRepoPath = originalValue; }
                             else if (pair[0] == "manapath") { GenManaPath = originalValue; }
                             else if (pair[0] == "tprocpath") { GenTProcPath = originalValue; }
@@ -152,6 +156,8 @@ namespace BridgeSQL
             IsSVNBlame = ManaSQLConfig.SvnBlame;
 
             HideLoad = ManaSQLConfig.HideLoad;
+            IsWithExtract = ManaSQLConfig.IsWithExtract;
+
             GenRepoPath = ManaSQLConfig.RepoPath;
             GenManaPath = ManaSQLConfig.ProgPath;
             GenTProcPath = ManaSQLConfig.TProcPath;
@@ -177,6 +183,7 @@ namespace BridgeSQL
             total = total + FormString("svndiff", IsSVNDiff ? "true" : "false");
             total = total + FormString("svnmerge", IsSVNMerge ? "true" : "false");
             total = total + FormString("svnblame", IsSVNBlame ? "true" : "false");
+            total = total + FormString("isWithExtract", IsWithExtract ? "true" : "false");
             total = total + FormString("hideLoad", HideLoad ? "true" : "false");
 
             total = total + FormString("repopath", GenRepoPath);

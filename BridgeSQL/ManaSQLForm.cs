@@ -1087,6 +1087,10 @@ namespace BridgeSQL
             {
                 dspHideLoad.CheckState = ManaSQLConfig.HideLoad ? CheckState.Checked : CheckState.Unchecked;
             }
+            if (Util.Contains(new string[] { "all", "general-IsWithExtract" }, list))
+            {
+                dspExtractFile.CheckState = ManaSQLConfig.IsWithExtract ? CheckState.Checked : CheckState.Unchecked;
+            }
             // each page: extract
             if (Util.Contains(new string[] { "all", "extract-IsDefault" }, list))
             {
@@ -1217,6 +1221,10 @@ namespace BridgeSQL
             if (Util.Contains(new string[] { "all", "dspSVNBlame" }, list))
             {
                 ManaSQLConfig.SvnBlame = flag;
+            }
+            if (Util.Contains(new string[] { "all", "dspExtractFile" }, list))
+            {
+                ManaSQLConfig.IsWithExtract = flag;
             }
             if (Util.Contains(new string[] { "all", "dspHideLoad" }, list))
             {

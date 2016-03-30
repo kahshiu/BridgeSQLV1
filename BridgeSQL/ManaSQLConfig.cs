@@ -36,6 +36,7 @@ namespace BridgeSQL
         private static bool _SvnMerge;
         private static bool _SvnBlame;
         private static bool _HideLoad;
+        private static bool _IsWithExtract;
 
         private static int _SelectedCustomPath = -1;
         private static int _SelectedCustomRepoPath = -1;
@@ -105,7 +106,10 @@ namespace BridgeSQL
             RepoPath = MSettings.GenRepoPath;
             ProgPath = MSettings.GenManaPath;
             TProcPath = MSettings.GenTProcPath;
+
             HideLoad = MSettings.HideLoad;
+            IsWithExtract = MSettings.IsWithExtract;
+
             ServerNamingIndex = MSettings.ServerNamingIndex;
             LogNamingIndex = MSettings.LogNamingIndex;
             qcm = MSettings.qcm;
@@ -337,6 +341,18 @@ namespace BridgeSQL
                     UpdatedCheckBox(Mode + "-HideLoad");
             }
         }
+
+        public static Boolean IsWithExtract
+        {
+            get { return _IsWithExtract; }
+            set
+            {
+                _IsWithExtract = value;
+                if (UpdatedCheckBox != null)
+                    UpdatedCheckBox(Mode + "-IsWithExtract");
+            }
+        }
+
         // START: PROPERTIES OF CUSTOM PATH
         public static int SelectCustomPath
         {

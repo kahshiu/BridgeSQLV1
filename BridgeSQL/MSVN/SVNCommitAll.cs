@@ -10,6 +10,17 @@ namespace BridgeSQL.MSVN
 {
     class SVNCommitAll : ActionSimpleOeMenuItemBase
     {
+        private readonly ISsmsFunctionalityProvider6 plug;
+        private ManaSQLCommand cmd;
+        private List<SimpleOeMenuItemBase> menu;
+
+        public SVNCommitAll(ISsmsFunctionalityProvider6 mPlug, ManaSQLCommand mCmd, List<SimpleOeMenuItemBase> mMenu)
+        {
+            plug = mPlug;
+            cmd = mCmd;
+            menu = mMenu;
+        }
+
         public override bool AppliesTo(ObjectExplorerNodeDescriptorBase oeNode)
         {
             var theNode = (IOeNode)oeNode;
@@ -24,6 +35,13 @@ namespace BridgeSQL.MSVN
         }
         public override void OnAction(ObjectExplorerNodeDescriptorBase node)
         {
+            if (ManaSQLConfig.IsWithExtract)
+            {
+                //quick hack: reference to extract menu
+                var extractMenu = (ActionSimpleOeMenuItemBase)menu[0];
+                extractMenu.OnAction(node);
+            }
+
             ManaProcess.runExe(
                 ManaSQLConfig.TProcPath
                 , TProcCommands.Add(new string[] { ManaSQLConfig.Extract.FormRepoPath() })
