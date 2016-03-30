@@ -50,6 +50,7 @@
             this.extractRepo = new System.Windows.Forms.TextBox();
             this.extractRepoLabel = new System.Windows.Forms.Label();
             this.upload = new System.Windows.Forms.TabPage();
+            this.massCommit = new System.Windows.Forms.Button();
             this.uploadSSPSelected = new System.Windows.Forms.ListBox();
             this.uploadCheckCase = new System.Windows.Forms.CheckBox();
             this.uploadSSPFilterInstruction = new System.Windows.Forms.Label();
@@ -137,6 +138,13 @@
             this.compareDirRepo2Label = new System.Windows.Forms.Label();
             this.compareDirRepoLabel = new System.Windows.Forms.Label();
             this.settings = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.customRepoPathWarning = new System.Windows.Forms.Label();
+            this.customRepoPathRemove = new System.Windows.Forms.Button();
+            this.customRepoPathAdd = new System.Windows.Forms.Button();
+            this.customRepoPath = new System.Windows.Forms.TextBox();
+            this.customRepoPaths = new System.Windows.Forms.ListBox();
             this.customGrp = new System.Windows.Forms.GroupBox();
             this.customPathRemove = new System.Windows.Forms.Button();
             this.customPathAdd = new System.Windows.Forms.Button();
@@ -160,6 +168,8 @@
             this.generalRepoLabel = new System.Windows.Forms.Label();
             this.generalSQLManaLabel = new System.Windows.Forms.Label();
             this.displayGrp = new System.Windows.Forms.GroupBox();
+            this.dspSVNAdd = new System.Windows.Forms.CheckBox();
+            this.dspHideLoad = new System.Windows.Forms.CheckBox();
             this.dspSVNBlame = new System.Windows.Forms.CheckBox();
             this.dspCompareFile = new System.Windows.Forms.CheckBox();
             this.dspExtract = new System.Windows.Forms.CheckBox();
@@ -169,31 +179,25 @@
             this.dspSVNUpdate = new System.Windows.Forms.CheckBox();
             this.dspSVNMerge = new System.Windows.Forms.CheckBox();
             this.dspSVNLog = new System.Windows.Forms.CheckBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dirBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.textContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.browseText = new System.Windows.Forms.ToolStripMenuItem();
             this.exploreText = new System.Windows.Forms.ToolStripMenuItem();
             this.fileSearch = new System.Windows.Forms.OpenFileDialog();
             this.favPaths = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.customRepoPaths = new System.Windows.Forms.ListBox();
-            this.customRepoPath = new System.Windows.Forms.TextBox();
-            this.customRepoPathAdd = new System.Windows.Forms.Button();
-            this.customRepoPathRemove = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.customRepoPathWarning = new System.Windows.Forms.Label();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dspExtractFile = new System.Windows.Forms.CheckBox();
             this.tab.SuspendLayout();
             this.extract.SuspendLayout();
             this.upload.SuspendLayout();
             this.compareFile.SuspendLayout();
             this.compare2.SuspendLayout();
             this.settings.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.customGrp.SuspendLayout();
             this.generalGrp.SuspendLayout();
             this.displayGrp.SuspendLayout();
             this.textContextMenu.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab
@@ -407,6 +411,7 @@
             // 
             // upload
             // 
+            this.upload.Controls.Add(this.massCommit);
             this.upload.Controls.Add(this.uploadSSPSelected);
             this.upload.Controls.Add(this.uploadCheckCase);
             this.upload.Controls.Add(this.uploadSSPFilterInstruction);
@@ -439,6 +444,16 @@
             this.upload.Text = "Upload";
             this.upload.UseVisualStyleBackColor = true;
             // 
+            // massCommit
+            // 
+            this.massCommit.Location = new System.Drawing.Point(382, 276);
+            this.massCommit.Name = "massCommit";
+            this.massCommit.Size = new System.Drawing.Size(140, 23);
+            this.massCommit.TabIndex = 11;
+            this.massCommit.Text = "Commit selected";
+            this.massCommit.UseVisualStyleBackColor = true;
+            this.massCommit.Click += new System.EventHandler(this.uploadList_Click);
+            // 
             // uploadSSPSelected
             // 
             this.uploadSSPSelected.FormattingEnabled = true;
@@ -452,7 +467,7 @@
             // uploadCheckCase
             // 
             this.uploadCheckCase.AutoSize = true;
-            this.uploadCheckCase.Location = new System.Drawing.Point(382, 469);
+            this.uploadCheckCase.Location = new System.Drawing.Point(382, 546);
             this.uploadCheckCase.Name = "uploadCheckCase";
             this.uploadCheckCase.Size = new System.Drawing.Size(121, 21);
             this.uploadCheckCase.TabIndex = 10;
@@ -463,7 +478,7 @@
             // uploadSSPFilterInstruction
             // 
             this.uploadSSPFilterInstruction.AutoSize = true;
-            this.uploadSSPFilterInstruction.Location = new System.Drawing.Point(379, 421);
+            this.uploadSSPFilterInstruction.Location = new System.Drawing.Point(379, 498);
             this.uploadSSPFilterInstruction.Name = "uploadSSPFilterInstruction";
             this.uploadSSPFilterInstruction.Size = new System.Drawing.Size(147, 17);
             this.uploadSSPFilterInstruction.TabIndex = 0;
@@ -472,7 +487,7 @@
             // uploadSSPFilterLabel
             // 
             this.uploadSSPFilterLabel.AutoSize = true;
-            this.uploadSSPFilterLabel.Location = new System.Drawing.Point(379, 404);
+            this.uploadSSPFilterLabel.Location = new System.Drawing.Point(379, 481);
             this.uploadSSPFilterLabel.Name = "uploadSSPFilterLabel";
             this.uploadSSPFilterLabel.Size = new System.Drawing.Size(111, 17);
             this.uploadSSPFilterLabel.TabIndex = 0;
@@ -480,7 +495,7 @@
             // 
             // uploadSSPFilter
             // 
-            this.uploadSSPFilter.Location = new System.Drawing.Point(382, 441);
+            this.uploadSSPFilter.Location = new System.Drawing.Point(382, 518);
             this.uploadSSPFilter.Name = "uploadSSPFilter";
             this.uploadSSPFilter.Size = new System.Drawing.Size(140, 22);
             this.uploadSSPFilter.TabIndex = 9;
@@ -529,17 +544,17 @@
             // 
             // uploadSelectFromFile
             // 
-            this.uploadSelectFromFile.Location = new System.Drawing.Point(382, 305);
+            this.uploadSelectFromFile.Location = new System.Drawing.Point(382, 382);
             this.uploadSelectFromFile.Name = "uploadSelectFromFile";
             this.uploadSelectFromFile.Size = new System.Drawing.Size(140, 23);
             this.uploadSelectFromFile.TabIndex = 7;
-            this.uploadSelectFromFile.Text = "Tick Entries in File";
+            this.uploadSelectFromFile.Text = "Tick SSPs in File";
             this.uploadSelectFromFile.UseVisualStyleBackColor = true;
             this.uploadSelectFromFile.Click += new System.EventHandler(this.uploadSelectFromFile_Click);
             // 
             // uploadList
             // 
-            this.uploadList.Location = new System.Drawing.Point(382, 276);
+            this.uploadList.Location = new System.Drawing.Point(382, 305);
             this.uploadList.Name = "uploadList";
             this.uploadList.Size = new System.Drawing.Size(140, 23);
             this.uploadList.TabIndex = 6;
@@ -550,7 +565,7 @@
             // uploadCheckAll
             // 
             this.uploadCheckAll.AutoSize = true;
-            this.uploadCheckAll.Location = new System.Drawing.Point(382, 334);
+            this.uploadCheckAll.Location = new System.Drawing.Point(382, 411);
             this.uploadCheckAll.Name = "uploadCheckAll";
             this.uploadCheckAll.Size = new System.Drawing.Size(88, 21);
             this.uploadCheckAll.TabIndex = 8;
@@ -856,7 +871,6 @@
             this.compareFileCommit2.TabIndex = 15;
             this.compareFileCommit2.Text = "Commit File2";
             this.compareFileCommit2.UseVisualStyleBackColor = true;
-            this.compareFileCommit2.Visible = false;
             this.compareFileCommit2.Click += new System.EventHandler(this.compareFileAction1_Click);
             // 
             // compareFileCommit1
@@ -868,7 +882,6 @@
             this.compareFileCommit1.TabIndex = 15;
             this.compareFileCommit1.Text = "Commit File1";
             this.compareFileCommit1.UseVisualStyleBackColor = true;
-            this.compareFileCommit1.Visible = false;
             this.compareFileCommit1.Click += new System.EventHandler(this.compareFileAction1_Click);
             // 
             // compareFileUpload1
@@ -1376,6 +1389,80 @@
             this.settings.Text = "Settings";
             this.settings.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 358);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(508, 102);
+            this.label1.TabIndex = 5;
+            this.label1.Text = resources.GetString("label1.Text");
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.customRepoPathWarning);
+            this.groupBox1.Controls.Add(this.customRepoPathRemove);
+            this.groupBox1.Controls.Add(this.customRepoPathAdd);
+            this.groupBox1.Controls.Add(this.customRepoPath);
+            this.groupBox1.Controls.Add(this.customRepoPaths);
+            this.groupBox1.Location = new System.Drawing.Point(569, 11);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(389, 341);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Custom Repo Paths";
+            // 
+            // customRepoPathWarning
+            // 
+            this.customRepoPathWarning.AutoSize = true;
+            this.customRepoPathWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customRepoPathWarning.ForeColor = System.Drawing.Color.Maroon;
+            this.customRepoPathWarning.Location = new System.Drawing.Point(6, 307);
+            this.customRepoPathWarning.Name = "customRepoPathWarning";
+            this.customRepoPathWarning.Size = new System.Drawing.Size(130, 17);
+            this.customRepoPathWarning.TabIndex = 21;
+            this.customRepoPathWarning.Text = "Invalid Directory!";
+            // 
+            // customRepoPathRemove
+            // 
+            this.customRepoPathRemove.Location = new System.Drawing.Point(299, 307);
+            this.customRepoPathRemove.Name = "customRepoPathRemove";
+            this.customRepoPathRemove.Size = new System.Drawing.Size(75, 23);
+            this.customRepoPathRemove.TabIndex = 20;
+            this.customRepoPathRemove.Text = "Remove";
+            this.customRepoPathRemove.UseVisualStyleBackColor = true;
+            this.customRepoPathRemove.Click += new System.EventHandler(this.CustomRepoPathActions);
+            // 
+            // customRepoPathAdd
+            // 
+            this.customRepoPathAdd.Location = new System.Drawing.Point(218, 307);
+            this.customRepoPathAdd.Name = "customRepoPathAdd";
+            this.customRepoPathAdd.Size = new System.Drawing.Size(75, 23);
+            this.customRepoPathAdd.TabIndex = 19;
+            this.customRepoPathAdd.Text = "Add";
+            this.customRepoPathAdd.UseVisualStyleBackColor = true;
+            this.customRepoPathAdd.Click += new System.EventHandler(this.CustomRepoPathActions);
+            // 
+            // customRepoPath
+            // 
+            this.customRepoPath.Location = new System.Drawing.Point(7, 279);
+            this.customRepoPath.Name = "customRepoPath";
+            this.customRepoPath.Size = new System.Drawing.Size(367, 22);
+            this.customRepoPath.TabIndex = 18;
+            this.customRepoPath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
+            this.customRepoPath.Leave += new System.EventHandler(this.UpdatePathWithLeave);
+            // 
+            // customRepoPaths
+            // 
+            this.customRepoPaths.FormattingEnabled = true;
+            this.customRepoPaths.HorizontalScrollbar = true;
+            this.customRepoPaths.ItemHeight = 16;
+            this.customRepoPaths.Location = new System.Drawing.Point(6, 22);
+            this.customRepoPaths.Name = "customRepoPaths";
+            this.customRepoPaths.Size = new System.Drawing.Size(368, 244);
+            this.customRepoPaths.TabIndex = 0;
+            this.customRepoPaths.SelectedIndexChanged += new System.EventHandler(this.SelectCustomRepoPathForRemove);
+            // 
             // customGrp
             // 
             this.customGrp.Controls.Add(this.customPathRemove);
@@ -1389,6 +1476,7 @@
             this.customGrp.TabIndex = 3;
             this.customGrp.TabStop = false;
             this.customGrp.Text = "Favourite Paths";
+            this.customGrp.Visible = false;
             // 
             // customPathRemove
             // 
@@ -1618,6 +1706,9 @@
             // 
             // displayGrp
             // 
+            this.displayGrp.Controls.Add(this.dspExtractFile);
+            this.displayGrp.Controls.Add(this.dspSVNAdd);
+            this.displayGrp.Controls.Add(this.dspHideLoad);
             this.displayGrp.Controls.Add(this.dspSVNBlame);
             this.displayGrp.Controls.Add(this.dspCompareFile);
             this.displayGrp.Controls.Add(this.dspExtract);
@@ -1634,10 +1725,34 @@
             this.displayGrp.TabStop = false;
             this.displayGrp.Text = "Display Settings";
             // 
+            // dspSVNAdd
+            // 
+            this.dspSVNAdd.AutoSize = true;
+            this.dspSVNAdd.Checked = true;
+            this.dspSVNAdd.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.dspSVNAdd.Enabled = false;
+            this.dspSVNAdd.Location = new System.Drawing.Point(7, 130);
+            this.dspSVNAdd.Name = "dspSVNAdd";
+            this.dspSVNAdd.Size = new System.Drawing.Size(142, 21);
+            this.dspSVNAdd.TabIndex = 6;
+            this.dspSVNAdd.Text = "+ (after SVN Add)";
+            this.dspSVNAdd.UseVisualStyleBackColor = true;
+            // 
+            // dspHideLoad
+            // 
+            this.dspHideLoad.AutoSize = true;
+            this.dspHideLoad.Location = new System.Drawing.Point(7, 316);
+            this.dspHideLoad.Name = "dspHideLoad";
+            this.dspHideLoad.Size = new System.Drawing.Size(139, 21);
+            this.dspHideLoad.TabIndex = 11;
+            this.dspHideLoad.Text = "Hide Load button";
+            this.dspHideLoad.UseVisualStyleBackColor = true;
+            this.dspHideLoad.Click += new System.EventHandler(this.CheckBoxUI_Click);
+            // 
             // dspSVNBlame
             // 
             this.dspSVNBlame.AutoSize = true;
-            this.dspSVNBlame.Location = new System.Drawing.Point(7, 238);
+            this.dspSVNBlame.Location = new System.Drawing.Point(7, 289);
             this.dspSVNBlame.Name = "dspSVNBlame";
             this.dspSVNBlame.Size = new System.Drawing.Size(101, 21);
             this.dspSVNBlame.TabIndex = 10;
@@ -1659,7 +1774,7 @@
             // dspExtract
             // 
             this.dspExtract.AutoSize = true;
-            this.dspExtract.Location = new System.Drawing.Point(7, 22);
+            this.dspExtract.Location = new System.Drawing.Point(7, 21);
             this.dspExtract.Name = "dspExtract";
             this.dspExtract.Size = new System.Drawing.Size(86, 21);
             this.dspExtract.TabIndex = 2;
@@ -1692,7 +1807,7 @@
             // dspSVNDiff
             // 
             this.dspSVNDiff.AutoSize = true;
-            this.dspSVNDiff.Location = new System.Drawing.Point(7, 184);
+            this.dspSVNDiff.Location = new System.Drawing.Point(7, 237);
             this.dspSVNDiff.Name = "dspSVNDiff";
             this.dspSVNDiff.Size = new System.Drawing.Size(83, 21);
             this.dspSVNDiff.TabIndex = 8;
@@ -1703,7 +1818,7 @@
             // dspSVNUpdate
             // 
             this.dspSVNUpdate.AutoSize = true;
-            this.dspSVNUpdate.Location = new System.Drawing.Point(7, 130);
+            this.dspSVNUpdate.Location = new System.Drawing.Point(7, 183);
             this.dspSVNUpdate.Name = "dspSVNUpdate";
             this.dspSVNUpdate.Size = new System.Drawing.Size(108, 21);
             this.dspSVNUpdate.TabIndex = 6;
@@ -1714,7 +1829,7 @@
             // dspSVNMerge
             // 
             this.dspSVNMerge.AutoSize = true;
-            this.dspSVNMerge.Location = new System.Drawing.Point(7, 211);
+            this.dspSVNMerge.Location = new System.Drawing.Point(7, 262);
             this.dspSVNMerge.Name = "dspSVNMerge";
             this.dspSVNMerge.Size = new System.Drawing.Size(102, 21);
             this.dspSVNMerge.TabIndex = 9;
@@ -1725,13 +1840,23 @@
             // dspSVNLog
             // 
             this.dspSVNLog.AutoSize = true;
-            this.dspSVNLog.Location = new System.Drawing.Point(7, 157);
+            this.dspSVNLog.Location = new System.Drawing.Point(7, 210);
             this.dspSVNLog.Name = "dspSVNLog";
             this.dspSVNLog.Size = new System.Drawing.Size(124, 21);
             this.dspSVNLog.TabIndex = 7;
             this.dspSVNLog.Text = "SVN Show Log";
             this.dspSVNLog.UseVisualStyleBackColor = true;
             this.dspSVNLog.Click += new System.EventHandler(this.CheckBoxUI_Click);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(983, 729);
+            this.tabPage1.TabIndex = 5;
+            this.tabPage1.Text = "Append";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // textContextMenu
             // 
@@ -1766,89 +1891,15 @@
             this.favPaths.Name = "favPaths";
             this.favPaths.Size = new System.Drawing.Size(67, 4);
             // 
-            // groupBox1
+            // dspExtractFile
             // 
-            this.groupBox1.Controls.Add(this.customRepoPathWarning);
-            this.groupBox1.Controls.Add(this.customRepoPathRemove);
-            this.groupBox1.Controls.Add(this.customRepoPathAdd);
-            this.groupBox1.Controls.Add(this.customRepoPath);
-            this.groupBox1.Controls.Add(this.customRepoPaths);
-            this.groupBox1.Location = new System.Drawing.Point(569, 11);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(389, 341);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Custom Repo Paths";
-            // 
-            // customRepoPaths
-            // 
-            this.customRepoPaths.FormattingEnabled = true;
-            this.customRepoPaths.HorizontalScrollbar = true;
-            this.customRepoPaths.ItemHeight = 16;
-            this.customRepoPaths.Location = new System.Drawing.Point(6, 22);
-            this.customRepoPaths.Name = "customRepoPaths";
-            this.customRepoPaths.Size = new System.Drawing.Size(368, 244);
-            this.customRepoPaths.TabIndex = 0;
-            this.customRepoPaths.SelectedIndexChanged += new System.EventHandler(this.SelectCustomRepoPathForRemove);
-            // 
-            // customRepoPath
-            // 
-            this.customRepoPath.Location = new System.Drawing.Point(7, 279);
-            this.customRepoPath.Name = "customRepoPath";
-            this.customRepoPath.Size = new System.Drawing.Size(367, 22);
-            this.customRepoPath.TabIndex = 18;
-            this.customRepoPath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UpdatePathWithKey);
-            this.customRepoPath.Leave += new System.EventHandler(this.UpdatePathWithLeave);
-            // 
-            // customRepoPathAdd
-            // 
-            this.customRepoPathAdd.Location = new System.Drawing.Point(218, 307);
-            this.customRepoPathAdd.Name = "customRepoPathAdd";
-            this.customRepoPathAdd.Size = new System.Drawing.Size(75, 23);
-            this.customRepoPathAdd.TabIndex = 19;
-            this.customRepoPathAdd.Text = "Add";
-            this.customRepoPathAdd.UseVisualStyleBackColor = true;
-            this.customRepoPathAdd.Click += new System.EventHandler(this.CustomRepoPathActions);
-            // 
-            // customRepoPathRemove
-            // 
-            this.customRepoPathRemove.Location = new System.Drawing.Point(299, 307);
-            this.customRepoPathRemove.Name = "customRepoPathRemove";
-            this.customRepoPathRemove.Size = new System.Drawing.Size(75, 23);
-            this.customRepoPathRemove.TabIndex = 20;
-            this.customRepoPathRemove.Text = "Remove";
-            this.customRepoPathRemove.UseVisualStyleBackColor = true;
-            this.customRepoPathRemove.Click += new System.EventHandler(this.CustomRepoPathActions);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 358);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(508, 102);
-            this.label1.TabIndex = 5;
-            this.label1.Text = resources.GetString("label1.Text");
-            // 
-            // customRepoPathWarning
-            // 
-            this.customRepoPathWarning.AutoSize = true;
-            this.customRepoPathWarning.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customRepoPathWarning.ForeColor = System.Drawing.Color.Maroon;
-            this.customRepoPathWarning.Location = new System.Drawing.Point(6, 307);
-            this.customRepoPathWarning.Name = "customRepoPathWarning";
-            this.customRepoPathWarning.Size = new System.Drawing.Size(130, 17);
-            this.customRepoPathWarning.TabIndex = 21;
-            this.customRepoPathWarning.Text = "Invalid Directory!";
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(983, 729);
-            this.tabPage1.TabIndex = 5;
-            this.tabPage1.Text = "Append";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.dspExtractFile.AutoSize = true;
+            this.dspExtractFile.Location = new System.Drawing.Point(7, 157);
+            this.dspExtractFile.Name = "dspExtractFile";
+            this.dspExtractFile.Size = new System.Drawing.Size(127, 21);
+            this.dspExtractFile.TabIndex = 12;
+            this.dspExtractFile.Text = "+ (after extract)";
+            this.dspExtractFile.UseVisualStyleBackColor = true;
             // 
             // ManaSQLForm
             // 
@@ -1868,6 +1919,8 @@
             this.compare2.PerformLayout();
             this.settings.ResumeLayout(false);
             this.settings.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.customGrp.ResumeLayout(false);
             this.customGrp.PerformLayout();
             this.generalGrp.ResumeLayout(false);
@@ -1875,8 +1928,6 @@
             this.displayGrp.ResumeLayout(false);
             this.displayGrp.PerformLayout();
             this.textContextMenu.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2037,5 +2088,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label customRepoPathWarning;
         private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Button massCommit;
+        private System.Windows.Forms.CheckBox dspHideLoad;
+        private System.Windows.Forms.CheckBox dspSVNAdd;
+        private System.Windows.Forms.CheckBox dspExtractFile;
     }
 }

@@ -35,6 +35,7 @@ namespace BridgeSQL
         private static bool _SvnDiff;
         private static bool _SvnMerge;
         private static bool _SvnBlame;
+        private static bool _HideLoad;
 
         private static int _SelectedCustomPath = -1;
         private static int _SelectedCustomRepoPath = -1;
@@ -104,6 +105,7 @@ namespace BridgeSQL
             RepoPath = MSettings.GenRepoPath;
             ProgPath = MSettings.GenManaPath;
             TProcPath = MSettings.GenTProcPath;
+            HideLoad = MSettings.HideLoad;
             ServerNamingIndex = MSettings.ServerNamingIndex;
             LogNamingIndex = MSettings.LogNamingIndex;
             qcm = MSettings.qcm;
@@ -325,6 +327,16 @@ namespace BridgeSQL
             }
         }
 
+        public static Boolean HideLoad
+        {
+            get { return _HideLoad; }
+            set
+            {
+                _HideLoad = value;
+                if (UpdatedCheckBox != null)
+                    UpdatedCheckBox(Mode + "-HideLoad");
+            }
+        }
         // START: PROPERTIES OF CUSTOM PATH
         public static int SelectCustomPath
         {
@@ -1078,7 +1090,7 @@ namespace BridgeSQL
             {
                 defRepoPath = ManaSQLConfig.RPMan.SearchBy(SERVER, DB);
                 defRepoPath = defRepoPath != null ? defRepoPath : ManaSQLConfig.RepoPath;
-                
+
                 if (IsDefault)
                 {
                     path = string.Format(@"{0}\{1}\{2}", defRepoPath, SERVER, DB);
@@ -1219,6 +1231,16 @@ namespace BridgeSQL
             foreach (string ssp in WhereSSPStore)
             {
                 total.Add(GetRepoPath(string.Format(@"{0}.{1}", ssp, ManaSQLConfig.Extension)));
+            }
+            return total;
+        }
+
+        public List<string> FormFilePaths()
+        {
+            List<string> total = new List<string>();
+            foreach (string ssp in WhereFileList)
+            {
+                total.Add(GetRepoPath(ssp));
             }
             return total;
         }

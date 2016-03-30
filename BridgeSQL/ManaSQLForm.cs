@@ -277,6 +277,11 @@ namespace BridgeSQL
             var control = sender as CheckBox;
             bool isChecked = control.CheckState == CheckState.Checked;
             UpdateCheckBoxes(control.Name, isChecked);
+            if (control.Equals(dspHideLoad))
+            {
+                RefreshButton("upload");
+                RefreshButton("compareFile1");
+            }
         }
 
         // START: ALL COMBOBOX
@@ -1015,7 +1020,10 @@ namespace BridgeSQL
             {
                 dspSVNBlame.CheckState = ManaSQLConfig.SvnBlame ? CheckState.Checked : CheckState.Unchecked;
             }
-
+            if (Util.Contains(new string[] { "all", "general-HideLoad" }, list))
+            {
+                dspHideLoad.CheckState = ManaSQLConfig.HideLoad ? CheckState.Checked : CheckState.Unchecked;
+            }
             // each page: extract
             if (Util.Contains(new string[] { "all", "extract-IsDefault" }, list))
             {
@@ -1147,6 +1155,10 @@ namespace BridgeSQL
             {
                 ManaSQLConfig.SvnBlame = flag;
             }
+            if (Util.Contains(new string[] { "all", "dspHideLoad" }, list))
+            {
+                ManaSQLConfig.HideLoad = flag;
+            }
 
             // each page: extract
             if (Util.Contains(new string[] { "all", "extractDDir" }, list))
@@ -1249,6 +1261,8 @@ namespace BridgeSQL
                 uploadCheckAll.Enabled = isActive;
                 uploadSSP.Enabled = isActive;
                 uploadList.Enabled = isActive && ManaSQLConfig.Upload.WhereFileList.Count > 0;
+                uploadList.Visible = !ManaSQLConfig.HideLoad;
+                massCommit.Enabled = isActive && ManaSQLConfig.Upload.WhereFileList.Count > 0;
             }
 
             if (Util.Contains(new string[] { "all", "compareFile1", "compareFile2" }, list))
@@ -1268,6 +1282,12 @@ namespace BridgeSQL
                 compareFileCompare.Enabled = isListed && isFileExist1 && isFileExist2;
                 compareFileUpload1.Enabled = isListed && isFileExist1;
                 compareFileUpload2.Enabled = isListed && isFileExist2;
+
+                compareFileUpload1.Visible = !ManaSQLConfig.HideLoad;
+                compareFileUpload2.Visible = !ManaSQLConfig.HideLoad;
+
+                compareFileCommit1.Enabled = isListed && isFileExist1;
+                compareFileCommit2.Enabled = isListed && isFileExist2;
             }
 
             if (Util.Contains(new string[] { "all", "compareDir" }, list))
@@ -1394,6 +1414,7 @@ namespace BridgeSQL
                     && ManaSQLConfig.Upload.ValidRepoPath
                     ;
                 uploadList.Enabled = isActive && ManaSQLConfig.Upload.WhereFileList.Count > 0;
+                massCommit.Enabled = isActive && ManaSQLConfig.Upload.WhereFileList.Count > 0;
 
                 if (isActive)
                 {

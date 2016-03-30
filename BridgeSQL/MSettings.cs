@@ -26,6 +26,7 @@ namespace BridgeSQL
         public static bool IsSVNDiff = true;
         public static bool IsSVNMerge = true;
         public static bool IsSVNBlame = true;
+        public static bool HideLoad = false;
         public static string GenRepoPath = @"c:\repoSSP";
         public static string GenManaPath = @"C:\SSMS_plugins\SQLMana\SqlMana.exe";
         public static string GenTProcPath = @"c:\Program Files\TortoiseSVN\bin\TortoiseProc.exe";
@@ -100,6 +101,8 @@ namespace BridgeSQL
                             else if (pair[0] == "svndiff") { Boolean.TryParse(pair[1], out IsSVNShowLog); }
                             else if (pair[0] == "svnmerge") { Boolean.TryParse(pair[1], out IsSVNDiff); }
                             else if (pair[0] == "svnblame") { Boolean.TryParse(pair[1], out IsSVNMerge); }
+
+                            else if (pair[0] == "hideload") { Boolean.TryParse(pair[1], out HideLoad); }
                             else if (pair[0] == "repopath") { GenRepoPath = originalValue; }
                             else if (pair[0] == "manapath") { GenManaPath = originalValue; }
                             else if (pair[0] == "tprocpath") { GenTProcPath = originalValue; }
@@ -147,6 +150,8 @@ namespace BridgeSQL
             IsSVNDiff = ManaSQLConfig.SvnDiff;
             IsSVNMerge = ManaSQLConfig.SvnMerge;
             IsSVNBlame = ManaSQLConfig.SvnBlame;
+
+            HideLoad = ManaSQLConfig.HideLoad;
             GenRepoPath = ManaSQLConfig.RepoPath;
             GenManaPath = ManaSQLConfig.ProgPath;
             GenTProcPath = ManaSQLConfig.TProcPath;
@@ -172,6 +177,8 @@ namespace BridgeSQL
             total = total + FormString("svndiff", IsSVNDiff ? "true" : "false");
             total = total + FormString("svnmerge", IsSVNMerge ? "true" : "false");
             total = total + FormString("svnblame", IsSVNBlame ? "true" : "false");
+            total = total + FormString("hideLoad", HideLoad ? "true" : "false");
+
             total = total + FormString("repopath", GenRepoPath);
             total = total + FormString("manapath", GenManaPath);
             total = total + FormString("tprocpath", GenTProcPath);
