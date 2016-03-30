@@ -46,19 +46,30 @@ namespace BridgeSQL
                 args = "data " + args;
                 ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
 
-                //add this command just in case SSP is new and not added
-                ManaProcess.runExe(
-                    ManaSQLConfig.TProcPath
-                    , TProcCommands.Add(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
-                    , false
-                    );
-
-                // Trying not to pollute the space
-                //ManaProcess.runExe(
-                //    ManaSQLConfig.TProcPath
-                //    , TProcCommands.Commit(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
-                //    , false
-                //    );
+                if (ManaProcess.returnCode < 0)
+                {
+                    Popups.ResetVars();
+                    Popups.message = "Error writing SQL to file. View log?";
+                    Popups.Prompt();
+                    if(Popups.response == System.Windows.Forms.DialogResult.OK)
+                    {
+                        ManaProcess.runExe("Explorer", ManaSQLConfig.Extract.GetLogPath(), false);
+                    }
+                }
+                //else
+                //{
+                //    //add this command just in case SSP is new and not added
+                //    ManaProcess.runExe(
+                //        ManaSQLConfig.TProcPath
+                //        , TProcCommands.Add(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
+                //        , false
+                //        );
+                //    ManaProcess.runExe(
+                //        ManaSQLConfig.TProcPath
+                //        , TProcCommands.Commit(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
+                //        , false
+                //        );
+                //}
             }
         }
     }

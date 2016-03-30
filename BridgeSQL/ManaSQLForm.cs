@@ -254,8 +254,9 @@ namespace BridgeSQL
 
             if (path == "" || varname == "")
             {
-                message = string.Format(@"{0}{1}{2}", "Error: ", "Empty string in directory.", "");
-                MessageBox.Show(message);
+                Popups.ResetVars();
+                Popups.message = "Empty string in directory.";
+                Popups.Alert();
                 return;
             }
 
@@ -266,8 +267,9 @@ namespace BridgeSQL
             }
             catch (Exception except)
             {
-                message = string.Format(@"{0}{1}{2}", "Error in creating directory: ", Environment.NewLine, path);
-                MessageBox.Show(message);
+                Popups.ResetVars();
+                Popups.message = string.Format(@"{0}{1}{2}", "Error in creating directory: ", Environment.NewLine, path);
+                Popups.Alert();
             }
         }
 
@@ -324,7 +326,9 @@ namespace BridgeSQL
                 }
                 else
                 {
-                    MessageBox.Show(errorMsg);
+                    Popups.ResetVars();
+                    Popups.message = errorMsg;
+                    Popups.Alert();
                 }
             }
         }
@@ -412,10 +416,24 @@ namespace BridgeSQL
                     args = ManaSQLConfig.UploadFile1.CompileArgs();
                     args = string.Format(@"data {0}", args);
                     ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+
+                    //popup: view log
+                    if (ManaProcess.returnCode < 0)
+                    {
+                        Popups.ResetVars();
+                        Popups.message = "Error loading SQL content to DB. View log?";
+                        Popups.Prompt();
+                        if (Popups.response == DialogResult.OK)
+                        {
+                            ManaProcess.runExe("Explorer", ManaSQLConfig.UploadFile1.GetLogPath(), false);
+                        }
+                    }
                 }
                 else
                 {
-                    MessageBox.Show(errorMsg);
+                    Popups.ResetVars();
+                    Popups.message = errorMsg;
+                    Popups.Alert();
                 }
             }
             else if (control.Equals(compareFileUpload2))
@@ -427,10 +445,24 @@ namespace BridgeSQL
                     args = ManaSQLConfig.UploadFile2.CompileArgs();
                     args = string.Format(@"data {0}", args);
                     ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+
+                    //popup: view log
+                    if (ManaProcess.returnCode < 0)
+                    {
+                        Popups.ResetVars();
+                        Popups.message = "Error loading SQL content to DB. View log?";
+                        Popups.Prompt();
+                        if (Popups.response == DialogResult.OK)
+                        {
+                            ManaProcess.runExe("Explorer", ManaSQLConfig.UploadFile2.GetLogPath(), false);
+                        }
+                    }
                 }
                 else
                 {
-                    MessageBox.Show(errorMsg);
+                    Popups.ResetVars();
+                    Popups.message = errorMsg;
+                    Popups.Alert();
                 }
             }
             // SVN merging
@@ -464,13 +496,32 @@ namespace BridgeSQL
             string args;
             if (ManaSQLConfig.CompareFile1.ValidPaths && ManaSQLConfig.CompareFile2.ValidPaths)
             {
+                int statAction1, statAction2;
                 args = ManaSQLConfig.CompareFile1.CompileArgs();
                 args = "data " + args;
                 ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+                statAction1 = ManaProcess.returnCode;
 
                 args = ManaSQLConfig.CompareFile2.CompileArgs();
                 args = "data " + args;
                 ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+                statAction2 = ManaProcess.returnCode;
+
+                if (statAction1 < 0 || statAction2 < 0)
+                {
+                    string temp = "";
+                    if (statAction1 < 0) temp = "," + ManaSQLConfig.CompareFile1.WhereSSPList;
+                    if (statAction2 < 0) temp = "," + ManaSQLConfig.CompareFile2.WhereSSPList;
+
+                    Popups.ResetVars();
+                    Popups.message = string.Format("Error in writing SQL ({0}) to file. View log?", temp.Substring(1));
+                    Popups.Prompt();
+                    if (Popups.response == DialogResult.OK)
+                    {
+                        if (statAction1 < 0) ManaProcess.runExe("Explorer", ManaSQLConfig.CompareFile1.GetLogPath(), false);
+                        if (statAction2 < 0) ManaProcess.runExe("Explorer", ManaSQLConfig.CompareFile2.GetLogPath(), false);
+                    }
+                }
 
                 // TODO: addback the files so can upload later
                 ManaSQLConfig.UploadFile1.AppendWhereFile(string.Format("{0}.{1}", ManaSQLConfig.CompareFile1.OBJ, ManaSQLConfig.Extension), false);
@@ -479,7 +530,9 @@ namespace BridgeSQL
             }
             else
             {
-                MessageBox.Show(errorMsg);
+                Popups.ResetVars();
+                Popups.message = errorMsg;
+                Popups.Alert();
             }
         }
 
@@ -488,7 +541,9 @@ namespace BridgeSQL
             //TODO: implement defensive code here
             if (!ManaSQLConfig.CompareDir.ValidPaths)
             {
-                MessageBox.Show(errorMsg);
+                Popups.ResetVars();
+                Popups.message = errorMsg;
+                Popups.Alert();
                 return;
             }
 
@@ -512,7 +567,9 @@ namespace BridgeSQL
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(string.Format(@"Error: Cannot create directory: [{0}]", logDir));
+                        Popups.ResetVars();
+                        Popups.message = string.Format(@"Cannot create directory: [{0}]", logDir);
+                        Popups.Alert();
                         return;
                     }
                 }
@@ -521,7 +578,9 @@ namespace BridgeSQL
             {
                 if (isValidDir)
                 {
-                    MessageBox.Show("Error: Not specified paths not present: Log Path, Result Path");
+                    Popups.ResetVars();
+                    Popups.message = "Not specified paths not present: Log Path, Result Path";
+                    Popups.Alert();
                     return;
                 }
             }
@@ -529,7 +588,7 @@ namespace BridgeSQL
             string args = ManaSQLConfig.CompareDir.CompileArgs();
             args = "data " + args;
             ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
-
+            
             try
             {
                 string username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
@@ -557,7 +616,9 @@ namespace BridgeSQL
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: Cannot compare log: " + filename);
+                Popups.ResetVars();
+                Popups.message = "Cannot compare log: " + filename;
+                Popups.Alert();
             }
 
             ManaSQLConfig.CompareDir.InvalidateAutomationDate();
@@ -614,8 +675,9 @@ namespace BridgeSQL
                     }
                     catch (Exception except)
                     {
-                        message = string.Format(@"{0}{1}{2}", "Error in creating directory: ", Environment.NewLine, customRepoPath.Text);
-                        MessageBox.Show(message);
+                        Popups.ResetVars();
+                        Popups.message = string.Format(@"{0}{1}{2}", "Error in creating directory: ", Environment.NewLine, customRepoPath.Text);
+                        Popups.Alert();
                     }
                 }
             }
@@ -644,8 +706,9 @@ namespace BridgeSQL
                     }
                     catch (Exception except)
                     {
-                        message = string.Format(@"{0}{1}{2}", "Error in creating directory: ", Environment.NewLine, customPath.Text);
-                        MessageBox.Show(message);
+                        Popups.ResetVars();
+                        Popups.message = string.Format(@"{0}{1}{2}", "Error in creating directory: ", Environment.NewLine, customPath.Text);
+                        Popups.Alert();
                     }
                 }
             }

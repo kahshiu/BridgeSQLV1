@@ -35,6 +35,17 @@ namespace BridgeSQL
             string args = ManaSQLConfig.Extract.CompileArgs(1);
             args = "data " + args;
             ManaProcess.runExe(ManaSQLConfig.ProgPath, args, false);
+
+            if (ManaProcess.returnCode < 0)
+            {
+                Popups.ResetVars();
+                Popups.message = "Error writing SQL(s) to file(s). View log?";
+                Popups.Prompt();
+                if (Popups.response == System.Windows.Forms.DialogResult.OK)
+                {
+                    ManaProcess.runExe("Explorer", ManaSQLConfig.Extract.GetLogPath(), false);
+                }
+            }
         }
     }
 }

@@ -74,6 +74,7 @@
     <Compile Include="MSVN\SVNShowLog.cs" />
     <Compile Include="MSVN\SVNUpdate.cs" />
     <Compile Include="MSVN\SVNUpdateAll.cs" />
+    <Compile Include="Popups.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MSettings.cs" />
     <Compile Include="QuickCompareMenu.cs" />

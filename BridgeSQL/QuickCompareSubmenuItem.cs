@@ -79,7 +79,10 @@ namespace BridgeSQL
                         , q.DB
                         , DBI.Type
                         , DBI.ObjectName);
-                    MessageBox.Show(wMessage, "ERROR: Missing Obj in DB");
+
+                    Popups.ResetVars();
+                    Popups.message = "Missing Obj in DB";
+                    Popups.Alert();
                 }
                 else
                 {
