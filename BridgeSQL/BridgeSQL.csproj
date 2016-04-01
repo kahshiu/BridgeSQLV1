@@ -64,6 +64,7 @@
     <Compile Include="ManaSQLCommand.cs" />
     <Compile Include="ManaSQLConfig.cs" />
     <Compile Include="MExtractAll.cs" />
+    <Compile Include="MExtractAllProgrammability.cs" />
     <Compile Include="MExtractEnlist.cs" />
     <Compile Include="MSVN\SVNBlame.cs" />
     <Compile Include="MSVN\SVNCommitAll.cs" />

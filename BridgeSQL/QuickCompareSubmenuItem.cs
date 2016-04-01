@@ -40,7 +40,7 @@ namespace BridgeSQL
                     || Util.GetIP(q.Server) == CON.Server;
                 hideFlag = (validServer && q.DB == DBI.DatabaseName) 
                     || q.Conn == null
-                    || ManaSQLConfig.IsAllowedSingleNode(theNode)
+                    || !ManaSQLConfig.IsAllowedSingleNode(theNode)
                     ;
             }
             return !hideFlag;
@@ -57,7 +57,7 @@ namespace BridgeSQL
             IDatabaseObjectInfo DBI;
             IConnectionInfo CON;
 
-            string tAuthString, tScript, wMessage = "", args;
+            string tAuthString, tScript, wMessage = "", args, scriptBase = "";
             int tCount;
 
             if (theNode.IsDatabaseObject
@@ -66,7 +66,22 @@ namespace BridgeSQL
                 )
             {
                 tAuthString = Util.FormAuthString(q.Conn.ConnectionString, q.DB);
-                tScript = string.Format(SQLScripts.PeepSSP, DBI.ObjectName);
+                if(theNode.Type == "StoredProcedure")
+                {
+                    scriptBase = SQLScripts.PeepSSP;
+                }
+                else if(theNode.Type == "UserDefinedFunction")
+                {
+                    scriptBase = SQLScripts.PeepFN;
+                }
+                else
+                {
+                    Popups.ResetVars();
+                    Popups.message = "Unsupported object type compare";
+                    Popups.Alert();
+                }
+                    
+                tScript = string.Format(scriptBase, DBI.ObjectName);
 
                 using (SqlConnection tConn = new SqlConnection(tAuthString))
                 {
@@ -112,6 +127,7 @@ namespace BridgeSQL
                     ManaSQLConfig.fakie.DB = q.DB;
                     ManaSQLConfig.fakie.Obj = DBI.ObjectName;
                     ManaSQLConfig.fakie.Type = DBI.Type;
+                    ManaSQLConfig.fakie.Path = theNode.Path;
 
                     ManaSQLConfig.UploadFile2.MirrorVariables(ManaSQLConfig.fakie, q.Conn);
 

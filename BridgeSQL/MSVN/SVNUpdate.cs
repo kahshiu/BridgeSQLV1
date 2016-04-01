@@ -20,7 +20,7 @@ namespace BridgeSQL.MSVN
         }
         public override string ItemText
         {
-            get { return "[SVN] Update ALL"; }
+            get { return "[SVN] Update"; }
         }
         public override void OnAction(ObjectExplorerNodeDescriptorBase node)
         {

@@ -43,10 +43,12 @@ namespace BridgeSQL
             // adding UI to MSSQL
             menuCommands.Add(new MExtract(thePlug, manaSQLCommand));
             menuCommands.Add(new MExtractEnlist(thePlug, manaSQLCommand));
+            menuCommands.Add(new MExtractAll(thePlug, manaSQLCommand));
             thePlug.AddTopLevelMenuItem(menuCommands[0]);
             thePlug.AddTopLevelMenuItem(menuCommands[1]);
+            thePlug.AddTopLevelMenuItem(menuCommands[2]);
 
-            thePlug.AddTopLevelMenuItem(new MExtractAll(thePlug,manaSQLCommand));
+            thePlug.AddTopLevelMenuItem(new MExtractAllProgrammability(thePlug, manaSQLCommand, menuCommands));
             thePlug.AddTopLevelMenuItem(new MSVN.SVNCommitAll(thePlug, manaSQLCommand, menuCommands));
             thePlug.AddTopLevelMenuItem(new MSVN.SVNUpdateAll());
             

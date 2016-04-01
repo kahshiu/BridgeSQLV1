@@ -18,7 +18,7 @@ AND type IN ( N'P', N'PC' )";
 @"SELECT COUNT(*)
 FROM sys.objects
 WHERE object_id = OBJECT_ID(N'{0}')
-AND type IN ( N'AF', N'FN', N'FS', N'FT', N'IF' )";
+AND type IN ( N'FN', N'IF', 'TF')";
     }
 
 }

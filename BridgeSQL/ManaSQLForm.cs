@@ -322,20 +322,20 @@ namespace BridgeSQL
                             ManaProcess.runExe("Explorer", ManaSQLConfig.Extract.GetLogPath(), false);
                         }
                     }
-                    else
-                    {
-                        // add file just in case its not already added
-                        ManaProcess.runExe(
-                        ManaSQLConfig.TProcPath
-                            , TProcCommands.Add(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
-                            , false
-                        );
-                        ManaProcess.runExe(
-                            ManaSQLConfig.TProcPath
-                            , TProcCommands.Commit(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
-                            , false
-                        );
-                    }
+                    //else
+                    //{
+                    //    // add file just in case its not already added
+                    //    ManaProcess.runExe(
+                    //    ManaSQLConfig.TProcPath
+                    //        , TProcCommands.Add(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
+                    //        , false
+                    //    );
+                    //    ManaProcess.runExe(
+                    //        ManaSQLConfig.TProcPath
+                    //        , TProcCommands.Commit(ManaSQLConfig.Extract.FormSelectedSSPFilePaths().ToArray())
+                    //        , false
+                    //    );
+                    //}
                 }
                 else
                 {

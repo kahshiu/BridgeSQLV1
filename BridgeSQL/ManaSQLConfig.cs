@@ -30,6 +30,7 @@ namespace BridgeSQL
         private static bool _ShowCompareFile;
         private static bool _SvnRepoStatus;
         private static bool _SvnCommit;
+        //private static bool _SvnCommit2; // extract and commit
         private static bool _SvnUpdate;
         private static bool _SvnShowLog;
         private static bool _SvnDiff;
@@ -127,17 +128,24 @@ namespace BridgeSQL
         public static bool ValidTProcPath { get { return Util.ValidatePath(TProcPath, "file", "TortoiseProc.exe"); } }
         public static bool ValidGenPaths { get { return ValidRepoPath && ValidProgPath && ValidTProcPath; } }
 
-        public static bool IsAllowedSingleNode (IOeNode n)
+        public static bool IsAllowedSingleNode(IOeNode n)
         {
-            return (n.Type == "StoredProcedure"
+            return (
+                n.Type == "StoredProcedure"
                 || Util.IsSVF(n.Path)
                 || Util.IsTVF(n.Path)
                 );
         }
 
-        public static bool IsAllowedGroupNode (IOeNode n)
+        public static bool IsAllowedGroupNode(IOeNode n)
         {
-            return (n.Type == "StoredProcedures"
+            return (
+                n.Type == "StoredProcedures"
+                || n.Type == "Scalar-valuedFunctions"
+                || n.Type == "Table-valuedFunctions"
+
+                || n.Type == "UserProgrammability"
+
                );
         }
 
@@ -289,6 +297,17 @@ namespace BridgeSQL
                     UpdatedCheckBox(Mode + "-SvnCommit");
             }
         }
+
+        //public static Boolean SvnCommit2
+        //{
+        //    get { return _SvnCommit2; }
+        //    set
+        //    {
+        //        _SvnCommit2 = value;
+        //        if (UpdatedCheckBox != null)
+        //            UpdatedCheckBox(Mode + "-SvnCommit2");
+        //    }
+        //}
 
         public static Boolean SvnUpdate
         {
@@ -522,17 +541,19 @@ namespace BridgeSQL
         public string DB = "";
         public string Type = "";
         public string Obj = "";
+        public string Path = "";
 
-        public void Reset ()
+        public void Reset()
         {
             Server = "";
             DB = "";
             Type = "";
             Obj = "";
+            Path = "";
         }
-        public bool IsValid ()
+        public bool IsValid()
         {
-            return !(Server == "" && DB == "" && Type == "" && Obj == "");
+            return !(Server == "" && DB == "" && Type == "" && Obj == "" && Path == "");
         }
     }
 
@@ -546,14 +567,15 @@ namespace BridgeSQL
         };
         string[] DBActions =
         {
-            "selectSSP"
-            ,"updateSSP"
+            "selectSSP" ,"updateSSP"
+            ,"selectFNS" ,"updateFNS"
+            ,"selectFNT" ,"updateFNT"
         };
         string[] FileActions =
         {
-            "readSSP"
-            ,"writeSSP"
-            ,"compareSSP"
+            "readSSP" ,"writeSSP" ,"compareSSP"
+            ,"readFNS" ,"writeFNS" ,"compareFNS"
+            ,"readFNT" ,"writeFNT" ,"compareFNT"
         };
         string[] Modes =
         {
@@ -609,33 +631,62 @@ namespace BridgeSQL
         public FixedSettings(string mode)
         {
             Mode = mode;
-            UpdateStatics();
         }
 
-        private void UpdateStatics()
+        // no longer static
+        public void UpdateInteractionFlags()
         {
             LogSuffix = Mode;
 
-            // actions + sequences
             if (Mode == "extract" || Mode == "compareFile1" || Mode == "compareFile2")
             {
                 SeqAction = SeqActions[0];
-                DBAction = DBActions[0];
-                FileAction = FileActions[1];
+                if (TYPE == "StoredProcedures")
+                {
+                    DBAction = DBActions[0];
+                    FileAction = FileActions[1];
+                }
+                else if (TYPE == "Functions_scalar_valued")
+                {
+                    DBAction = DBActions[2];
+                    FileAction = FileActions[4];
+                }
+                else if (TYPE == "Functions_table_valued")
+                {
+                    DBAction = DBActions[4];
+                    FileAction = FileActions[7];
+                }
             }
             else if (Mode == "upload" || Mode == "uploadFile1" || Mode == "uploadFile2")
             {
                 SeqAction = SeqActions[1];
-                DBAction = DBActions[1];
-                FileAction = FileActions[0];
+
+                if (TYPE == "StoredProcedures")
+                {
+                    DBAction = DBActions[1];
+                    FileAction = FileActions[0];
+                }
+                else if (TYPE == "Functions_scalar_valued")
+                {
+                    DBAction = DBActions[3];
+                    FileAction = FileActions[3];
+                }
+                else if (TYPE == "Functions_table_valued")
+                {
+                    DBAction = DBActions[5];
+                    FileAction = FileActions[6];
+                }
             }
             else if (Mode == "compareDir")
             {
                 SeqAction = SeqActions[2];
                 DBAction = "";
-                FileAction = FileActions[2];
+                if (TYPE == "StoredProcedures") { FileAction = FileActions[2]; }
+                else if (TYPE == "Functions_scalar_valued") { FileAction = FileActions[5]; }
+                else if (TYPE == "Functions_table_valued") { FileAction = FileActions[8]; }
                 _isStrict = false;
             }
+
         }
 
         public void ResetMirrorVariables()
@@ -644,7 +695,7 @@ namespace BridgeSQL
             FakeCON = null;
         }
 
-        public void RenameMirrorVariables ()
+        public void RenameMirrorVariables()
         {
             if (ManaSQLConfig.ServerNamingIndex == 1) { SERVER = Util.GetMachine(FakeCON.Server); }
             else if (ManaSQLConfig.ServerNamingIndex == 2) { SERVER = Util.GetIP(FakeCON.Server); }
@@ -659,12 +710,10 @@ namespace BridgeSQL
             RenameMirrorVariables();
             DB = FakeNODE2.DB;
             OBJ = FakeNODE2.Obj;
+            TYPE = GetObjType(FakeNODE2.Type, FakeNODE2.Path);
 
-            if(FakeNODE2.Type == "StoredProcedures" || FakeNODE2.Type == "StoredProcedure")
-            {
-                TYPE = "StoredProcedures";
-            }
-            
+            UpdateInteractionFlags();
+
             if (trigger && UpdatedVariables != null)
             {
                 UpdatedVariables("compareFile2");
@@ -714,6 +763,9 @@ namespace BridgeSQL
                 ResetWhereFiles(false);
             }
 
+            UpdateInteractionFlags();
+
+            // for dir comparison
             if (node == 2) { NODE2 = newNode; }
             else { NODE = newNode; }
 
@@ -923,15 +975,13 @@ namespace BridgeSQL
 
                     if (Mode == "extract" || Mode == "upload" || Mode == "compareDir")
                     {
-                        if (theNode.Type == "StoredProcedures")
+                        if (ManaSQLConfig.IsAllowedGroupNode(theNode)
+                            || ManaSQLConfig.IsAllowedSingleNode(theNode)
+                            )
                         {
-                            dbname = theNode.Name;
-                            objtype = "StoredProcedures";
-                        }
-                        else if (theNode.Type == "StoredProcedure" && validDBI)
-                        {
-                            dbname = DBI.DatabaseName;
-                            objtype = "StoredProcedures";
+                            if (validDBI) { dbname = DBI.DatabaseName; }
+                            else { dbname = theNode.Name; }
+                            objtype = GetObjType(theNode.Type, theNode.Path);
                         }
                     }
                     else if (Mode == "compareFile1"
@@ -940,17 +990,28 @@ namespace BridgeSQL
                         || Mode == "uploadFile2"
                         )
                     {
-                        //if (validDBI)
-                        if (theNode.Type == "StoredProcedure" && validDBI)
+                        if (validDBI)
                         {
                             dbname = DBI.DatabaseName;
                             objname = DBI.ObjectName;
-                            objtype = "StoredProcedures";
+                            objtype = GetObjType(theNode.Type, theNode.Path);
                         }
                     }
                 }
             }
             return new string[4] { servername, dbname, objname, objtype };
+        }
+
+        public string GetObjType(string nodeType, string nodePath)
+        {
+            string temp = null;
+            if (nodeType == "StoredProcedure") temp = "StoredProcedures";
+            else if (nodeType == "StoredProcedures") temp = "StoredProcedures";
+            else if (nodeType == "Scalar-valuedFunctions") temp = "Functions_scalar_valued";
+            else if (nodeType == "Table-valuedFunctions") temp = "Functions_table_valued";
+            else if (Util.IsSVF(nodePath)) temp = "Functions_scalar_valued";
+            else if (Util.IsTVF(nodePath)) temp = "Functions_table_valued";
+            return temp;
         }
 
         //triggered when opening/ closing new connection
@@ -1111,9 +1172,10 @@ namespace BridgeSQL
             bool hasDB = (SERVER != "" && DB != "");
             string defRepoPath;
 
-            if (TYPE == "StoredProcedures")
-                subdir = TYPE;
-            else if (TYPE == "UserDefinedFunctions")
+            if (TYPE == "StoredProcedures"
+                || TYPE == "Functions_scalar_valued"
+                || TYPE == "Functions_table_valued"
+                )
                 subdir = TYPE;
 
             if ((isStrict && hasDB) || !isStrict)
@@ -1327,7 +1389,7 @@ namespace BridgeSQL
         // Successful: return appropriate string
         public string CompileArgs(int variant = 0, string template = "\"{0}|{1}\" ")
         {
-            Boolean success = false; 
+            Boolean success = false;
             string compiled = "", auth;
 
             bool proceed2Compile;

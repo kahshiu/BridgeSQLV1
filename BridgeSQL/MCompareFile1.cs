@@ -24,7 +24,7 @@ namespace BridgeSQL
             return
                 ManaSQLConfig.ValidGenPaths
                 && ManaSQLConfig.ShowCompareFile
-                && theNode.Type == "StoredProcedure";
+                && ManaSQLConfig.IsAllowedSingleNode(theNode);
         }
         public override string ItemText
         {

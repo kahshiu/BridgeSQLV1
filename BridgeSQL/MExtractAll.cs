@@ -21,16 +21,18 @@ namespace BridgeSQL
                 ManaSQLConfig.ValidGenPaths
                 && ManaSQLConfig.Extract.ValidPaths
                 && ManaSQLConfig.ShowExtract
-                && ManaSQLConfig.IsAllowedGroupNode(theNode);
+                && ManaSQLConfig.IsAllowedGroupNode(theNode)
+                && theNode.Type != "UserProgrammability"
+                ;
         }
         public override string ItemText
         {
-            get { return "[Extract] All SSPs"; }
+            get {
+                return "[Extract] ALL children";
+            }
         }
         public override void OnAction(ObjectExplorerNodeDescriptorBase node)
         {
-            //throw new NotImplementedException();
-
             ManaSQLConfig.PageIndex = 0;
             string args = ManaSQLConfig.Extract.CompileArgs(1);
             args = "data " + args;
